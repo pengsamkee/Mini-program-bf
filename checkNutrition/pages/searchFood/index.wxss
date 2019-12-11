@@ -1,0 +1,154 @@
+/* checkNutrition/pages/searchFood/index.wxss */
+.wrap{
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+}
+.w-100{
+  width:100%;
+}
+.h-100{
+  height:100%;
+}
+.wh-100{
+  width:100%;
+  height:100%;
+}
+.wrap{
+  width: 100%;
+}
+.search-wrap{
+  width:100%;
+  height: 100rpx;
+  display: flex;
+  padding: 0 10rpx;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 下方是粘贴过来的search框的信息 */
+
+.search-input {
+  color: #2E2D2D;
+  border-radius: 20px;
+  background:rgba(246,246,246,1);
+  height: 35px;
+  align-items: center;
+}
+
+.top-input-area{
+  /* background-color: #d52c45; */
+  flex-direction: row;
+  width: 0%;
+  margin: 10px 10px;
+  border-radius: 20px;
+  border: none;
+}
+
+.self-weui-icon-search_in-box {
+  position:absolute;
+  left:10px;
+  top:10px;
+}
+
+.self-weui-icon-clear {
+  right: 2px !important;
+  top: 1px !important;
+}
+
+.self-weui-icon-clear {
+  position:absolute;
+  top:0;
+  right:0;
+  padding:7px 8px;
+  font-size:0;
+}
+
+.top-text-area{
+  margin-right:24rpx;
+  align-items: center;
+  text-align: center;
+  color:#2E2D2D;
+  font-size:16px;
+}
+
+.phcolor {
+  color: #848484;
+}
+
+.search-line{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  /* background-color: #ed2c48; */
+  width:100%;
+}
+
+.search-container {
+  margin-top: 0;
+}
+
+.no-result {
+  text-align: center;
+}
+
+.text-search-bd {
+  margin-top: 10px;
+}
+
+.public-wrap{
+  width:100%;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  margin-top:56rpx;
+}
+.title-wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:24rpx;
+  color:rgba(132,132,132,1);
+  margin-bottom: 10rpx;
+}
+.title-wrap image{
+  width:24rpx;
+  height: 30rpx;
+  display: block;
+}
+.weui-cell{
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+.weui-cell:before {
+  left: 0px;
+
+}
+.food-lists{
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -12rpx;
+
+}
+.food-item{
+  font-size:22rpx;
+  color:rgba(46,45,45,1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:rgba(247,247,247,1);
+  border-radius:27rpx;
+  padding:10rpx 26rpx 12rpx 26rpx;
+  margin:10rpx;
+}
+.resultList{
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+.noDate{
+  width:100%;
+  margin-top:20%;
+  color: #aaa;
+  text-align: center;
+}

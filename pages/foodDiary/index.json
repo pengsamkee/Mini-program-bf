@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "calendar": "/components/calendar/calendar",
+    "circle":"/components/circle-progress/circle-progress",
+    "ff-canvas": "@antv/f2-canvas"
+  }
+}

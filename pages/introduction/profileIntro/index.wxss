@@ -1,0 +1,40 @@
+/* pages/introduction/loggingIntro/index.wxss */
+.pages{
+  padding-top: 20px;
+  padding-left: 10px;
+}
+
+.vertical_layout {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  margin-left:4.5%;
+  margin-right:4.5%;
+}
+
+.intro_text {
+  margin-left: 20px;
+  margin-top: 15px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li {
+  margin-bottom: 40px;
+}
+
+ul li span {
+  border-radius: 50%;
+  padding: 1.5% 3%;
+  margin-right: 5px;
+  color: white;
+  background-color: red;
+}
+
+.li_container {
+  border-left: 1px dashed lightgray;
+}

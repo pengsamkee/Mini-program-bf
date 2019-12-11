@@ -1,0 +1,206 @@
+<!--pages/weightRecord/index.wxml-->
+<loading wx:if='{{!showContent}}'>加载中..</loading>
+<view class="weightrecord-parent" wx:if='{{showContent}}'>
+
+  <!-- two tabs at top of page -->
+  <view class="weui-tab">
+    <view class="weui-navbar">
+      <view class="{{tabOneStyleClass}}" bindtap="onNavbarSelect1">
+          记录
+      </view>
+      <view class="{{tabTwoStyleClass}}" bindtap="onNavbarSelect2">
+          曲线
+      </view>
+    </view>
+    <view class="weui-tab__panel">
+
+      <!-- tabOne - weightRecords 记录 -->
+      <view wx:if="{{isTabOneSelected}}" class="weui-panel__bd">
+
+        <!-- top section: displays info relevant to pregnant women (ie dateOfDelivery 孕期 numWeeksPreg 孕周） -->
+        <view wx:if="{{isPregnantLady}}" class="preginfo-container">
+          <view class="record-grid grid-left">
+            <view class="record-grid-top">
+              <view class="record-label">预产期 </view>
+            </view>
+
+            <view class="record-grid-bottom">
+              <view class="preginfo-date">
+                {{dateOfDelivery.year}}年{{dateOfDelivery .month}}月{{dateOfDelivery.day}}日
+              </view>
+            </view>
+          </view>
+
+          <view class="record-grid grid-left">
+            <view class="record-grid-top">
+              <view class="record-label">孕周</view>
+            </view>
+
+            <view class="record-grid-bottom">
+              <view class="preginfo-date">{{numWeeksPreg}} 周</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- center section - displays latest weight/date record with big red button -->
+        <view class="weightform-container">
+          <view class="latestdate-container"> <view class="latestdate-text">
+            {{latestDate.year}}年{{latestDate.month}}月{{latestDate.day}}日 
+          </view> </view>
+
+          <view class="latestweight-container"> 
+            <view class="latestweight-num"> {{latestWeight}} </view>
+            <view class="latestweight-text"> 公斤 </view> </view>
+
+          <view class="weightform-btn" bindtap="navigateToWeightInputPage">
+            <view class="weightform-btn-text "> 记录体重 </view>
+          </view>
+
+          <view wx:if="{{isPregnantLady && (numWeeksPreg > 12)}}" class="weightchange-text">
+            每周只增重{{weeklyWeightChangeLower}}-{{weeklyWeightChangeUpper}}公斤
+          </view>
+        </view>
+
+        <!-- bottom section - displays first, latest and target weight/date records for regular users-->
+        <!-- and displays weight before pregnancy, and latest weight for pregnant users-->
+        <view class="record-container"> 
+          <view wx:if="{{isPregnantLady}}" class="record-grid grid-left">
+            <view class="record-grid-top">
+              <view class="record-number"> {{initWeight}} </view>
+              <view class="record-kg"> 公斤  </view>
+            </view>
+
+            <view class="record-grid-bottom">
+              <view class="record-label label-indent"> 孕前体重 </view>
+            </view>
+          </view>
+          <view wx:else class="record-grid grid-left">
+            <view class="record-grid-top">
+              <view class="record-number"> {{initWeight}} </view>
+              <view class="record-kg"> 公斤  </view>
+            </view>
+
+            <view class="record-grid-bottom">
+              <view class="record-label label-indent"> 初始体重 </view>
+            </view>
+          </view>
+
+          <view wx:if="{{isPregnantLady}}" class="record-grid grid-right">
+            <view class="record-date">
+            {{dateOfConception.year}}年{{dateOfConception.month}}月{{dateOfConception.day}}日
+            </view>
+          </view>
+
+          <view wx:else class="record-grid grid-right">
+            <view class="record-date">
+            {{initDate.year}}年{{initDate.month}}月{{initDate.day}}日
+            </view>
+          </view>
+
+          <view class="record-grid grid-left">
+            <view class="record-grid-top">
+              <view class="record-number"> {{latestWeight}} </view>
+              <view class="record-kg"> 公斤 </view>
+            </view>
+
+            <view class="record-grid-bottom">
+              <view class="record-label label-indent"> 最新体重 </view>
+            </view>
+          </view>
+          <view class="record-grid grid-right">
+            <view class="record-date">
+            {{latestDate.year}}年{{latestDate.month}}月{{latestDate.day}}日
+            </view>
+            <view class="record-label"> 第{{currMaxIdx}}天 </view> 
+            <!-- to be implemented -->
+
+          </view>
+
+          <view wx:if="{{isTargetSet && !isPregnantLady}}" class="record-grid grid-left">
+            <view class="record-grid-top">
+              <view class="record-number"> {{targetWeight}} </view>
+              <view class="record-kg"> 公斤 </view>
+            </view>
+
+            <view class="record-grid-bottom">
+              <view class="record-label label-indent"> 目标体重 </view>
+            </view>
+          </view>
+
+          <view wx:if="{{isTargetSet && !isPregnantLady}}" class="record-grid grid-right">
+            <view class="record-date"> {{targetDate.year}}年{{targetDate.month}}月{{targetDate.day}}日 </view>
+
+            <view class="record-grid-bottom">
+              <view class="record-label"> 目标日期 </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- big white setTarget button  -->
+        <view wx:if="{{!isPregnantLady}}" class="settarget-container">
+          <view class="settarget-btn" bindtap="navigateToTargetInputPage">
+            <view class="settarget-btn-text"> 设定新目标 </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- tabTwo - weightChart 曲线 -->
+      <view wx:else class="weui-panel__bd">
+
+      <!-- top section - date range selector - left arrow -->
+      <view class="chartview-container">
+        <view wx:if="{{chartView[chartViewIdx] === '周'}}" class="arrow-btn" bindtap="prevWeekInterval">
+          <image wx:if="{{isPrevWeekAllowed}}" class="arrow-icon" src="../../images/leftArrow-selected.png" mode="widthFix"></image>
+          <image wx:else class="arrow-icon" src="../../images/leftArrow.png" mode="widthFix"></image>
+        </view>
+
+        <view  wx:if="{{chartView[chartViewIdx] === '月'}}" class="arrow-btn" bindtap="prevMonthInterval">
+          <image wx:if="{{isPrevMonthAllowed}}" class="arrow-icon" src="../../images/leftArrow-selected.png" mode="widthFix"></image>
+          <image wx:else class="arrow-icon" src="../../images/leftArrow.png" mode="widthFix"></image>
+        </view>
+
+        <!-- top section - monthView 月/weekView 周 picker -->
+        <picker class="chartview-picker" bindchange="bindChartViewChange" value="{{chartViewIdx}}" range="{{chartView}}">
+          <view wx:if="{{chartView[chartViewIdx] === '周'}}" class="chartview-title">
+          {{chartWeekViewStart.month}}月{{chartWeekViewStart.day}}日 - {{chartWeekViewEnd.month}}月{{chartWeekViewEnd.day}}日 
+          <image class="chartview-picker-icon" src="../../images/Page1@3x.png" mode="widthFix"></image>
+          </view>
+          <view wx:if="{{chartView[chartViewIdx] === '月'}}" class="chartview-title">
+          {{chartMonthViewStart.year}}年 {{chartMonthViewStart.month}}月 
+          <image class="chartview-picker-icon" src="../../images/Page1@3x.png" mode="widthFix"></image>
+          </view>
+        </picker>
+        
+        <!-- top section - date range selector - right arrow -->
+        <view wx:if="{{chartView[chartViewIdx] === '周'}}" class="arrow-btn" bindtap="nextWeekInterval">
+          <image wx:if="{{isNextWeekAllowed}}" class="arrow-icon" src="../../images/rightArrow-selected.png" mode="widthFix"></image>
+          <image wx:else class="arrow-icon" src="../../images/rightArrow.png" mode="widthFix"></image>
+        </view>
+
+        <view wx:if="{{chartView[chartViewIdx] === '月'}}" class="arrow-btn" bindtap="nextMonthInterval">
+          <image wx:if="{{isNextMonthAllowed}}" class="arrow-icon" src="../../images/rightArrow-selected.png" mode="widthFix"></image>
+          <image wx:else class="arrow-icon" src="../../images/rightArrow.png" mode="widthFix"></image>
+        </view>
+      </view>
+
+        <!-- middle section - actual weight chart -->
+        <view class="weightchart-container">
+          <ff-canvas id="scroll" canvas-id="scrollLine" opts="{{ opts }}"></ff-canvas>
+        </view>
+
+        <!-- bottom section - latest weight -->
+        <view class="weighttrend-container">
+            <view class="weightrend-top">
+              <view class="trend-label">当前体重</view>
+            </view>
+
+            <view class="weightrend-bottom">
+              <view class="trend-number"> {{latestWeight}} </view> 
+              <view class="trend-kg"> 公斤</view>
+            </view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,113 @@
+<!-- article -->
+<template name="card_type_article">
+  <view class="article_card" style="height:358rpx;">
+    <image src="{{iconLink}}" mode="scaleToFill" class="background-pic" />
+    <view class="shadow_view"></view>
+    <text class="article_card_title">{{title}}</text>
+  </view>
+</template>
+
+<template name="card_type_punch">
+  <view class="frame_card">
+    <view class="side_part_view">
+      <image src="{{iconLink}}" class="card-icon" />
+      <view class="column_view">
+        <text class="feature_title-text">{{title}}</text>
+      </view>
+    </view>
+    <checkbox-group>
+      <label class="side_part_view">
+        <checkbox class="weui-check" value="{{cardId}}" checked="{{isChecked}}" />
+        <view class="weui-cell__hd weui-check__hd_in-checkbox">
+          <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!isChecked}}"></icon>
+          <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{isChecked}}"></icon>
+        </view>
+      </label>
+    </checkbox-group>
+
+  </view>
+</template>
+
+
+<!--pages/home/index.wxml-->
+<view class="page">
+  <view class="portrait_view">
+    <view class="userinfo-avatar">
+      <open-data mode='aspectFit' type="userAvatarUrl"></open-data>
+    </view>
+    <view class="userinfo-nickname">
+      <open-data type="userNickName"></open-data>
+    </view>
+  </view>
+  
+  <view class="nutriton_tab card">
+    <view class="title_view">
+      <image src="/images/bowl_red.png" style='width:20px;height:20px;' />
+      <text class="title_text" style="margin-left:10px">本周能量摄入</text>
+    </view>
+    <view class="space-between-view">
+      <text class='gray_text'>每日平均: {{average_energy}}千卡</text>
+      <text class='gray_text'>目标: {{target_energy}}千卡</text>
+    </view>
+    <view class="chart_container">
+      <ff-canvas id="nutrition_chart" canvas-id="nutrition_chart" opts="{{ opts }}"></ff-canvas>
+    </view>
+  </view>
+
+  <view class="horizontal_card">
+    <view class="card small-cube-card" wx:for="{{cardList}}" catchtap='redirectToPage' data-redirect-path="{{item.card_redirect_path}}">
+      <view class="color_bar" style='background-color:{{item.card_bar_color}}' />
+      <text class="small-cube-title">{{item.card_title}}</text>
+      <view class="small-cube-block">
+        <view wx:if="{{item.card_weight_value > 0 }}">
+          <text class="small-cube-weight-value">{{item.card_weight_value}}</text>
+          <text class="small-cube-desc-unit">{{item.card_desc}}</text>
+        </view>
+
+        <view wx:else>
+          <text class="small-cube-desc">{{item.card_desc}}</text>
+        </view>
+
+      </view>
+    </view>
+  </view>
+
+  <view class="article_card_container card">
+    <view class="title_view">
+      <image src="/images/icon_fire.png" style='width:20px;height:20px;' />
+      <text class="title_text" style="margin-left:10px">今日任务</text>
+    </view>
+    <view class="card_list" wx:for="{{activityCardList}}" bindtap="redirectFromFeed" data-card-id="{{item.cardId}}" data-card-type="{{item.cardType}}" data-card-desc="{{item.description}}" data-card-link="{{item.contentLink}}" data-card-index="{{index}}">
+      <template is="card_type_{{item.cardType}}" data='{{...item}}' />
+    </view>
+  </view>
+  <!-- <button type="primary" style="height:100px;" show-message-card="true" open-type="contact" /> -->
+  <!--use the empty footer to fill in the bottom-->
+  <view class="empty-footer"></view>
+</view>
+
+<!-- show feedback dialog-->
+<modal-input show="{{showFeedbackDlg}}" height='55' bindupdate="modalUpdate">
+  <view class='modal-content'>
+    <view class="feedback-card-title">留言给营养师</view>
+    <view class="feedback-card-desc">我们周末结合你的报告一起答复。</view>
+    <textarea class="feedback-card-textarea" placeholder-class="phcolor" placeholder='请填写问题' bindinput='bindFeedbackQuestionInput' value="{{questionText}}"></textarea>
+    <view class="nextButton-container" catchtap="onFeedbackDlgBtnSubmit">提交</view>
+  </view>
+</modal-input>
+<!--show questionnaire dialog-->
+<modal-input show="{{showQuesDlg}}" height='55' bindupdate="modalUpdate">
+  <view class='modal-content'>
+    <view class="color_bar" style='background-color:#ed2c48' />
+    <view class="feedback-card-title">问题</view>
+    <!-- <view class="feedback-card-desc">{{question}}</view> -->
+    <view class="feedback-card-desc">{{quesTitle}}</view>
+    <view class="gray-line" />
+    <view class="answer-area">
+
+      <view class="{{isAnswerPositive?'answer-block-selected':'answer-block'}}" catchtap='onQuesDlgBtnPress' data-selection='{{true}}'>对</view>
+      <view class="{{isAnswerPositive?'answer-block':'answer-block-selected'}}" catchtap='onQuesDlgBtnPress' data-selection='{{false}}'>不对</view>
+    </view>
+    <view class="nextButton-container" catchtap="onQuesDlgBtnSubmit">提交</view>
+  </view>
+</modal-input>

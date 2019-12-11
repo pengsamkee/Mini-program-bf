@@ -1,0 +1,67 @@
+<!--pages/queryCalories/index.wxml-->
+<view class='wrap'>
+  <view class='search-wrap' bindtap="goSearchFood">
+    <view class="search-line">
+      <view class="weui-search-bar__form top-input-area">
+        <view class="weui-search-bar__box search-input">
+          <icon class="self-weui-icon-search_in-box" type="search" size="14"></icon>
+          <view type="text" class="weui-search-bar__input search-input">搜索食物</view>
+          <view class="self-weui-icon-clear" wx:if="{{keyword.length > 0}}" bindtap="clearInput">
+            <icon class="self-weui-icon-clear" type="clear" size="14"></icon>
+          </view>
+        </view>
+      </view>
+      <!-- <text class="top-text-area" catchtap="performSearch">搜索</text> -->
+    </view>
+  </view>
+  <view class='scroll-wrap'>
+
+    <!-- <view class='category'>
+      <scroll-view scroll-y scroll-with-animation class='category-scroll-view' scroll-top="{{scrollTop}}">
+        <block wx:for='{{category}}' wx:key='*this'>
+          <view class="category-item {{index==activeIndex?'active-item':''}}" bindtap='handleTapCategoryItem' data-category-index="{{index}}">{{item.name}}</view>
+        </block>
+      </scroll-view>
+    </view>
+
+    <view class='food-info'>
+      <scroll-view scroll-y bindscrolltolower='scrollToLower' class='food-info-scroll-view'>
+        <block wx:for='{{category[activeIndex].children}}' wx:key='item.id'>
+          <view class='food-item'>
+            <image src="" class='food-image'></image>
+            <view class='food-item-info' bindtap='goNutritionDetil' data-item-id='{{item.id}}'>
+              <view class='name-and-heat'>{{item.name}}</view>
+              <view class='right-across'>></view>
+            </view>
+          </view>
+        </block>
+        <view class="loading-wrap" wx:if="{{showLoading}}">
+          <text class="loading_ball a"></text>
+          <text class="loading_ball b"></text>
+          <text class="loading_ball c"></text>
+          <text class="loading_ball d"></text>
+          <text class="loading-text">加载中..</text>
+        </view>
+      </scroll-view>
+    </view> -->
+  <scroll-view class='scroll_left' scroll-y="true">
+    <block wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName" wx:key="{{idx}}">  
+      <view class="nav_left_items {{curNav == idx ? 'active' : ''}}" bindtap="switchRightTab" data-id="{{idx}}">{{itemName[0].name}}</view>  
+    </block>  
+  </scroll-view>
+
+  <!--右侧栏-->
+    <scroll-view scroll-y="true" class="scroll_right" scroll-into-view="{{scrollTopId}}" scroll-with-animation="true" bindscroll='bindscroll'>
+      <view class='food_list' wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName" wx:key="itemName" >
+        <view class="item {{idx=='A'?'first-item':''}}">
+          <view class='food_list_name' id='{{idx}}'>{{itemName[0].name}}</view>
+          <view class='item-detail'>
+            <view wx:for="{{itemName}}" wx:for-index="idex" wx:key="item.id" class="{{idex>0?'nav_right_items_wrap':''}}"> 
+              <view class="nav_right_items" wx:if="{{idex>0}}" bindtap='onTapFoodItem' data-food-id='{{item.id}}' data-food-type='{{item.foodType}}'>{{item.name}}</view>      
+            </view> 
+          </view>
+        </view>
+      </view>    
+    </scroll-view>
+  </view>
+</view>

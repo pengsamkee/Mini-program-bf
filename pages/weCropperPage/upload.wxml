@@ -1,0 +1,14 @@
+<import src="../../utils/we-cropper.wxml"/>
+
+<view class="cropper-wrapper">
+  <view class="cropper-buttons" style="color: {{cropperOpt.boundStyle.color}}">
+      <view
+        class="getCropperImage btn"
+        style="background-color: {{cropperOpt.boundStyle.color}};"
+        bindtap="getCropperImage">
+        上传
+      </view>
+    </view>
+  <template is="we-cropper" data="{{...cropperOpt}}"/>
+  
+</view>

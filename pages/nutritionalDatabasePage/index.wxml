@@ -1,0 +1,120 @@
+<!--index.wxml-->
+<!-- 注释开始
+  <view class="weui-tab">
+    <view class="weui-navbar">
+      <view class="{{tabOneStyleClass}}" bindtap="onNavbarSelect1">
+          产能营养素专题
+      </view>
+      <view class="{{tabTwoStyleClass}}" bindtap="onNavbarSelect2">
+          微量营养素专题
+      </view>
+    </view>
+    <view class="weui-tab__panel">
+
+      <!-- tabTwo - 微量营养素专题 
+      <view wx:if="{{isTabOneSelected}}" class="weui-panel__bd">
+        <block wx:for="{{macroDisplayArr}}">
+          <navigator url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}" open-type="navigate" 
+              hover-class="navigator-hover" class="weui-media-box weui-media-box_appmsg remove-bottom-border">
+              <view class="weui-media-box__hd">
+                <image class="thumbnail-image" mode="aspectFill" src="{{item.src}}"> </image>
+                <view class="title-text-container">
+                  <text class="title-text"> {{item.title}}  </text>
+                </view>
+              </view>
+          </navigator>
+        </block>
+        <view class="loadmore-btn-container">
+          <view wx:if="{{isThereMoreMacro}}" class="loadmore-btn" bindtap="onLoadMoreMacro"> 
+            <view class="loadmore-btn-text"> 查看更多 </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- tabTwo - 产能营养素专题 
+      <view wx:else class="weui-panel__bd" >
+        <block wx:for="{{microDisplayArr}}">
+          <navigator url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}" open-type="navigate" 
+              hover-class="navigator-hover" class="weui-media-box weui-media-box_appmsg remove-bottom-border">
+              <view class="weui-media-box__hd">
+                <image class="thumbnail-image" mode="aspectFill" src="{{item.src}}"> </image>
+                <view class="bigtitle-text-container">
+                  <text class="bigtitle-text"> {{item.title}}  </text>
+                </view>
+                <view class="title-text-container">
+                  <text class="title-text"> {{item.subtitle}}  </text>
+                </view>
+              </view>
+          </navigator>
+        </block>
+        <view class="loadmore-btn-container">
+          <view wx:if="{{isThereMoreMicro}}" class="loadmore-btn" bindtap="onLoadMoreMicro"> 
+            <view class="loadmore-btn-text"> 查看更多 </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+ 注释结束 -->
+
+    <!-- 2019-10-23 图片滚动-->
+    <view>
+      <swiper autoplay="true" interval="3000" duration="300">
+        <swiper-item wx:for="{{rollingImages}}">     
+          <navigator url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}" class="rollingBlock">
+            <image class="rollingImage" mode="aspectFill" src="{{item.src}}"></image>
+            <view class="rollingImagesText">{{item.title}}</view>
+          </navigator>
+        </swiper-item>
+      </swiper>
+    </view>
+    <!-- 滚动图下文字 -->
+    <view class="weui-navbar-text">
+      <view bindtap="onNavBarTextSelect1" class="{{textOneStyleClass}}">合理饮食</view>
+      <view bindtap="onNavBarTextSelect2" class="{{textTwoStyleClass}}">生活方式</view>
+      <view bindtap="onNavBarTextSelect3" class="{{textThreeStyleClass}}">健康心理</view>
+      <view bindtap="onNavBarTextSelect4" class="{{textFourStyleClass}}">体重管理</view>
+    </view>
+    <!-- 文字选项对应页面 -->
+    <view>
+      <!-- 合理饮食页面 -->
+      <view wx:if="{{optionNumber==1}}">
+        <block wx:for="{{textPageOneArticlesArr}}">
+          <navigator url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}" class="articleBlock">
+            
+            <view class="articleBlockText">{{item.title}}</view>
+            <image src="{{item.src}}" class="articleBlockImage"></image>
+            
+          </navigator>
+        </block>
+      </view>
+      <!-- 生活方式页面 -->
+      <view wx:elif="{{optionNumber==2}}">
+        <block wx:for="{{textPageTwoArticlesArr}}">
+          <navigator url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}" class="articleBlock">
+            <view class="articleBlockText">{{item.title}}</view>
+            <image src="{{item.src}}" class="articleBlockImage"></image>
+          </navigator>
+        </block>
+      </view>
+      <!-- 身体健康页面 -->
+      <view wx:elif="{{optionNumber==3}}">
+        <block wx:for="{{textPageThreeArticlesArr}}">
+          <navigator url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}" class="articleBlock">
+            <view class="articleBlockText">{{item.title}}</view>
+            <image src="{{item.src}}" class="articleBlockImage"></image>
+          </navigator>
+        </block>
+      </view>
+      <!-- 体重管理页面 -->
+      <view wx:else="{{optionNumber==4}}">
+        <block wx:for="{{textPageFourArticlesArr}}">
+          <navigator url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}" class="articleBlock">
+            <view class="articleBlockText">{{item.title}}</view>
+            <image src="{{item.src}}" class="articleBlockImage"></image>
+          </navigator>
+        </block>
+      </view>
+    </view>
+    
+<!--  </view> -->

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "首页",
+  "usingComponents": {
+    "modal-input": "/components/modal-input/modal-input",
+    "ff-canvas": "@antv/f2-canvas"
+  }
+} 

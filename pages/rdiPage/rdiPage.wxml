@@ -1,0 +1,4 @@
+<!--pages/rdiPage/rdiPage.wxml-->
+<view class="rdi-page-body">
+    <web-view src="{{url}}" binderror="loadPageFailed"></web-view>
+</view>

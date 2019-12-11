@@ -1,0 +1,15 @@
+<!--form template-->
+<template name="formItem">
+  <view>
+    <text>{{index}}</text>
+    <text>enter food description here:{{description}}</text>
+    <text>enter food portion here:{{portion}}</text>
+  </view>
+</template>
+
+<view 
+  id="ani-card" class="ani-card-container">
+    <view class="ani-card-item">
+       <slot name="ani-card-item"></slot>
+    </view>
+</view>

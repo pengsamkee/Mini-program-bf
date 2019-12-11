@@ -1,0 +1,61 @@
+<!--index.wxml-->
+<!-- <view class="morepage-parent"> -->
+
+<view class="profpage-btn-parent" bindtap="handlePortfolioPageNav">
+  <!-- <button class="profpage-btn" > -->
+  <view class="profpage-btn-leftcol">
+    <view class="profpage-btn-avatar">
+      <open-data mode='aspectFit' type="userAvatarUrl"></open-data>
+    </view>
+    <!-- <image wx:if="{{hasUserInfo}}" bindtap="bindViewTap" class="profpage-btn-avatar" src="{{userInfo.avatarUrl}}" mode="cover"> </image>
+    <image wx:else bindtap="bindViewTap" class="profpage-btn-avatar" src="../../images/profile/avatar@3x.png" mode="cover"> </image> -->
+  </view>
+
+  <view class="profpage-btn-midcol">
+    <view class="profpage-btn-nickname">
+      <open-data type="userNickName"></open-data>
+    </view>
+    <text class='profpage-btn-label'> 修改个人资料 </text>
+  </view>
+
+  <view class="profpage-btn-rightcol">
+    <image bindtap="bindViewTap" class="profpage-btn-arrow" src="../../images/profile/Group11@3x.png" mode="cover"></image>
+  </view>
+  <!-- </button> -->
+</view>
+
+<view class="morepage-panel-parent">
+  <view class="morepage-panel-btn-container">
+    <view class="morepage-panel-btn" bindtap="handleNutriDatabaseNav">
+      <image class="morepage-panel-btn-icon" src="../../images/profile/report@3x.png" mode="aspectFit" />
+      <text class='morepage-panel-label'> 营养知识 </text>
+    </view>
+  </view>
+
+  <view class="morepage-panel-btn-container">
+    <view class="morepage-panel-btn" bindtap="handleweightRecordNav">
+      <image class="morepage-panel-btn-icon" src="../../images/profile/scale@3x.png" mode="aspectFit" />
+      <text class='morepage-panel-label'> 体重记录 </text>
+    </view>
+  </view>
+
+  <view class="morepage-panel-btn-container">
+    <view class="morepage-panel-btn" bindtap="handleRDINav">
+      <image class="morepage-panel-btn-icon" src="../../images/profile/Group6@3x.png" mode="aspectFit" />
+      <text class='morepage-panel-label'> 营养推荐值 </text>
+    </view>
+  </view>
+
+  <view class="morepage-panel-btn-container">
+    <button class="morepage-panel-btn" open-type='contact'>
+      <image class="morepage-panel-btn-icon" src="../../images/profile/customerService@3x.png" mode="aspectFit" />
+      <text class='morepage-panel-label'> 咨询营养师 </text>
+    </button> 
+  </view>
+  <view class="morepage-panel-btn-container"> </view>
+  <view class="morepage-panel-btn-container"> </view>
+</view>
+
+<view class="morepage-bottomarea">
+</view>
+<!-- </view> -->

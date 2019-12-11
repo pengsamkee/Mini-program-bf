@@ -1,0 +1,44 @@
+<!--checkNutrition/pages/nutritionDetail/index.wxml-->
+<view class="wrap">
+<!-- <view style='width:100%;height:500rpx;'>
+  <ff-canvas id="scroll" canvas-id="scrollLine" opts="{{ opts }}"></ff-canvas>
+</view> -->
+
+  <view class="food-info">
+    <view class='name'>{{foodInfo.name}}</view>
+    <view class='enegry'>{{foodInfo.contentEnergy+foodInfo.contentEnergyUnit}}/100克</view>
+    <view class="canvas-info">
+      <view class='left'>
+        <view class='canvas-wrap'>
+          <ff-canvas  id='canvasf2' canvas-id="canvasf2" opts="{{ opts }}" ></ff-canvas>
+        </view>
+      </view>
+      <view class='right'>
+        <view class='right-enegry'>{{foodInfo.contentEnergy}}</view>
+        <view class='right-total-enegry'>{{foodInfo.contentEnergyUnit}}/100克</view>
+      </view>
+    </view>
+  </view>
+  <view class="food-detail-public">
+    <view class='title'>营养元素</view>
+    <view class='detail'>
+      <block wx:for='{{foodInfo.mainNutrients}}' wx:key='{{item.name}}'>
+        <view class='item'>
+          <view class="name">{{item.name}}</view>
+          <view class="weight">{{item.content}}{{item.unit}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="food-detail-public">
+    <view class='title minc'>微量元素</view>
+    <view class='detail'>
+      <block wx:for='{{micro}}' wx:key='{{item.name}}'>
+        <view class='item'>
+          <view class="name">{{item.name}}</view>
+          <view class="weight">{{item.content}}{{item.unit}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

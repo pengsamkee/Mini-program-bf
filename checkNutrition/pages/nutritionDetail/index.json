@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "查询结果",
+  "usingComponents": {
+    "ff-canvas": "@antv/f2-canvas"
+  }
+}

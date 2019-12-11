@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "calendar": "/components/calendar/calendar",
+    "ff-canvas": "@antv/f2-canvas",
+    "modal-input": "/components/modal-input/modal-input"
+  }
+}

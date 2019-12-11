@@ -1,0 +1,49 @@
+<!--pages/introduction/index.wxml-->
+<view class="pages">
+  <view class="page__bd">
+    <view class="weui-panel card" catchtap='intro_profile_tutorial'>
+          <view class="weui-panel__bd">
+             <view class="weui-media-box weui-media-box_text">
+              <view class="card-head" >
+                <view>
+                   <view class="weui-media-box__title">我的</view>
+                   <view class="weui-media-box__desc">完成所有</view> 
+                </view>
+                <image class="right-arrow-image" src="../../images/rightArrow.png" />
+              </view>
+            </view>
+          </view>
+    </view>
+
+     <view class="weui-panel card" catchtap='intro_logging_tutorial'>
+          <view class="weui-panel__bd">
+             <view class="weui-media-box weui-media-box_text">
+              <view class="card-head" >
+                <view>
+                   <view class="weui-media-box__title">日志</view>
+                   <view class="weui-media-box__desc">教程</view> 
+                </view>
+                <image class="right-arrow-image" src="../../images/rightArrow.png" />
+              </view>
+            </view>
+          </view>
+    </view>
+
+
+     <view class="weui-panel card" catchtap='intro_report_tutorial'>
+          <view class="weui-panel__bd">
+             <view class="weui-media-box weui-media-box_text">
+              <view class="card-head" >
+                <view>
+                   <view class="weui-media-box__title">报告</view>
+                   <view class="weui-media-box__desc">我什么时候能拿到它</view> 
+                </view>
+                <image class="right-arrow-image" src="../../images/rightArrow.png" />
+              </view>
+            </view>
+          </view>
+    </view>
+
+ 
+  </view>
+</view>

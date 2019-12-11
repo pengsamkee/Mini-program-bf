@@ -1,0 +1,15 @@
+<!--pages/introduction/profileIntro/index.wxml-->
+<view class="pages">
+    <ul>
+      <li>
+        <span>1</span> 个人资料是必须的吗?
+        <view class="vertical_layout li_container">
+          <text class="intro_text">是的。个人资料是必须的。营养师通过你的身高，体重(包括孕前和孕期)，孕周，还有健康状况，来计算出你的身体对每种营养素的最佳需求量。最佳需求量每个人不尽相同，请务必准确填写，以获得你专属的营养报告。</text>
+          <image class="sample-image" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/intro_profile_pic%403x.png' style="width:65vw;" mode='widthFix'  ></image>
+        </view>
+      </li>
+      <li>
+        <text style="color:lightgray;">结束</text>
+      </li>
+    </ul>
+</view>

@@ -1,0 +1,137 @@
+<!--pages/report/report.wxml-->
+
+
+<view class='wrap' >
+
+  <view class="day-or-week">
+    <view class="day public {{choose==0?'active':''}}" bindtap='choose' data-num="0">每日</view>
+    <view class="week public {{choose==1?'active':''}}" bindtap='choose' data-num="1">每周</view>
+  </view>
+  <view class='lists' wx:if='{{choose==0}}'>
+    <scroll-view class='scroll-view' scroll-y="true" bindscrolltolower='scrollToLower'>
+      <view wx:for='{{dayReportArr}}' wx:key='index'>
+        <view wx:if='{{item.score}}' style="width:100%;height:170rpx;display:flex;justify-content:center;align-items:center;">
+          <view class='scroll-day' bindtap='goDayReport' data-time-stamp="{{item.dateTimeStamp}}" >
+            <view class="scroll-day-left">
+              <view class="date">{{item.date}}</view>
+              <view class='calorie-num'>总共摄入<text>{{item.daily_intake.energy.intake/100}}</text>千卡</view>
+            </view>
+            <view class="scroll-day-right">
+              健康得分<text>{{item.score}}</text>
+              <image src='../../images/rightArrow.png'></image>
+            </view>
+          </view>
+        </view>
+      </view>
+       <view class="loading-wrap" wx:if="{{showLoading}}">
+          <text class="loading_ball a"></text>
+          <text class="loading_ball b"></text>
+          <text class="loading_ball c"></text>
+          <text class="loading_ball d"></text>
+          <text class="loading-text">加载中..</text>
+        </view>
+    </scroll-view>  
+    <!-- <view class="empty-view" wx:if='{{}}'>
+      <image src="../../images/report_empty_icon.png" style='width:300rpx;height:200rpx;margin:10rpx' />
+      <view class="empty_view_text">暂无数据</view>
+      <view class="empty_view_desc">请上传食物照片获取日报</view>
+    </view>  -->
+  </view>
+  <view class='list-week'  wx:if='{{choose==1}}' style="flex-direction: column;">
+  <!-- 下面是原来的，不要删除乱动,除了下面这个最外层的style要删掉-->
+<view class="calendar-body" style="width:100%;margin-top:6rpx;">
+  <view class="calendar_bar">
+    <view wx:if="{{isPrevMonthAllowed == true}}">
+      <view bindtap="prevMonth" class="arrow-container">
+        <image class="arrow-img" src="../../images/leftArrow-selected.png" mode="widthFix"></image>
+      </view>
+    </view>
+
+    <view wx:elif="{{isPrevMonthAllowed == false}}">
+      <view class="arrow-container">
+        <image class="arrow-img" src="../../images/leftArrow.png" mode="widthFix"></image>
+      </view>
+    </view>
+
+    <view class="calendar">{{year}}年{{month}}月</view>
+
+    <view wx:if="{{isNextMonthAllowed == true}}">
+      <view bindtap="nextMonth" class="arrow-container">
+        <image class="arrow-img" src="../../images/rightArrow-selected.png" mode="widthFix"></image>
+      </view>
+    </view>
+
+    <view wx:if="{{isNextMonthAllowed == false}}">
+      <view class="arrow-container">
+        <image class="arrow-img" src="../../images/rightArrow.png" mode="widthFix"></image>
+      </view>
+    </view>
+  </view>
+
+  <view class="report-body">
+    <view class="empty-view" hidden="{{weeklyReportArr.length !== 0}}">
+      <image src="../../images/report_empty_icon.png" style='width:300rpx;height:200rpx;margin:10rpx' />
+      <view class="empty_view_text">暂无数据</view>
+      <view class="empty_view_desc">请完成所有日常报告以生成每周报告</view>
+    </view>
+    <view wx:for="{{weeklyReportArr}}" wx:key="this" wx:for-index="idx">
+      <view class="body">
+        <view catchtap='onWeeklyReportClick' data-report-index="{{idx}}">
+          <view class="weekly_cells-container">
+            <view class="wrapper">
+              <view class="weekly_title">{{item.first_day}}日 - {{item.last_day}}日</view>
+
+              <view wx:if="{{item.is_read}}">
+                <view class="weekly_ready-container">
+                  <view class="dot"></view>
+                  <view class="weekly_label">本周总结报告</view>
+                </view>
+              </view>
+
+              <view wx:else>
+                <view class="weekly_ready-container">
+                  <view class="dot_ready"></view>
+                  <view class="weekly_label_ready">本周总结报告</view>
+                </view>
+              </view>
+
+            </view>
+            <view class="cell-arrow" catchtap='onWeeklyReportClick' data-report-index="{{idx}}">
+              <image src="../../images/rightArrowBlack.png" style="width:10px;height:15px" />
+            </view>
+
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 上面是原来的，不要删除乱动 -->
+
+    <!-- <scroll-view class='scroll-view' scroll-y="true"> -->
+    <!-- <view bindtouchend="pageTouchEnd">
+      <block wx:for='33883' wx:key='index'>
+        <view class="page">
+          <view class="card">
+            <view class="data-and-check-report">
+              <view class="data-range">11月9日-11月15日</view>
+              <view class="check-report">
+                <text>查看报告</text>
+                <image src='../../images/rightArrow.png'></image>
+              </view>
+            </view>
+            <view class="chart_container" bindtap='stop'>
+              <view style="width:100%;height:100%; position: relative">
+                <ff-canvas id="nutrition_chart{{index}}" canvas-id="nutrition_chart{{index}}" opts="{{ opts }}" ></ff-canvas>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block> -->
+    <!-- </scroll-view> -->
+    <!-- </view> -->
+  </view>
+</view>
+
+
+<!--pages/home/index.wxml-->

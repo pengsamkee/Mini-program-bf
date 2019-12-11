@@ -1,0 +1,37 @@
+<!--pages/introduction/loggingIntro/index.wxml-->
+<view class="pages">
+   <ul>
+      <li>
+        <span>1</span> 如何拍摄正确的照片
+        <view class="vertical_layout li_container">
+          <text class="intro_text">照片完整，清晰，看得出食材。拍照时放一张卡片或筷子，方便营养师参考食物的分量。</text>
+          <image class="sample-image" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/intro_logging_correct_pic%403x.png' style="width:75vw;" mode='widthFix'  ></image>
+        </view>
+      </li>
+      <li>
+        <span>2</span> 文字描述
+        <view class="vertical_layout li_container">
+          <text class="intro_text">照片之外，可以额外加一些描述，比如:</text>
+          <image class="sample-image" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/intro_logging_text_desc%403x.png' style="width:75vw;" mode='widthFix'  ></image>
+        </view>
+      </li>
+      <li>
+        <span>3</span> 忘记拍照片?
+        <view class="vertical_layout li_container">
+          <text class="intro_text">没关系，描述一下吃了什么，吃了多少。</text>
+          <image class="sample-image" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/intro_logging_only_text%403x.png' style="width:75vw;" mode='widthFix'  ></image>
+        </view>
+      </li>
+      <li>
+        <span>4</span> 这顿没有吃？
+        <view class="vertical_layout li_container">
+          <text class="intro_text">点一下"没有摄入"按钮，这顿就折叠起来了。</text>
+          <image class="sample-image" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/intro_logging_no_eat%403x.png' style="width:75vw;" mode='widthFix'  ></image>
+        </view>
+      </li>
+      <li>
+        <text style="color:lightgray;">结束</text>
+      </li>
+    </ul>
+</view>
+

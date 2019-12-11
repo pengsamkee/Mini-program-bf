@@ -1,0 +1,130 @@
+/* pages/invitation/invitation.wxss */
+
+.header {
+  position: absolute;
+  font-family: PingFangSC-Regular;
+  font-size: 50rpx;
+  color: #000;
+  letter-spacing: 0;
+  margin-top: 188rpx;
+  width: 200rpx;
+  height: 200rpx;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.body {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-top: 450rpx;
+  margin-bottom: 0;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.description {
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #353535;
+  letter-spacing: 2.14rpx;
+  text-align: left;
+}
+
+.section {
+  margin-top: 30rpx;
+  background: #fafafa;
+  background-color: white;
+  border: 2rpx solid #ccc;
+  border-radius: 200rpx;
+  width: 408rpx;
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+  color: black;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  margin-top: 90rpx;
+  margin-bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.submitButton {
+  position: absolute;
+  letter-spacing: -0.25px;
+  line-height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3465a;
+  border: 1rpx solid #f3465a;
+  border-radius: 20rpx;
+  width: 682rpx;
+  height: 114rpx;
+  margin-top: 400rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #fff;
+  letter-spacing: 0.14rpx;
+  text-align: left;
+}
+
+.authButton {
+  position: absolute;
+  letter-spacing: -0.25px;
+  line-height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #86c430;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.486);
+  border-radius: 20rpx;
+  width: 682rpx;
+  height: 114rpx;
+  margin-top: 400rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #fff;
+  letter-spacing: 0.14rpx;
+  text-align: left;
+}
+
+.validation-message {
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 400rpx;
+}
+
+.weui-demo-dialog {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.weui-demo-dialog_show {
+  visibility: visible;
+  opacity: 1;
+}

@@ -1,0 +1,5 @@
+<!--pages/reportPage/reportPage.wxml-->
+
+<view class="report-page-body">
+  <web-view src="https://test-jreport.pinshen.com.cn/userdailyreport/{{url}}"></web-view>
+</view>

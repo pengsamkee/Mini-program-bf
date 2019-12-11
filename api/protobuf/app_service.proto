@@ -1,0 +1,488 @@
+/**
+ * this file is for API code generator
+ * use protoapi and this file to generate relevant code
+ */
+syntax = "proto3";
+
+import "common.proto";
+
+option go_package = "apisvr";
+
+message RetrieveUserProfileResp {
+    int32 gender = 1;
+    int32 year_of_birth = 2;
+    int32 height = 3;
+    int32 weight = 4;
+    int32 weight_before_pregnancy = 5;
+    int32 activity_level = 6;
+    int32 pregnancy_stage = 7;
+    int64 expected_birth_date = 8;
+}
+
+message UpdateUserProfileReq {
+    int32 gender = 1;
+    int32 year_of_birth = 2;
+    float height = 3;
+    float weight = 4;
+    float weight_before_pregnancy = 5;
+    int32 activity_level = 6;
+    int32 pregnancy_stage = 7;
+    int64 expected_birth_date = 8;
+    string nickname = 9;
+    string avatar_url = 10;
+    int32  times_of_pregnancy = 11;
+}
+
+message FoodPreference {
+    int32 food_preference_id = 1;
+    string name = 2;
+    bool is_selected = 3;
+}
+
+message RetrieveFoodPreferenceResp {
+    repeated FoodPreference food_preferences = 1;
+}
+
+message UpdateFoodPreferenceReq {
+    repeated int32 food_preference_ids = 1;
+}
+
+message FoodAllergy {
+    int32 food_allergy_id = 1;
+    string name = 2;
+    bool is_selected = 3;
+}
+
+message MedicalCondition {
+    int32 medical_condition_id = 1;
+    string name = 2;
+    bool is_selected = 3;
+}
+
+message RetrieveMedicalProfileResp {
+    repeated FoodAllergy food_allergies = 1;
+    repeated MedicalCondition medical_conditions = 2;
+}
+
+message UpdateMedicalProfileReq {
+    repeated int32 food_allergy_ids = 1;
+    repeated int32 medical_condition_ids = 2;
+}
+
+message RetrieveRecommendedDailyAllowanceResp {
+    int32 energy = 1;
+}
+
+message WeightValueDate {
+    int32 value = 1;
+    int64 date = 2;
+}
+
+message WeightChangeRange {
+    int32 upper = 1;
+    int32 lower = 2;
+}
+
+message RetrieveWeightLogReq {
+    int64 date_from = 1;
+    int64 date_to = 2;
+}
+
+message RetrieveWeightLogResp {
+    WeightValueDate initial_weight = 1;
+    WeightValueDate latest_weight = 2;
+    WeightValueDate target_weight = 3;
+    repeated WeightValueDate weight_logs = 4;
+    WeightChangeRange weight_change_range = 5;
+    bool is_pregnant_lady = 6;
+    int64 expected_birth_date = 7;
+    int32 number_of_pregnant_weeks = 8;
+    int32 weight_upper_bound = 9;
+    int32 weight_lower_bound = 10;
+}
+
+message CreateWeightLogReq {
+    int32 weight_value = 1;
+    int64 date = 2;
+}
+
+message CreateTargetWeightReq {
+    int32 target_weight_value = 1;
+    int64 date = 2;
+}
+
+message ArticleInfo{
+    string title = 1;
+    string desc = 2;
+    string img_url = 3;
+    string article_url = 4;
+}
+
+message RetrieveNutritionKnowledgeResp {
+    repeated ArticleInfo macro = 1;
+    repeated ArticleInfo micro = 2;
+}
+
+message RetrieveUserRDAResp {
+    string rda_url = 1;
+}
+
+message RetrieveUserReportsReq {
+    int64 date_from = 1;
+    int64 date_to = 2;
+}
+
+message DailyReportCard {
+    int64 date = 1;
+    bool is_report_generated = 2;
+    bool is_food_log_empty = 3;
+}
+
+message WeeklyReportCard {
+    int64 date = 1;
+    bool is_read = 2;
+    string report_url = 3;
+}
+
+message RetrieveUserReportsResp {
+    repeated DailyReportCard daily_report = 1;
+    repeated WeeklyReportCard weekly_report = 2;
+    int32 num_of_new_weekly_report = 3;
+}
+
+message RetrieveOrCreateUserReportReq {
+    int64 date = 1;
+}
+
+message RetrieveOrCreateUserReportResp {
+    string report_url = 1;
+    bool is_food_log_empty = 2;
+}
+
+message RetrieveHomePageInfoReq {
+    int64 date = 1;
+}
+
+message DailyIntake {
+    int32 value = 1;
+    string week = 2;
+}
+
+message RetrieveHomePageInfoResp {
+    int32 daily_avg_intake = 1;
+    int32 daily_target_intake = 2;
+    int32 daily_suggested_intake = 3;
+    int32 latest_weight = 4;
+    repeated DailyIntake daily_intakes = 5;
+}
+
+message RetrieveHomePageFeedReq {
+    int32 offset = 1;
+    int32 limit = 2;
+}
+
+message FeedInfo {
+    string name = 1;
+    string description = 2;
+    int32 type = 3;
+    string icon_link = 4;
+    string link = 5;
+    int64 timestamp = 6;
+}
+
+message RetrieveHomePageFeedResp {
+    repeated FeedInfo feed_info = 1;
+}
+
+message CreateQuestionReq {
+    int64 date = 1;
+    string question = 2;
+}
+
+message RetrieveSurveyReq {
+    int32 survey_id = 1;
+}
+
+message RetrieveSurveyResp {
+    string question = 1;
+}
+
+message CreateSurveyAnswerReq {
+    int32 survey_id = 1;
+    bool is_positive = 2;
+}
+
+message NutrientValue {
+    int32 percentage = 1;
+    int32 suggested_intake = 2;
+    int32 intake = 3;
+}
+
+message NutrientIntake {
+    NutrientValue energy = 1;
+    NutrientValue protein = 2;
+    NutrientValue carbohydrate = 3;
+    NutrientValue fat = 4;
+}
+
+message NutrientValueByMeal {
+    int32 percentage = 1;
+    int32 suggested_intake = 2;
+    int32 energy_intake = 3;
+}
+
+message MealInfo {
+    int32 meal_id = 1;
+    string img_key = 2;
+}
+
+message RetrieveFoodDiaryReq {
+    int64 date = 1;
+}
+
+message RetrieveFoodDiaryResp {
+    NutrientIntake daily_intake = 1;
+    NutrientValueByMeal breakfast_suggestion = 2;
+    NutrientValueByMeal lunch_suggestion = 3;
+    NutrientValueByMeal dinner_suggestion = 4;
+    NutrientValueByMeal addition_suggestion = 5;
+    repeated MealInfo breakfast = 6;
+    repeated MealInfo lunch = 7;
+    repeated MealInfo dinner = 8;
+    repeated MealInfo addition = 9;
+    int32 is_report_generated = 10;
+}
+
+message UnitOption {
+    int32 unit_id = 1;
+    string unit_name = 2;
+    int32 weight = 3;
+}
+
+message IngredientList {
+    int32 recipe_details_id = 1;
+    string ingredient_name = 2;
+    int32 amount = 3;
+    int32 unit_id = 4;
+    string unit_name = 5;
+    int32 weight = 6;
+    repeated UnitOption unit_option = 7;
+}
+
+message RecognitionResults {
+    int32 food_id = 1;
+    int32 food_type = 2;
+    string food_name = 3;
+    int64 score = 4;
+}
+
+message FoodLogInfo {
+    int32 food_log_id = 1;
+    string food_name = 2;
+    int32 food_type = 3;
+    int32 energy = 4;
+    int32 tag_x = 5;
+    int32 tag_y = 6;
+    int32 amount = 7;
+    int32 unit_id = 8;
+    string unit_name = 9;
+    int32 weight = 10;
+    repeated UnitOption unit_option = 11;
+    repeated IngredientList ingredient_list = 12;
+    repeated RecognitionResults recognition_results = 13;
+}
+
+message MealLogFoodList {
+    int32 food_id = 1;
+    int32 food_type = 2;
+    int32 input_type = 3;
+    int32 tag_x = 4;
+    int32 tag_y = 5;
+    int32 bbox_x = 6;
+    int32 bbox_y = 7;
+    int32 bbox_w = 8;
+    int32 bbox_h = 9;
+    repeated RecognitionResults recognition_results = 10;
+}
+
+message CreateOrUpdateMealLogReq {
+    int32 meal_id = 1;
+    int64 meal_date = 2;
+    int32 meal_type = 3;
+    repeated MealLogFoodList food_list = 4;
+}
+
+message MealLogResp {
+    int32 meal_id = 1;
+    string meal_name = 2;
+    int64 meal_date = 3;
+    int32 meal_type = 4;
+    NutrientIntake total_intake = 5;
+    repeated FoodLogInfo food_log = 6;
+}
+
+message RetrieveMealLogReq {
+    int32 meal_id = 1;
+}
+
+message ConfirmMealLogReq {
+    int32 meal_id = 1;
+}
+
+message DestroyMealLogReq {
+    int32 meal_id = 1;
+}
+
+message TextSearchResult {
+    int32 food_id = 1;
+    string food_name = 2;
+    int32 food_type = 3;
+    int32 amount = 4;
+    string unit_name = 5;
+    int32 energy = 6;
+}
+
+message RetrieveTextSearchReq {
+    string query = 1;
+    int32 filter_type = 2;
+    int32 limit = 3;
+    int32 offset = 4;
+    int32 food_type = 5;
+    int32 meal_type = 6;
+    int64 lat = 7;
+    int64 long = 8;
+}
+
+message RetrieveTextSearchResp {
+    int32 total_num = 1;
+    repeated TextSearchResult result_list = 2;
+}
+
+message PredictionResult {
+    int32 tag_x = 1;
+    int32 tag_y = 2;
+    int32 bbox_x = 3;
+    int32 bbox_y = 4;
+    int32 bbox_w = 5;
+    int32 bbox_h = 6;
+    int32 food_id = 7;
+    int32 food_type = 8;
+    string food_name = 9;
+    repeated RecognitionResults result_list = 10;
+}
+
+message RetrieveRecognitionReq {
+    string img_key = 1;
+    int64 meal_date = 2;
+    int32 meal_type = 3;
+    int64 lat = 4;
+    int64 long = 5;
+}
+
+message RetrieveRecognitionResp {
+    int32 meal_id = 1;
+    string img_key = 2;
+    repeated PredictionResult prediction = 3;
+}
+
+message UpdateFoodLogReq {
+    int32 food_log_id = 1;
+    int32 unit_id = 2;
+    int32 amount = 3;
+}
+
+message DestroyFoodLogReq {
+    int32 food_log_id = 1;
+}
+
+message AddRecipeItemReq {
+    int32 food_log_id = 1;
+    int32 ingredient_id = 2;
+}
+
+message UpdateRecipeItemReq {
+    int32 recipe_item_id = 1;
+    int32 unit_id = 2;
+    int32 amount = 3;
+}
+
+message DestroyRecipeItemReq {
+    int32 recipe_item_id = 1;
+}
+
+message RetrieveMealLogShareURLReq {
+    int32 meal_log_id = 1;
+}
+
+message RetrieveMealLogShareURLResp {
+    string sharing_img_link = 1;
+}
+
+service AppService {
+    option (auth) = true;  // need to verify the authorization  
+    option (common_error) = "CommonError";
+
+    rpc RetrieveUserProfile (Empty) returns (RetrieveUserProfileResp) {};
+    
+    rpc UpdateUserProfile (UpdateUserProfileReq) returns (Empty) {};
+    
+    rpc RetrieveFoodPreference (Empty) returns (RetrieveFoodPreferenceResp) {};
+    
+    rpc UpdateFoodPreference (UpdateFoodPreferenceReq) returns (Empty) {};
+    
+    rpc RetrieveMedicalProfile (Empty) returns (RetrieveMedicalProfileResp) {};
+
+    rpc UpdateMedicalProfile (UpdateMedicalProfileReq) returns (Empty) {};
+
+    rpc RetrieveRecommendedDailyAllowance (Empty) returns (RetrieveRecommendedDailyAllowanceResp) {};
+
+    rpc RetrieveWeightLog (RetrieveWeightLogReq) returns (RetrieveWeightLogResp) {};
+
+    rpc CreateWeightLog (CreateWeightLogReq) returns (Empty) {};
+
+    rpc CreateTargetWeight (CreateTargetWeightReq) returns (Empty) {};
+
+    rpc RetrieveNutritionKnowledge (Empty) returns (RetrieveNutritionKnowledgeResp) {};
+
+    rpc RetrieveUserRDA (Empty) returns (RetrieveUserRDAResp) {};
+
+    rpc RetrieveUserReports (RetrieveUserReportsReq) returns (RetrieveUserReportsResp) {};
+
+    rpc RetrieveOrCreateUserReport (RetrieveOrCreateUserReportReq) returns (RetrieveOrCreateUserReportResp) {};
+    
+    rpc RetrieveHomePageInfo (RetrieveHomePageInfoReq) returns (RetrieveHomePageInfoResp) {};
+
+    rpc RetrieveHomePageFeed (RetrieveHomePageFeedReq) returns (RetrieveHomePageFeedResp) {};
+
+    rpc CreateQuestion (CreateQuestionReq) returns (Empty) {};
+    
+    rpc RetrieveSurvey (RetrieveSurveyReq) returns (RetrieveSurveyResp) {};
+
+    rpc CreateSurveyAnswer (CreateSurveyAnswerReq) returns (Empty) {};
+    
+    rpc RetrieveFoodDiary (RetrieveFoodDiaryReq) returns (RetrieveFoodDiaryResp) {};
+
+    rpc CreateOrUpdateMealLog (CreateOrUpdateMealLogReq) returns (MealLogResp) {};
+
+    rpc RetrieveMealLog (RetrieveMealLogReq) returns (MealLogResp) {};
+
+    rpc ConfirmMealLog (ConfirmMealLogReq) returns (Empty) {};
+
+    rpc DestroyMealLog (DestroyMealLogReq) returns (Empty) {};
+
+    rpc RetrieveTextSearch (RetrieveTextSearchReq) returns (RetrieveTextSearchResp) {};
+
+    rpc RetrieveRecognition (RetrieveRecognitionReq) returns (RetrieveRecognitionResp) {};
+
+    rpc UpdateFoodLog (UpdateFoodLogReq) returns (MealLogResp) {};
+
+    rpc DestroyFoodLog (DestroyFoodLogReq) returns (MealLogResp) {};
+
+    rpc AddRecipeItem (AddRecipeItemReq) returns (MealLogResp) {};
+
+    rpc UpdateRecipeItem (UpdateRecipeItemReq) returns (MealLogResp) {};
+
+    rpc DestroyRecipeItem (DestroyRecipeItemReq) returns (MealLogResp) {};
+
+    rpc RetrieveMealLogShareURL (RetrieveMealLogShareURLReq) returns (RetrieveMealLogShareURLResp) {};
+}

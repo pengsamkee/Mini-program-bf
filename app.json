@@ -1,0 +1,89 @@
+{
+  "pages": [
+    "pages/foodDiary/index",
+    "pages/onBoard/onBoard",
+    "pages/checkNutrition/index",
+    "pages/report/index",
+    "pages/home/index",
+    "pages/invitation/invitation",
+    "pages/login/index",
+    "pages/portfolio/index",
+    "pages/foodLog/index",
+    "pages/medicalCase/index",
+    "pages/webView/index",
+    "pages/foodPreference/index",
+    "pages/introduction/index",
+    "pages/introduction/loggingIntro/index",
+    "pages/introduction/profileIntro/index",
+    "pages/introduction/reportIntro/index",
+    "pages/introduction/feedbackIntro/index",
+    "pages/weightRecord/index",
+    "pages/index/index",
+    "pages/imageTag/index",
+    "pages/textSearch/index",
+
+    "pages/weCropperPage/upload",
+    "pages/foodDetail/index",
+    "pages/rdiPage/rdiPage",
+    "pages/reportPage/reportPage",
+    "pages/morePage/index",
+    "pages/nutritionalDatabasePage/index",
+    "pages/rdiGoal/index",
+    "pages/nutritionalDatabasePage/articlePage",
+    "pages/weightRecord/weightInput",
+    "pages/weightRecord/targetInput",
+    "pages/feedSurvey/index",
+    "pages/feedQuestion/index",
+    "pages/foodShare/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ed2c48",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#ed2c48"
+  },
+  "tabBar": {
+    "selectedColor": "#ed2c48",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+     
+      {
+        "pagePath": "pages/foodDiary/index",
+        "text": "首页",
+        "iconPath": "images/Fill2@3x.png",
+        "selectedIconPath": "images/home@3x.png"
+      },
+      {
+        "pagePath": "pages/checkNutrition/index",
+        "text": "查营养",
+        "iconPath": "images/tabbar_check.png",
+        "selectedIconPath": "images/tabbar_check_active.png"
+      },
+      {
+        "pagePath": "pages/report/index",
+        "text": "饮食分析",
+        "iconPath": "images/report.png",
+        "selectedIconPath": "images/report_red.png"
+      },
+      {
+        "pagePath": "pages/morePage/index",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile_red.png"
+      }
+    ]
+  },
+  "debug": true,
+  "cloud": true,
+  "sitemapLocation": "sitemap.json",
+  "subpackages": [
+    {
+      "root": "checkNutrition",
+      "pages": [
+        "pages/searchFood/index",
+        "pages/nutritionDetail/index"
+      ]
+    }
+  ]
+}

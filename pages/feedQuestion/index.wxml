@@ -1,0 +1,10 @@
+<!--pages/feedQuestion/index.wxml-->
+ <!-- show feedback dialog-->
+   <view class='modal-content' style='height:100%' catchtap='doNothing'>
+    <view class='main-content'>
+      <view class="feedback-card-title">留言给营养师</view>
+      <view class="feedback-card-desc">我们周末结合你的报告一起答复。</view>
+      <textarea class="feedback-card-textarea" placeholder-class="phcolor" placeholder='请填写问题' bindinput='bindFeedbackQuestionInput' value="{{questionText}}"></textarea>
+      <view class="nextButton-container" catchtap="onFeedbackDlgBtnSubmit">提交</view>
+   </view>
+  </view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "小调查",
+  "usingComponents": {
+    "modal-input": "/components/modal-input/modal-input"
+  }
+}

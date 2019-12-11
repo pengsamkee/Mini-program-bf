@@ -1,0 +1,7 @@
+/* pages/rdiGoal/index.wxss */
+
+.rdigoalpage-parent {
+  height: 100%;
+  width: 100%;
+  font-size: 14rpx;
+}

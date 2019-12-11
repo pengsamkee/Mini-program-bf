@@ -1,0 +1,15 @@
+<!--pages/feedSurvey/index.wxml-->
+  <!--show questionnaire dialog-->
+   <view class='modal-content' style='height:100%' catchtap='doNothing'>
+      <view class="color_bar" style='background-color:#ed2c48' />
+      <view class="feedback-card-title">问题</view>
+      <!-- <view class="feedback-card-desc">{{question}}</view> -->
+      <view class="feedback-card-desc">{{quesTitle}}</view>
+      <view class="gray-line" />
+      <view class="answer-area">
+        <view class="{{isAnswerPositive?'answer-block-selected':'answer-block'}}" catchtap='onQuesDlgBtnPress' data-selection='{{true}}'>对</view>
+        <view class="{{isAnswerPositive?'answer-block':'answer-block-selected'}}" catchtap='onQuesDlgBtnPress' data-selection='{{false}}'>不对</view>
+      </view>
+      <view class="nextButton-container" catchtap="onQuesDlgBtnSubmit">提交</view>
+  </view>
+    

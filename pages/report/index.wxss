@@ -1,0 +1,615 @@
+/* pages/report/report.wxss */
+
+page{
+  width:100%;
+  height: 100%;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+}
+.wrap{
+  width:100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  /* overflow: hidden; */
+}
+.day-or-week{
+  display: flex;
+  margin:36rpx 0;
+}
+.public{
+  height: 48rpx;
+  width:160rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border:2rpx solid rgba(209,209,209,1);
+  font-size:28rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(110,108,108,1);
+  background: #fff;
+}
+.day{
+  border-top-left-radius: 24rpx;
+  border-bottom-left-radius: 24rpx;
+  border-right:none;
+}
+.week{
+  border-top-right-radius: 24rpx;
+  border-bottom-right-radius: 24rpx;
+  border-left:none;
+}
+.active{
+  background: #ed2c48;
+  color:rgba(255,255,255,1);
+  border:2rpx solid #ed2c48;
+}
+.lists{
+  flex: 1;
+  width: 100%;
+  display: flex;
+}
+.list-week{
+  flex: 1;
+  width: 100%;
+  display: flex;
+}
+.scroll-view{
+  width:100%;
+  height: 100%;
+}
+/* .block{
+  padding-bottom: 12rpx;
+} */
+.scroll-day{
+  width:670rpx;
+  height:136rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 4rpx 12rpx 0px rgba(0,0,0,0.15);
+  border-radius:12rpx;
+  margin:0 auto ;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx 0 34rpx;
+  box-sizing: border-box;
+}
+.scroll-day:nth-of-type(1){
+  margin-top:12rpx;
+}
+ 
+.date{
+  font-size:34rpx;
+  font-weight:500;
+  color:rgba(53,53,53,1);
+}
+.calorie-num{
+  font-size:28rpx;
+  color:rgba(157,157,157,1);
+}
+.calorie-num text{
+  color:#F3465A;
+  margin:0 8rpx;
+}
+
+.scroll-day-right{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size:28rpx;
+  color:rgba(157,157,157,1);
+}
+.scroll-day-right text{
+  color:#F3465A;
+  margin:0 28rpx 0 8rpx;
+}
+.scroll-day-right image{
+  width:8rpx;
+  height: 26rpx;
+}
+
+.page{
+  background-color: white;
+  width: 100%;
+  padding:24rpx;
+  box-sizing: border-box;
+}
+.card {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width:100%;
+  height:476rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 4rpx 12rpx 0px rgba(0,0,0,0.15);
+  border-radius:12rpx;
+}
+/* .title_view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 34rpx;
+  margin-left: 32rpx;
+  margin-bottom: 20rpx;
+}
+.title_text{
+  font-family:PingFangSC-Medium;
+  font-size:34rpx;
+  color:#000000;
+  text-align:left;
+} */
+.data-and-check-report{
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  margin:32rpx 0 0 0;
+}
+
+.data-range{
+  font-size:34rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(53,53,53,1);
+}
+.check-report{
+  display: flex;
+  align-items: center;
+}
+.check-report text{
+  font-size:28rpx;
+  color:rgba(157,157,157,1);
+  margin-right:22rpx;
+}
+.check-report image{
+  width:8rpx;
+  height:26rpx;
+}
+/* .space-between-view{
+  margin: 0px 32rpx;
+  display: flex;
+  flex-direction: space-between;
+  justify-content: space-between;
+}
+
+.gray_text{
+  font-family:PingFangSC-Regular;
+  font-size:28rpx;
+  color:#888888;
+  text-align:left;
+} */
+.chart_container {
+  width: 100%;
+  flex:1;
+  margin-bottom:10rpx;
+  position: relative;
+}
+
+ff-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+/* 下面是原来的，不要乱动 */
+
+.card {
+  margin: 10px;
+  box-shadow: 2rpx 2rpx 2rpx 2rpx lightgray;
+  border-radius: 2%;
+}
+
+.right-arrow-image {
+  position: relative;
+  width: 10px;
+  height: 15px;
+  margin-right: 5px;
+}
+
+.card-head {
+  display: flex;
+  flex-direction: space-between;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.report-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.report-arrow {
+  position: relative;
+  width: 10px;
+  height: 15px;
+}
+
+.weui-navbar {
+  position: fixed;
+  color: #888;
+  opacity: 0% !important;
+  background: #fafafa;
+  box-shadow: inset 0 -1px 0 0 #e5e5e5;
+  width: 750rpx;
+  height: 100rpx;
+}
+
+.weui-navbar__item {
+  font-size: 32rpx !important;
+  font-weight: 500;
+  font-family: PingFangSC-Light;
+  color: #888;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 45rpx;
+  position: relative;
+  display: block;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  padding-top: 26rpx;
+  padding-bottom: 26rpx;
+}
+
+.weui-bar__item_on {
+  border-bottom: 4rpx solid #f3465a !important;
+  opacity: 0.9;
+  font-family: PingFangSC-Medium;
+  font-size: 32rpx;
+  color: #f3465a;
+  letter-spacing: 0;
+  text-align: center;
+  align-items: center;
+  width: 50%;
+  line-height: 45rpx;
+  position: relative;
+  display: block;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  padding-top: 26rpx;
+  padding-bottom: 26rpx;
+}
+
+.weui-tab__panel {
+  overflow: hidden !important;
+  padding-top: 100rpx;
+}
+
+.arrow-img {
+  display: flex;
+  width: 20rpx;
+  height: 30rpx;
+}
+
+.calendar_bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.calendar-body {
+  margin-top: 48rpx;
+}
+
+.arrow-container {
+  width: 100rpx;
+  height: 68rpx;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+
+.report-body {
+  height: auto;
+}
+
+.calendar {
+  background: #f3465a;
+  border: 4rpx solid #f3465a;
+  border-radius: 60rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 288rpx;
+  height: 60rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weekly_cells-container {
+  padding: 32rpx;
+  background: #fff;
+  box-shadow: 0 6px 17px 0 rgba(0, 0, 0, 0.10);
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.wrapper {
+  align-items: center;
+}
+
+.cells-container {
+  width: 684rpx;
+  height: 134rpx;
+  background: #fff;
+  box-shadow: 0 6px 17px 0 rgba(0, 0, 0, 0.10);
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: row;
+  margin-bottom:32rpx; 
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding: 32rpx;
+}
+
+.divider {
+  display: flex;
+  background: #f8e71c;
+  width: 1.4px;
+  height: 134rpx;
+}
+
+.cell-date-container {
+  display: flex;
+  height: 134rpx;
+  width: 150rpx;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 28rpx;
+  margin-right: 28rpx;
+}
+
+.cell-date {
+  font-family: PingFangSC-Regular;
+  font-size: 80rpx;
+  color: #353535;
+  text-align: center;
+}
+
+.cell-content {
+  display: flex;
+  flex-direction: column;
+  height: 134rpx;
+  width: 100%;
+  align-items: left;
+  justify-content: center;
+  margin-left: 24rpx;
+}
+
+.day-title {
+  display: flex;
+  flex-direction: row;
+  font-family: PingFangSC-Semibold;
+  font-size: 34rpx;
+  color: #888;
+  text-align: left;
+}
+
+.day-title-today {
+  display: flex;
+  flex-direction: row;
+  font-family: PingFangSC-Semibold;
+  font-size: 34rpx;
+  color: #f3465a;
+  text-align: left;
+}
+
+.generate-report {
+  display: flex;
+  flex-direction: row;
+  font-family: PingFangSC-Medium;
+  font-size: 28rpx;
+  color: #888;
+  text-align: center;
+}
+
+.checked-box {
+  position: relative;
+  background: #ff9e9f;
+  border: 1px solid #ff9e9f;
+  border-radius: 2px;
+  width: 24rpx;
+  height: 24rpx;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.unchecked-box {
+  position: relative;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  width: 24rpx;
+  height: 24rpx;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.unchecked-box-unavailable {
+  position: relative;
+  background: #d0d0d0;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  width: 24rpx;
+  height: 24rpx;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.label {
+  position: relative;
+  font-family: PingFangSC-Light;
+  font-size: 28rpx;
+  color: #888;
+  text-align: center;
+  margin-left: 16rpx;
+}
+
+.label-checked {
+  position: relative;
+  font-family: PingFangSC-Light;
+  font-size: 28rpx;
+  color: #353535;
+  text-align: center;
+  margin-left: 16rpx;
+}
+
+.label-today {
+  position: relative;
+  font-family: PingFangSC-Light;
+  font-size: 28rpx;
+  color: #f3465a;
+  text-align: center;
+  margin-left: 16rpx;
+}
+
+.tick {
+  position: relative;
+  width: 14rpx;
+  height: 100%;
+  display: flex;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cell-arrow {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  width: 200rpx;
+  font-family: PingFangSC-Medium;
+  font-size: 28rpx;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+}
+
+.text {
+  width: 200rpx;
+  height: auto;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.weekly_title {
+  font-family: PingFangSC-Medium;
+  font-size: 34rpx;
+  color: #353535;
+  text-align: left;
+}
+
+.dot {
+  margin-right: 10rpx;
+  background: #ff9e9f;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 100%;
+}
+
+.dot_ready {
+  margin-right: 10rpx;
+  background: #f3465a;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 100%;
+}
+
+.weekly_ready-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.weekly_label {
+  font-family: PingFangSC-Light;
+  font-size: 28rpx;
+  color: #888;
+  text-align: left;
+  margin-left: 10rpx;
+}
+
+.weekly_label_ready {
+  font-family: PingFangSC-Medium;
+  font-size: 28rpx;
+  color: #f3465a;
+  text-align: left;
+  margin-left: 10rpx;
+}
+
+.weui-badge {
+  position: absolute;
+  padding: 0.15em 0.4em;
+  min-width: 16rpx;
+  border-radius: 60rpx;
+  background-color: #e64340;
+  color: #fff;
+  line-height: 1.2;
+  text-align: center;
+  font-size: 24rpx;
+  vertical-align: middle;
+  top: 10rpx;
+  left: 0;
+  margin-left: 130rpx;
+}
+
+.empty-view {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty_view_text {
+  font-size: 20px;
+  color: #353535;
+}
+
+.empty_view_desc {
+  font-size: 16px;
+  color: #888;
+}
+
+.red-dot-badge {
+  width: 10px;
+  height: 10px;
+  margin-left: 10px;
+  border-radius: 50%;
+  background-color: red;
+}

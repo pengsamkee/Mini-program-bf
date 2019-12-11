@@ -1,0 +1,38 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.5.0",
+	"projectname": "%E6%97%A9%E9%A4%90%E5%90%83%E5%A5%BD",
+	"scripts": {
+		"beforeCompile": "npm run compile",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"bundle": true
+	},
+	"appid": "wx4714ce5383005530",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
+}

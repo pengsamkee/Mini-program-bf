@@ -1,0 +1,126 @@
+/**index.wxss**/
+
+/* .morepage-parent {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+} */
+
+.profpage-btn-parent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 50rpx;
+  margin-bottom: 50rpx;
+}
+
+/* .profpage-btn {
+  background-color: white;
+  height: 200rpx;
+  width: 780rpx;
+} */
+
+.profpage-btn-leftcol {
+  display: flex;
+  justify-content: center;
+  float: left;
+  width: 26%;
+}
+
+.profpage-btn-midcol {
+  float: left;
+  width: 62%;
+}
+
+.profpage-btn-rightcol {
+  display: flex;
+  justify-content: center;
+  float: right;
+  margin-left: 37rpx;
+}
+
+.profpage-btn-nickname {
+  text-align: left;
+  line-height: 54rpx;
+  font-size: 36rpx;
+  display: block;
+  color: #353535;
+}
+
+.profpage-btn-label {
+  text-align: left;
+  line-height: 34rpx;
+  letter-spacing: 0;
+  display: block;
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #888;
+}
+
+.profpage-btn-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profpage-btn-arrow {
+  height: 27.3rpx;
+  width: 21rpx;
+}
+
+.morepage-panel-parent {
+  display: grid;
+  grid-template-columns: 240rpx 240rpx 240rpx;
+  padding: 20rpx;
+  background-color: white;
+  border-top: 8rpx solid #ececec;
+  border-bottom: 2rpx solid #ececec;
+}
+
+.morepage-bottomarea {
+  height: 440rpx;
+  background-color: white;
+}
+
+.morepage-panel-btn-container {
+  height: 25%;
+  text-align: center;
+}
+
+.morepage-panel-btn {
+  background-color: white;
+  padding: 40rpx;
+  border: white 0px;
+}
+
+button.morepage-panel-btn::after{
+  border:none;
+}
+button.morepage-panel-btn{
+  line-height: inherit;
+}
+
+
+
+.morepage-panel-btn-icon {
+  position: block;
+  width: 38rpx;
+  height: 44rpx;
+  margin-top: 8rpx;
+  margin-bottom: 15rpx;
+  padding: 0rpx;
+}
+
+.morepage-panel-label {
+  height: 10%;
+  text-align: center;
+  color: #353535;
+  display: block;
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  line-height: 32rpx;
+}

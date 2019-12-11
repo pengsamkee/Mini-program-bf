@@ -1,0 +1,137 @@
+<!--pages/portfolio/index.wxml-->
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="space-between-view">
+          <view class="weui-cell__bd">头像</view>
+          <view class="weui-cell__ft">
+            <view class="userinfo-avatar">
+              <open-data mode='aspectFit' type="userAvatarUrl"></open-data>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="weui-cell">
+        <view class="space-between-view">
+          <view class="weui-cell__bd">昵称</view>
+          <view class="weui-cell__ft">
+            <open-data type="userNickName"></open-data>
+          </view>
+        </view>
+      </view>
+      <view class="weui-cell">
+        <view class="space-between-view">
+          <view class="weui-cell__bd">健康管理VIP号</view>
+          <view class="weui-cell__ft">
+            <input class="right-align-input" bindblur="onIDInput" value="{{externalId}}"></input>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="weui-cells weui-cells_after-title section">
+      <!--gender-->
+      <picker mode="selector" bindchange='genderSelect' range='{{genderArray}}' value='{{genderIndex}}'>
+        <view class="weui-cell">
+          <view class="space-between-view">
+            <view class="weui-cell__bd">性别</view>
+            <view class="weui-cell__ft">{{genderArray[genderIndex]}}</view>
+          </view>
+        </view>
+      </picker>
+      <!--birthday-->
+      <view class="weui-cell">
+        <picker mode="date" bindchange='birthdaySelect' value='{{birthday}}' fields='year' start='1919' end='2018'>
+          <view class="space-between-view">
+            <view class="weui-cell__bd">出生年份</view>
+            <view class="weui-cell__ft">{{birthday}}</view>
+          </view>
+        </picker>
+      </view>
+      <!--height-->
+      <view class="weui-cell {{errorChecking[3]==true?'error-red-border':''}}">
+        <view class="space-between-view">
+          <view class="weui-cell__bd">身高</view>
+          <view class="weui-cell__ft">
+            <input class="right-align-input" type="number" bindblur='onHeightInput' placeholder="请输入您的身高" value='{{height}}' bindfocus='onFocusHeightInput'></input>
+          </view>
+          <view class="weui-cell__ft">
+            <view>cm</view>
+          </view>
+        </view>
+      </view>
+      <!--current weight-->
+      <view class="weui-cell {{errorChecking[4]==true?'error-red-border':''}}">
+        <view class="space-between-view">
+          <view class="weui-cell__bd">体重</view>
+          <view class="weui-cell__ft">
+            <input class="right-align-input" type="number" bindblur='onCurrentWeightInput' placeholder="请输入您现在的体重" value='{{currentWeight}}' bindfocus='onFocusWeightInput'></input>
+          </view>
+          <view class="weui-cell__ft">kg</view>
+        </view>
+      </view>
+      <!--daily acitivty level-->
+      <view class="weui-cell {{errorChecking[6]==true?'error-red-border':''}}">
+        <picker mode="selector" bindchange='activityLvlSelect' range='{{activityLevelArray}}' value='{{activityLevelIndex}}'>
+          <view class="space-between-view">
+            <view class="weui-cell__bd">日常运动量</view>
+            <view class="weui-cell__ft">{{activityLevelArray[activityLevelIndex]}}</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="weui-cells weui-cells_after-title section" hidden='{{genderIndex == 1}}'>
+      <!--pregnancy status-->
+      <picker class="weui-cell {{errorChecking[1]==true?'error-red-border':''}}" mode="selector" bindchange='pregnancyStatusSelect' range='{{pregnancyStatusArray}}' value='{{pregnancyStatusIndex}}'>
+        <view class="space-between-view">
+          <view class="weui-cell__bd">怀孕状况</view>
+          <view class="weui-cell__ft">{{pregnancyStatusArray[pregnancyStatusIndex]}}</view>
+        </view>
+      </picker>
+      <!--pregnancy date-->
+      <view class="weui-cell {{errorChecking[2]==true?'error-red-border':''}}" hidden='{{pregnancyStatusIndex == 0 || pregnancyStatusIndex == 1 || pregnancyStatusIndex == 3}}'>
+        <view class="space-between-view">
+          <view class="weui-cell__bd">预产期</view>
+          <view class="weui-cell__ft">
+            <picker class="right-align-input" mode="date" value="{{pregnancyDate.date}}" bindchange="onPregnancyDateInput">
+              <view class="right-align-input">
+                {{pregnancyDate.year}}年{{pregnancyDate.month}}月{{pregnancyDate.day}}日
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <!--weight before pregnancy-->
+      <view class="weui-cell {{errorChecking[5]==true?'error-red-border':''}}" hidden='{{pregnancyStatusIndex == 0 || pregnancyStatusIndex == 1}}'>
+        <view class="space-between-view">
+          <view class="weui-cell__bd">孕前体重</view>
+          <view class="weui-cell__ft">
+            <input class="right-align-input" type="number" bindinput="onWeightBeforePregInput" bindblur='checkWeight' placeholder="请输入您怀孕前的体重" value='{{weightBeforePreg}}'></input>
+          </view>
+          <view class="weui-cell__ft">kg</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="weui-cells weui-cells_after-title section">
+      <view class="weui-cell" catchtap='tapOnMealHabit'>
+        <view class="space-between-view">
+          <view class="weui-cell__bd">饮食习惯</view>
+          <image class="right-arrow-img weui-cell__ft" src="../../images/rightArrow.png" style="width:10px;height:15px" />
+        </view>
+      </view>
+    </view>
+
+    <view class="weui-cells weui-cells_after-title section">
+      <view class="weui-cell" catchtap='tapOnMedicalRecord'>
+        <view class="space-between-view">
+          <view class="weui-cell__bd">疾病情况</view>
+          <image class="right-arrow-img weui-cell__ft" src="../../images/rightArrow.png" style="width:10px;height:15px" />
+        </view>
+      </view>
+    </view>
+
+  </view>
+</view>

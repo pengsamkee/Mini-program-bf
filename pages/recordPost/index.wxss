@@ -1,0 +1,30 @@
+/* pages/recordPost/index.wxss */
+.container {
+  display: block;
+}
+
+.image-list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-count: 3;
+  margin: auto;
+  justify-content: left;
+  align-items: left;
+}
+
+.post-image {
+  width:30%;
+  height:30vw;
+  margin: 1.5%;
+  object-fit: cover;
+}
+
+.text-card-container {
+  border: 1px;
+  border-width: 1px;
+  margin: 10px;
+  border-color: gray;
+  border-style: outset;
+  height: 100px;
+}

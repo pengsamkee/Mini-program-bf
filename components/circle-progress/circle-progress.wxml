@@ -1,0 +1,8 @@
+<!--components/circle-progress/circle-progress.wxml-->
+<view class="circle_box" style="width:{{size}}rpx;height:{{size}}rpx;">
+  <canvas class="circle_bg" canvas-id="{{bg}}" style="width:{{size}}rpx;height:{{size}}rpx">
+  </canvas>
+  <canvas class="circle_bg progress" canvas-id="canvas" style="width:{{size}}rpx;height:{{size}}rpx;position:absolute;top:0;left:0;z-index:55">
+  </canvas>
+  <slot></slot>
+</view>

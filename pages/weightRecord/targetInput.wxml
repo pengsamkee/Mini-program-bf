@@ -1,0 +1,33 @@
+<!--pages/weightRecord/targetInput.wxml-->
+
+<view class="targetinput-parent">
+  <view class="grid-parent">
+    <view class="grid">
+        <view class="date-label"> 日期 </view>
+    </view>
+
+    <view class="grid">
+      <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+        <view class="date">
+          {{year}}年{{month}}月{{day}}日
+        </view>
+      </picker>
+    </view>
+
+    <view class="grid">
+      <view class="weight-label"> 体重 </view>
+    </view>
+
+    <view class="grid">
+      <view class="weight-num-container">
+        <input class="weight-num" type="digit" bindinput="onWeightInput" bindblur="onWeightConfirm" bindconfirm="onWeightConfirm" value="{{weight}}"> </input>
+        <view class="weight-kg"> 公斤 </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="confirm-btn">
+    <view class="confirm-btn-label" bindtap="submitWeightRecord"> 确认 </view>
+  </view>
+</view>
+

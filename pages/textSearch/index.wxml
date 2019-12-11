@@ -1,0 +1,46 @@
+<!--pages/textSearch/index.wxml-->
+<view class="page">
+  <view class="search-line">
+    <view class="weui-search-bar__form top-input-area">
+      <view class="weui-search-bar__box search-input">
+        <icon class="self-weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="text" class="weui-search-bar__input search-input" placeholder-class="phcolor" placeholder="请添加食物名称" value="{{keyword}}" confirm-type="search" bindconfirm="performSearch" bindinput="inputTyping" />
+        <view class="self-weui-icon-clear" wx:if="{{keyword.length > 0}}" bindtap="clearInput">
+          <icon class="self-weui-icon-clear" type="clear" size="14"></icon>
+        </view>
+      </view>
+    </view>
+    <text class="top-text-area" catchtap="performSearch">搜索</text>
+  </view>
+
+
+  <view wx:if="{{resultError === true}}">
+    <view class="no-result">没有找到与您查询的 “{{keyword}}” 食物名称</view>
+  </view>
+
+  <view wx:else>
+    <view class="weui-cells searchbar-result search-container" wx:if="{{resultList.length > 0}}">
+      <navigator catchtap='onTextSearchResultSelect' class="weui-cell" hover-class="weui-cell_active" wx:for="{{resultList}}" data-text-index="{{index}}">
+        <view>
+          <view style="margin-left:10px;">{{item.foodName}}</view>
+          <view style="margin-left:10px;font-size:12px;color:#e09c51;">{{item.energy}}千卡/{{item.unit}}</view>
+        </view>
+      </navigator>
+    </view>
+    <view class="searchbar-result" wx:if="{{recentList.length > 0}}">
+      <view style="margin:10px;font-size:14px;">最近搜过</view>
+      <navigator catchtap='onRecentResultSelect' class="weui-cell" hover-class="weui-cell_active" wx:for="{{recentList}}" data-text-index="{{index}}">
+        <view class="weui-cell__bd">
+          <icon color="gray" type="waiting" size="14" />
+          <text style="margin-left:10px;color:#888888;">{{item.foodName}}</text>
+        </view>
+      </navigator>
+      <view class="weui-cell" catchtap="deleteTextSearchCache">
+        <view class="weui-cell__bd" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">
+          <image src="/images/delete_icon.png" style="width:16px;height:20px;" />
+          <text style="margin-left:10px;color:#ff7b87;">删除历史记录</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,22 @@
+/* pages/introduction/index.wxss */
+
+.card {
+  margin: 10px;
+  box-shadow: 2rpx 2rpx 2rpx 2rpx lightgray;
+  border-radius: 2%;
+}
+
+
+.right-arrow-image {
+  position:relative;
+  width: 10px;
+  height: 15px;
+  margin-right: 5px;
+}
+
+.card-head {
+  display:flex;
+  flex-direction: space-between;
+  align-items:center;
+  justify-content: space-between
+}

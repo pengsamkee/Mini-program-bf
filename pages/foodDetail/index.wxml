@@ -1,0 +1,87 @@
+<!--pages/foodDetail/index.wxml-->
+<image class="full-width-image" src="{{imageUrl}}" mode="widthFix"></image>
+<view class="page">
+  <!-- <view class="header">
+    <view class="header-text"> 我的套餐 </view>
+  </view> -->
+  <view class="intaken-layout">
+    <text style='font-family:PingFangSC-Regular;font-size:28rpx;color:#353535;letter-spacing:0.22rpx;'>热量</text>
+    <view class="intaken-value">
+      <text style='font-family:PingFangSC-Medium;font-size:48rpx;color:#353535;letter-spacing:0.24rpx;'>{{totalEngry}}</text>
+      <text style='font-family:PingFangSC-Regular;font-size:24rpx;color:#353535;letter-spacing:0.2rpx;margin-left:4rpx'>千卡</text>
+    </view>
+  </view>
+  <view class="share-layout" hidden='{{!showShareBtn}}'>
+    <image catchtap='onConfirmPressed' src="/images/redShareButton.png" style='width:30px;height:30px;align-items:center;margin-right:32px;margin-left:5px'></image>
+    <view catchtap='onConfirmPressed'>生成美图并分享</view>
+  </view>
+  <view class="food-card" wx:for="{{foodList}}" wx:for-index="idx">
+    <view class="food-name-row" >
+      <view>
+        <text style='font-family:PingFangSC-Thin;font-size:28rpx;color:#353535;letter-spacing:0.22rpx;'>{{idx+1}}.</text>
+        <text style='font-family:PingFangSC-Semibold;font-size:40rpx;color:#353535;letter-spacing:0.30rpx;margin-left:12rpx'>{{item.food_name}}</text>
+      </view>
+      <image catchtap='deleteFood' data-food-index="{{idx}}" class="small-icon" src="../../images/round_delete_icon.png"></image>
+    </view>
+    <view class="energy-weight-data-row">
+      <view>
+        <text style="color:red;font-family:PingFangSC-Regular;font-size:28rpx;letter-spacing:0.22rpx;">{{item.energy}}</text>
+        <text style="font-family:PingFangSC-Regular;font-size:28rpx;letter-spacing:0.22rpx;color:#888888;">千卡</text>
+      </view>
+        <text style="font-family:PingFangSC-Regular;font-size:28rpx;letter-spacing:0.22rpx;color:#888888;">共{{item.weight}}克
+        </text>
+      </view>
+
+    <view class="portion-area">
+      <view class="left-round-corner-view">
+        <input class="amount-input" type='digit' value='{{item.amount}}' bindblur='onFoodAmountChange' data-food-index="{{idx}}" />
+      </view>
+      <view class="right-round-corner-view">
+        <picker mode="selector" class="portion-selector-text" mode="selector" bindchange='onFoodPortionSelect' range='{{item.portionStrArr}}' value='{{item.selectedPortionIndex}}' data-food-index="{{idx}}" >
+           <view class="weui-cell__ft" style="text-align:left;display:flex;justify-content:space-between;align-items:center;">
+            <text style='font-family:PingFangSC-Regular;font-size:28rpx;color:#353535;letter-spacing:0.22rpx;'>{{item.unit_option[item.selectedPortionIndex].unit_name}} ({{item.unit_option[item.selectedPortionIndex].weight}}克)</text>
+            <image src="../../images/arrow_down.png" style='width:10px;height:7px;' />
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="show-more-view" hidden='{{item.food_type!=1}}' catchtap='toggleShowIngredients' data-food-index="{{idx}}">
+      <text style="font-family:PingFangSC-Thin;font-size:28rpx;color:#353535;letter-spacing:0.18rpx;">显示更多</text>
+      <view wx:if="{{item.showIngredients == 1}}">
+        <image src="../../images/arrow_up.png" style="width:18rpx;height:10rpx;display:flex;align-items:center;margin-left:8rpx;"></image>
+      </view>
+
+      <view wx:else>
+        <image src="../../images/arrow_down.png" style="width:18rpx;height:10rpx;display:flex;align-items:center;margin-left:8rpx;"></image>
+      </view>
+    </view>
+    <view class="ingredient-area" hidden='{{!item.showIngredients}}'>
+      <view class="ingredient-area-style" wx:for="{{item.ingredient_list}}" wx:for-item="ingredient" wx:for-index="ingredient_idx">
+        <view class="ingredient-name">
+          <text style='font-family:PingFangSC-Regular;font-size:28rpx;color:#353535;letter-spacing:0.22rpx;'>{{ingredient.ingredient_name}}</text>
+          <image catchtap="deleteIngredient" data-food-index="{{idx}}" data-ingredient-index="{{ingredient_idx}}"  class="small-icon" src="../../images/round_delete_icon.png"></image>
+        </view>
+        <view style="display:flex;justify-content:center;align-items:center;">
+          <view class='left-round-corner-view'>
+            <input class='amount-input' type='digit' value='{{ingredient.amount}}' bindblur='onIngredientAmountChange' data-food-index="{{idx}}" data-ingredient-index="{{ingredient_idx}}"  />
+          </view>
+          <view class="right-round-corner-view">
+            <picker mode="selector" class="portion-selector-text" mode="selector" bindchange='onIngredientPortionSelect' range='{{ingredient.portionStrArr}}' value='{{ingredient.selectedPortionIndex}}' data-food-index="{{idx}}" data-ingredient-index="{{ingredient_idx}}">
+              <view class="weui-cell__ft" style="text-align:left;display:flex;justify-content:space-between;align-items:center;">
+                <text style='font-family:PingFangSC-Regular;font-size:28rpx;color:#353535;letter-spacing:0.22rpx;'>{{ingredient.unit_option[ingredient.selectedPortionIndex].unit_name}}({{ingredient.unit_option[ingredient.selectedPortionIndex].weight}}克)</text>
+                <image src="../../images/arrow_down.png" style='width:10px;height:7px;' />
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <view class="add-more-view" catchtap='addMoreIngredient' data-food-index="{{idx}}">
+        <image style="width:28rpx;height:28rpx;margin:16rpx;" src="../../images/plus_black.png" />
+        <view style='font-family:PingFangSC-Light;font-size:28rpx;color:#888888;letter-spacing:0.04rpx;'>添加食物</view>
+      </view>
+    </view>
+  </view>
+  <button class="confirm-btn" catchtap="onConfirmPressed">确认并生成美图</button>
+  <!-- <button catchtap='onPreviewSharedImage' class="confirm-btn">分享</button> -->
+  <button hidden='{{!showDeleteBtn}}' class="weui-btn confirm-btn" style='margin:32rpx;background-color:#f8f8f8;border-radius:20rpx;color:black;' type="primary" catchtap="deleteMeal">删除记录</button>
+</view>

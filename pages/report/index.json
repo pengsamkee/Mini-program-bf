@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "报告",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "ff-canvas": "@antv/f2-canvas"
+  }
+}

@@ -1,0 +1,16 @@
+<!--pages/foodHabit/index.wxml-->
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-cells weui-cells_after-title">
+      <checkbox-group bindchange="checkboxChange" >
+        <block wx:for="{{food_preference}}" wx:for-index="idx" wx:for-item="preferenceItem">
+          <view class="weui-cell">
+            <checkbox value="{{idx}}" checked="{{preferenceItem.is_selected}}" />{{preferenceItem.name}}
+          </view>
+        </block>
+      </checkbox-group>
+    </view>
+    <!--confirm button-->
+    <button class="weui-btn confirm-btn" type="primary" catchtap='confirmFoodPreference'>确认</button>
+  </view>
+</view>

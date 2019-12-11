@@ -1,0 +1,15 @@
+<!--pages/invitation/invitation.wxml-->
+<view wx:if="{{canIUse}}">
+  <image class="header" src="../../images/logo.png" widthFix></image>
+  <view class="body" wx:if="{{!showAuth}}">
+    <view class="description"> 请输入邀请码 </view>
+    <view class="section">
+      <input bindinput="bindCodeInput" placeholder="内容" focus="{{focus}}" />
+    </view>
+  </view>
+  <view class="container">
+    <view class="submitButton" catchtap="submit" wx:if="{{!showAuth}}">确认</view>
+    <button class="authButton" open-type="getUserInfo" wx:if="{{showAuth}}" bindgetuserinfo="bindgetuserInfo">授权登录</button>
+  </view>
+</view>
+<view wx:else>请升级微信版本</view>

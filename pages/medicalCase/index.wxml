@@ -1,0 +1,29 @@
+<!--pages/medicalCase/index.wxml-->
+<view class="page">
+  <view class="page__bd">
+    <!--allergy items-->
+    <view class="weui-cells__title card-head"><text>食物过敏</text></view>
+     <view class="weui-cells weui-cells_after-title" >
+      <checkbox-group bindchange="allergyCheckboxChange">
+        <block wx:for="{{food_allergy}}" wx:for-index="idx" wx:for-item="allergyItem">
+          <view class="weui-cell">
+            <checkbox value="{{idx}}" checked="{{allergyItem.is_selected}}" />{{allergyItem.name}}
+          </view>
+        </block>
+      </checkbox-group>
+    </view>
+    <!--illness items-->
+    <view class="weui-cells__title">病史</view>
+    <view class="weui-cells weui-cells_after-title">
+      <checkbox-group bindchange="medicalConditionboxChange">
+        <block wx:for="{{medical_condition}}" wx:for-index="idx" wx:for-item="medicalItem">
+          <view class="weui-cell">
+            <checkbox value="{{idx}}" checked="{{medicalItem.is_selected}}" />{{medicalItem.name}}
+          </view>
+        </block>
+      </checkbox-group>
+    </view>
+    <!--confirm button-->
+    <button class="weui-btn confirm-btn" type="primary" catchtap='confirmMedicalProfile'>确认</button>
+  </view>
+</view>

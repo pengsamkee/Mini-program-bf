@@ -1,0 +1,15 @@
+<!--pages/introduction/feedbackIntro/index.wxml-->
+<view class="pages">
+    <ul>
+      <li>
+        <span>1</span> 有问题怎么反馈?
+        <view class="vertical_layout li_container">
+          <text class="intro_text">请通过公众号发消息给我们, 期待你的建议!</text>
+          <image class="sample-image" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/intro_feedback_pic%403x.png' style="width:65vw;" mode='widthFix'  ></image>
+        </view>
+      </li>
+      <li>
+        <text style="color:lightgray;">结束</text>
+      </li>
+    </ul>
+</view>

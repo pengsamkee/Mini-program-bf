@@ -1,0 +1,9 @@
+<!--components/modal-input/modal-input.wxml-->
+<view class='mask' wx:if='{{show}}' bindtap='clickMask'>
+  <view class='modal-content' style='height:{{height}}' catchtap='doNothing'>
+    <view class='main-content'>
+      <slot></slot>
+    </view>
+  </view>
+</view>
+

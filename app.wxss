@@ -1,0 +1,115 @@
+/**app.wxss**/
+@import 'style/weui.wxss';
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+
+page {
+  background-color: white;
+  font-size: 16px;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+
+.page__hd {
+    padding: 40px;
+}
+.page__bd {
+    padding-bottom: 40px;
+    margin-top: 40px;
+}
+.page__bd_spacing {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.page__ft{
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.page__title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.page__desc {
+    margin-top: 5px;
+    color: #888888;
+    text-align: left;
+    font-size: 14px;
+}
+.theme-color,.theme-color-b{
+  background: #ed2c48;
+}
+
+
+
+.loading-wrap {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  position: relative;
+  text-align: center;
+}
+
+.loading-text {
+  margin-left: 48rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.loading_ball {
+  border: 0;
+  margin: 28rpx 0 0 0;
+  width: 12rpx;
+  height: 12rpx;
+  position: absolute;
+  border-radius: 50%;
+  animation: k-loadingO 2s ease infinite;
+}
+
+.a {
+  background: #19a68c;
+  animation-delay: -1.5s;
+}
+
+.b {
+  background: #f63d3a;
+  animation-delay: -1s;
+}
+
+.c {
+  background: #fda543;
+  animation-delay: -0.5s;
+}
+
+.d {
+  animation: k-loadingO 2s ease infinite;
+  background: #193b48;
+}
+
+@keyframes k-loadingO {
+  0%, 100% {
+    transform: translate(0);
+  }
+
+  25% {
+    transform: translate(160%);
+  }
+
+  50% {
+    transform: translate(160%, 160%);
+  }
+
+  75% {
+    transform: translate(0, 160%);
+  }
+}

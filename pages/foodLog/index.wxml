@@ -1,0 +1,112 @@
+<!--pages/reort/index.wxml-->
+<template name="meal-card">
+  <view class="weui-panel card">
+    <view class="card-head">
+      <text class="vertical-txt">{{mealType}}</text>
+      <view style="float:left;width: 1px; height: 100%; background: #ed2c48;" />
+      <!-- <button class="mini-btn" type="primary" size="mini" catchtap='toogleMeal' data-meal-index="{{index}}">没有摄入</button> -->
+    </view>
+    <view id="card-content-{{index}}" class="weui-panel__bd card-content">
+      <!--image post row-->
+      <view class="weui-media-box weui-media-box_text {{isSkip?'hidden-card':'show-card'}}" hidden='{{isSkip}}' catchtap='addFoodImage' data-meal-index="{{index}}">
+        <view wx:if="{{imageList.length == 0}}">
+          <view class="card-head">
+            <text>食物图片</text>
+            <image class="add-content-image" src="../../images/plus.png" mode="apsectFit" />
+          </view>
+        </view>
+        <view class="food-image-collection-container" wx:elif="{{imageList.length != 0}}">
+          <!--for loop existing image-->
+          <view class="food-image-container weui-uploader__file {{(item.isUploading||item.isUploadFailed)?'weui-uploader__file_status':''}}" wx:for="{{imageList}}" wx:for-index="idx">
+            <image class="food-image weui-uploader__img" src="{{item.imageUrl}}" mode="aspectFill" catchtap='previewImage' data-meal-index="{{index}}" data-image-index="{{idx}}" />
+            <image class="top-right-delete-btn" src="../../images/redCross.png" catchtap='deleteFoodImage' data-meal-index="{{index}}" data-image-index="{{idx}}" />
+            <view class="weui-uploader__file-content" hidden="{{!item.isUploading && !item.isUploadFailed}}">
+              <icon type="warn" size="25" color="#F43530" catchtap='reUploadImage' data-meal-index="{{index}}" hidden="{{!item.isUploadFailed}}"></icon>
+              <text hidden="{{!item.isUploading}}">{{item.uploadPercentage}}%</text>
+            </view>
+            <!-- <view class="weui-uploader__file-content" wx:if="{{upload_percentage==-1}}"><icon type="warn" size="23" color="#F43530"></icon></view>
+              <view class="weui-uploader__file-content" wx:elif="{{upload_percentage!=undefined}}">{{upload_percentage}}%</view> -->
+          </view>
+          <image class="add-food-image" src="../../images/plus.png" hidden="{{imageList.length>=3}}" catchtap="addFoodImage" data-meal-index="{{index}}" />
+        </view>
+      </view>
+      <!--text post row-->
+      <view class="weui-media-box weui-media-box_text {{isSkip?'hidden-card':'show-card'}}" hidden='{{isSkip}}' catchtap='addTextDesc' data-meal-index="{{index}}">
+        <view wx:if="{{!isShowTextArea}}">
+          <view class="card-head">
+            <text>食物名和分量</text>
+            <image class="add-content-image" src="../../images/plus.png" />
+          </view>
+        </view>
+        <view wx:elif="{{isShowTextArea}}">
+          <view class="weui-media-box__title weui-media-box__title_in-text">食物描述和分量</view>
+          <view class="weui-media-box__desc">{{hint}}</view>
+          <view class="weui-cell__bd txtarea" catchtap='onShowTextInput' data-meal-index="{{index}}">
+            <!-- <textarea auto-height='true' class="weui-textarea" disabled='{{reportStatus >= 2}}' value='{{textDesc}}' style="margin:10px;" placeholder="请输入文本" bindblur='confirmText' bindinput='countText' data-meal-index="{{index}}" maxlength='200' /> -->
+            <text>{{textDesc}}</text>
+          </view>
+        </view>
+      </view>
+      <!--switch row-->
+      <view class="weui-media-box switch-row">
+        <switch catchtap="toogleMeal" data-meal-index="{{index}}" checked='{{isSkip}}' color="#ed2c48"></switch>
+        <text class="{{isSkip?'red-text':'gray-text'}}">{{skipMealText}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<view class="page">
+  <!--log header-->
+  <view class="head static-top" hidden='{{reportStatus >= 2}}'>
+    <canvas canvas-id="ringCanvas" class="canvas" bindtouchstart="touchHandler" style="width:160px;" hidden='{{completedFlag}}'></canvas>
+    <button class="round-image" hidden='{{!completedFlag}}' catchtap='onSubmitBtnPressed'>提交</button>
+    <view class="verticle-view">
+      <text class="title-text">24小时饮食记录</text>
+    </view>
+  </view>
+  <view class="analysis-top" hidden='{{reportStatus < 2||reportStatus == 10}}'>
+    <image class="canvas" style="width:60px;height:60px;margin:20px;" mode='aspectFit' src="../../images/dietitian_logo.png" />
+    <view class="verticle-view">
+      <text class="bold-text">营养师正在分析</text>
+      <text class="bold-text">报告制作中</text>
+    </view>
+    <view class="verticle-view" style="padding:5px;">
+      <button type="primary" size="mini" type='primary' style='margin:5px' catchtap='createNewReport'>新建报告</button>
+    </view>
+  </view>
+  <view class="analysis-top" style="height:100px" hidden='{{reportStatus != 10}}'>
+    <text style='width:120px;margin:20px;align-items: center;'>饮食报告已生成</text>
+    <view class="verticle-view">
+      <button type="primary" size="mini" type='primary' style='margin:5px' catchtap='naviToReportPage'>去看报告</button>
+      <button type="primary" size="mini" type='primary' style='margin:5px' catchtap='createNewReport'>新建报告</button>
+    </view>
+  </view>
+  <!--fix top-->
+  <!-- <view class="head fix-top" wx:if="{{fixTop<scrollTop}}">
+    <image class="canvas_image_container" src="{{canvas_image_src}}" mode="aspectFill" />
+    <view class="verticle-view">
+      <text class="title-text">24小时饮食记录</text>
+      <text class="green-text">0分</text>
+    </view>
+  </view> -->
+  <!--page body-->
+  <xing-scroll scroll-y style="height: {{scrollHeight + 'px'}}" bindpulldownrefresh="onPullDownRefresh" nomore="false" refreshing="{{refreshing}}" >
+    <view class="page__bd">
+      <!--card -->
+      <template is="meal-card" wx:for="{{mealList}}" data="{{...mealList[index],index,reportStatus}}"></template>
+    </view>
+  </xing-scroll>
+  <modal-input show="{{showModal}}" height='55' bindupdate="modalUpdate" >
+    <view class='modal-content'>
+      <view class="weui-cell__bd txtarea">
+        <textarea focus='true' class="weui-textarea" value='{{textAreaTxt}}' placeholder="请输入文本" bindinput='countText' data-meal-index="{{currentInputMealIndex}}" maxlength='200' />
+        <view class="weui-textarea-counter">
+          <image src="../../images/microphone.png" catchtap='onVoiceInputReminder' style="width:20px;height:20px;margin-right:10px" />{{textAreaTxt.length}}/200
+        </view>
+      </view>
+    </view>
+  </modal-input>
+
+  <view class="bg" catchtap='doNothing' style="height: {{scrollHeight + 'px'}}" hidden='{{reportStatus < 2}}'></view>
+</view>

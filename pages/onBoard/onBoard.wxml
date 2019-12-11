@@ -1,0 +1,262 @@
+<!--pages/onBoard/onBoard.wxml-->
+<progress percent="{{100*(currentPage-1)/totalPage}}" activeColor="#ed2c48" duration='50' active-mode='forwards' active backgroundColor='#ddd' class='progress-'/>
+
+<!-- <view wx:if="{{countPage != 11}}" class="progress-container">
+  {{currentPage}}/{{totalPage}}
+</view>  -->
+<view wx:if="{{countPage == 11}}" class="progress-container">
+  完成
+</view>
+
+<!-- Gender -->
+<view wx:if="{{countPage == 1}}"> 
+  <view class="header">您的性别?</view> 
+  <view class="gender-container">
+    <view class="text-center">
+      <view class="{{gender === 2?'female-button-selected':'female-button'}}" bindtap="genderEvent" id="女">
+        <view wx:if="{{gender===2}}">
+          <image id="女" bindtap="genderEvent" src="../../images/genderPage/female-white@3x.png" class="female-icon" mode="widthFix"></image>
+        </view>
+
+        <view wx:else>
+          <image id="女" bindtap="genderEvent" src="../../images/genderPage/female-red@3x.png" class="female-icon" mode="widthFix"></image>
+        </view>
+      </view>
+      <view class="sex-tip">女</view> 
+    </view>
+    <view class="divider" />
+    <view class="text-center">
+      <view class="{{gender === 1?'male-button-selected':'female-button'}}" bindtap="genderEvent" id="男">
+        <view wx:if="{{gender===1}}">
+          <image bindtap="genderEvent" id="男" src="../../images/genderPage/male-white@3x.png" class="male-icon" mode="widthFix"></image>
+        </view>
+        <view wx:else>
+          <image bindtap="genderEvent" id="男" src="../../images/genderPage/male-red@3x.png" class="male-icon" mode="widthFix"></image>
+        </view>
+      </view>
+      <view class="sex-tip">男</view> 
+    </view>
+  </view>
+
+  <view class="nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container"> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{optionsValidate}}</view>
+  </view>
+</view>
+
+<!-- Height -->
+<view wx:elif="{{countPage == 2}}">
+  <view class="header">您的身高?</view>
+
+  <!-- <view class="body">
+    <view>
+      <input class="{{textInputClass}}" type="digit" bindfocus="focusInput" bindinput='bindHeightInput' placeholder=" 0" focus="{{focus}}" />
+    </view>
+    <view class="unit">cm</view>
+  </view> -->
+  <view class="age-body">
+    <view class="{{yearDisplay}}">{{height}}cm</view>
+    <picker-view class="picker-column" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{heightVal}}" bindchange="bindHeightSelect">
+      <picker-view-column>
+        <view wx:for="{{heightArr}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+  <view class="margin-top-20 nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap='preButton234'> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{heightValidate}}</view>
+  </view>
+</view>
+
+<!-- Weight -->
+<view wx:elif="{{countPage == 3}}">
+  <view class="header">您的体重?</view>
+  <!-- <view class="body">
+    <view>
+      <input type="digit" class="{{textInputClass}}" bindfocus="focusInput" bindinput="bindWeightInput" placeholder="0" focus="{{focus}}" />
+    </view>
+    <view class="unit">kg</view>
+  </view> -->
+ <view class="age-body">
+    <view class="{{yearDisplay}}">{{weight}}kg</view>
+    <picker-view class="picker-column" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{weightVal}}" bindchange="bindWeightSelect">
+      <picker-view-column>
+        <view wx:for="{{weightArr}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+  <view class="margin-top-20 nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap='preButton234'> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{weightValidate}}</view>
+  </view>
+</view>
+
+<!-- birth year -->
+<view wx:elif="{{countPage == 4}}">
+  <view class="header">您的出生年份?</view>
+
+  <view class="age-body">
+    <view class="{{yearDisplay}}">{{birthYear}}年</view>
+    <picker-view class="picker-column" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{birthVal}}" bindchange="bindAgeInput">
+      <picker-view-column>
+        <view wx:for="{{birthYears}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+
+  <view class="margin-top-20 nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap='preButton234'> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{ageValidate}}</view>
+  </view>
+</view>
+ 
+<!-- Not shown to users who are male (page 1) or below the age of 16 (page 4) -->
+<view wx:elif="{{pregnantStageCondition == true && dueDateCondition == false}}">
+  <view class="header">您处于以下哪个阶段?</view>
+  <view class="container">
+    <view> 
+      <view class="multiplebuttons-divider" />
+      <view class="{{pregStageSelected === 1?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="pregnancyStageEvent" id="1">备孕期</view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{pregStageSelected === 2?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="pregnancyStageEvent" id="2">怀孕期</view>
+      <view class="multiplebuttons-divider" /> 
+      <view class="{{pregStageSelected === 3?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="pregnancyStageEvent" id="3">哺乳期</view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{pregStageSelected === 0?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="pregnancyStageEvent" id="0">都不是</view>
+    </view>
+  </view> 
+  <view class="nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap="preButtonPregnantAndNotDue"> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{optionsValidate}}</view>
+  </view>
+</view>
+
+<!-- Expected Pregnancy DatefOnly shown to users who selected ‘Pregnant’ on page (5) -->
+<view wx:elif="{{dueDateCondition == true}}">
+  <view class="header">您的预产期是?</view>
+
+  <view class="body-picker">
+    <view class="{{datePicker}}">{{year}}年{{month}}月{{date}}日</view>
+
+    <picker-view class="picker-column" indicator-style="height: 50px;" value="{{value}}" bindchange="bindDateChange"> 
+      <picker-view-column>
+        <view wx:for="{{years}}" style="line-height: 50px">{{item}}年</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{months}}" style="line-height: 50px">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" style="line-height: 50px">{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+  <view class="margin-top-20 nextButton-container " bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap='preButtonDueDateCondition'> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{expectedDateValidate}}</view>
+  </view>
+</view>
+
+<!-- Weight before pregnancy -->
+<view wx:elif="{{weightBeforePregnancy == true}}">
+  <view class="header">您的孕前体重？</view>
+  <view class="body">
+    <view class="rows-container">
+      <input type="digit" class="{{textInputClass}}" bindfocus="focusInput" bindinput="bindBeforePregWeightInput" placeholder="0" focus="{{focus}}" />
+    </view>
+    <view class="unit">kg</view>
+  </view>
+
+  <view class="nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text> </view>
+  <view class="preButton-container" bindtap='weightBeforePregnancyBack'> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{inputValidate}}</view>
+  </view>
+</view>
+
+<!-- 9. Number of pregnancies -->
+<view wx:elif="{{numberOfPregnancies == true}}">
+  <view class="header">您是第几次怀孕？</view>
+
+  <view class="body">
+    <view class="preg-unit">第</view>
+    <view class="preg-section">{{numPreg}}</view>
+    <view class="preg-unit">次</view>
+  </view>
+
+  <view class="nextButton-container" bindtap="nextSubmit">下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap='numberOfPregnanciesPre'> 上一步</view>
+  <picker-view class="picker-column" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{pregnancyNumVal}}" bindchange="bindNumPregInput">
+    <picker-view-column>
+      <view wx:for="{{numPregOptions}}" style="line-height: 66rpx; justify-content: center;">{{item}}</view>
+    </picker-view-column>
+  </picker-view>
+
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{inputValidate}}</view>
+  </view>
+</view>
+
+<!-- Activity level -->
+<view wx:elif="{{countPage == 9}}">
+  <view class="header">您的日常运动量?</view>
+  <view class="container">
+    <view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{activitySelected === 1?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="activityLevelEvent" id="1">卧床休息</view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{activitySelected === 2?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="activityLevelEvent" id="2">轻度，静坐少动</view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{activitySelected === 3?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="activityLevelEvent" id="3">中度，常常走动</view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{activitySelected === 4?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="activityLevelEvent" id="4">重度，负重</view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{activitySelected === 5?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="activityLevelEvent" id="5">剧烈，超负重</view>
+    </view>
+  </view>
+
+  <view class="nextButton-container" bindtap="nextSubmit">下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap='preButton9'> 上一步</view>
+
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{optionsValidate}}</view>
+  </view>
+</view>
+
+<!-- Medical conditions -->
+<view wx:elif="{{countPage == 10 || countPage == 11}}">
+  <view class="header">您是否有以下疾病?</view>
+
+  <view class="container"> 
+    <view> 
+      <view class="multiplebuttons-divider" />
+      <view class="{{medicalselected === 1?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="medicalCondition" id="1">糖尿病</view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{medicalselected === 2?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="medicalCondition" id="2">甲状腺疾病</view>
+      <view class="multiplebuttons-divider" />
+      <view class="{{medicalselected === 0?'multipleChoicesButton-selected':'multipleChoicesButton'}}" bindtap="medicalCondition" id="0">无</view>
+    </view>
+  </view>
+
+  <view class="nextButton-container" bindtap="nextSubmit">完成</view>
+  <view class="preButton-container" bindtap='preButton10'> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{optionsValidate}}</view>
+  </view>
+</view>
+
+<!-- RDI goals -->
+<!-- <view wx:elif="{{countPage == 11}}">
+  <view class="header">根据每个人身体素质和运动情况，你的每日所需能量</view>
+  <view class='rdi-container'>
+    <view class="rdi-text">{{rdiValue}}</view>
+    <view class="rdi-text-units">千卡/天</view>
+  </view>
+  <view class="nextButton-container" catchtap="redirectToRDAPage">更多推荐值</view>
+  <view class="confirmButton" catchtap="confirmSubmit">确认</view>
+</view> -->

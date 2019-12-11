@@ -1,0 +1,30 @@
+/* pages/medicalCase/index.wxss */
+
+.card {
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 80%;
+    border-radius: 5px;
+    overflow: visible;
+}
+
+.underline-input {
+  border-bottom: 1px #000 solid; 
+  height: 5px;
+}
+
+.card-head {
+  display:flex;
+  flex-direction: space-between;
+  align-items:center;
+  justify-content: space-between
+}
+
+.confirm-btn {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 25px;
+  padding: 0px;
+}

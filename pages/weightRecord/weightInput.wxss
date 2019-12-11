@@ -1,0 +1,88 @@
+/* pages/weightRecord/weightInput.wxss */
+
+.weightinput-parent {
+  height: 100%;
+  width: 100%;  
+  align-items: center;
+}
+
+.grid-parent {
+  display: grid;
+  grid-template-columns: 380rpx 380rpx;
+  background-color: white;
+}
+
+.grid {
+  padding: 40rpx;
+  font-size: 30rpx;
+  height: 50rpx;
+  border-bottom: 1rpx solid #ececec;
+}
+
+.date-label {
+  width: 80%;
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color:#353535;
+  text-align: left;
+}
+
+.date {
+  font-family:PingFangSC-Regular;
+  font-size: 36rpx;
+  color:#888888;
+  text-align: right;
+  letter-spacing: 1rpx;
+}
+
+.weight-label {
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color:#353535;
+  text-align:left;
+}
+
+.weight-num-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-radius: 12rpx;
+}
+
+.weight-num {
+  width: 70%;
+  font-family:PingFangSC-Regular;
+  font-size: 40rpx;
+  line-height: 50rpx;
+  color:#888888;
+  text-align: right;
+}
+
+.weight-kg {
+  margin-left: 10rpx;
+  width: 25%;
+  font-family:PingFangSC-Regular;
+  font-size: 36rpx;
+  line-height: 50rpx;
+  color:#353535;
+  text-align: left;
+}
+
+.confirm-btn {
+  width: auto;
+  height: 54rpx;
+  border-radius: 10rpx;
+  background-color: #f3465a !important;
+  align-items: center;
+  padding: 30rpx;
+  margin: 40rpx;
+}
+
+.confirm-btn-label {
+  text-align: center;
+  font-family: PingFangSC-Regular;
+  color:#ffffff;
+  letter-spacing: 0.77rpx;
+  font-size: 38rpx;
+  font-weight: 300;
+}

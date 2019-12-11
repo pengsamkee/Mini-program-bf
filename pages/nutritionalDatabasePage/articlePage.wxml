@@ -1,0 +1,4 @@
+<!--pages/nutritionalDatabasePage/articlePage.wxml-->
+<view class="article-page-body">
+  <web-view src="{{url}}"></web-view>
+</view>

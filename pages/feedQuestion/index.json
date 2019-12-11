@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "问题反馈",
+  "usingComponents": {
+    "modal-input": "/components/modal-input/modal-input"
+  }
+}

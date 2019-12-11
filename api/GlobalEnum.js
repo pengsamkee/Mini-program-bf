@@ -1,0 +1,10 @@
+"use strict";
+module.exports = {
+    globalKey_reportId: 'reportId',
+    globalKey_token: 'token',
+    globalKey_jscode: 'jscode',
+    globalkey_hideBanner: 'hideBanner',
+    baseUrl: 'https://test-japi.pinshen.com.cn',
+    cosSignUrl: "https://sts.pinshen.com.cn/sts"
+};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2xvYmFsRW51bS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkdsb2JhbEVudW0udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLE1BQU0sQ0FBQyxPQUFPLEdBQUc7SUFDZixrQkFBa0IsRUFBRSxVQUFVO0lBQzlCLGVBQWUsRUFBRSxPQUFPO0lBQ3hCLGdCQUFnQixFQUFFLFFBQVE7SUFDMUIsb0JBQW9CLEVBQUUsWUFBWTtJQUNsQyxPQUFPLEVBQUUsa0NBQWtDO0lBQzNDLFVBQVUsRUFBRSxnQ0FBZ0M7Q0FDN0MsQ0FBQSIsInNvdXJjZXNDb250ZW50IjpbIm1vZHVsZS5leHBvcnRzID0ge1xuICBnbG9iYWxLZXlfcmVwb3J0SWQ6ICdyZXBvcnRJZCcsICAgLy8g5a+55aSW5pq06Zyy55qE5Y+Y6YeP5ZCN5Y+rbXlEYXRhUG9zdCzlr7nlupTnnYDlhoXpg6jnmoRkYXRhUG9zdOWvueixoSAgIFxuICBnbG9iYWxLZXlfdG9rZW46ICd0b2tlbicsXG4gIGdsb2JhbEtleV9qc2NvZGU6ICdqc2NvZGUnLFxuICBnbG9iYWxrZXlfaGlkZUJhbm5lcjogJ2hpZGVCYW5uZXInLFxuICBiYXNlVXJsOiAnaHR0cHM6Ly90ZXN0LWphcGkucGluc2hlbi5jb20uY24nLCAgLy8g5pep6aSQ5ZCD5aW9SmF2YeeJiOacrFxuICBjb3NTaWduVXJsOiBcImh0dHBzOi8vc3RzLnBpbnNoZW4uY29tLmNuL3N0c1wiXG59ICBcbiJdfQ==
