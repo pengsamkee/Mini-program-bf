@@ -1,113 +1,172 @@
-<!-- article -->
-<template name="card_type_article">
-  <view class="article_card" style="height:358rpx;">
-    <image src="{{iconLink}}" mode="scaleToFill" class="background-pic" />
-    <view class="shadow_view"></view>
-    <text class="article_card_title">{{title}}</text>
-  </view>
-</template>
-
-<template name="card_type_punch">
-  <view class="frame_card">
-    <view class="side_part_view">
-      <image src="{{iconLink}}" class="card-icon" />
-      <view class="column_view">
-        <text class="feature_title-text">{{title}}</text>
-      </view>
-    </view>
-    <checkbox-group>
-      <label class="side_part_view">
-        <checkbox class="weui-check" value="{{cardId}}" checked="{{isChecked}}" />
-        <view class="weui-cell__hd weui-check__hd_in-checkbox">
-          <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!isChecked}}"></icon>
-          <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{isChecked}}"></icon>
-        </view>
-      </label>
-    </checkbox-group>
-
-  </view>
-</template>
-
-
 <!--pages/home/index.wxml-->
-<view class="page">
-  <view class="portrait_view">
-    <view class="userinfo-avatar">
-      <open-data mode='aspectFit' type="userAvatarUrl"></open-data>
+
+<!-- nutrition block progress template -->
+<template name="nutrition_block">
+  <view style="width:{{width_percentage}}vw;margin-left:2%;margin-right:2%;">
+    <view class="space-between-layout">
+      <text style='color:#434343;font-size:20rpx'>{{nutrient_name}}</text>
+      <text style='color:#434343;font-size:20rpx'>{{intaken_percentage}}%</text>
     </view>
-    <view class="userinfo-nickname">
-      <open-data type="userNickName"></open-data>
-    </view>
+    <progress percent='{{intaken_percentage}}' border-radius='20px' activeColor="{{progress_color}}"></progress>
+    <text class="small-text-font">{{intaken_num}}/{{total_num}}{{unit}}</text>
   </view>
-  
-  <view class="nutriton_tab card">
-    <view class="title_view">
-      <image src="/images/bowl_red.png" style='width:20px;height:20px;' />
-      <text class="title_text" style="margin-left:10px">本周能量摄入</text>
+</template>
+<!-- nutrition summary block progress template -->
+<template name="summary_block">
+  <view style="width:{{width_percentage}}vw;margin-left:2%;margin-right:2%;">
+    <view class="space-between-layout">
+      <text style='font-family:PingFangSC-Light;color:#353535;font-size:32rpx'>{{nutrient_name}}</text>
+      <text style='font-family:PingFangSC-Light;color:#353535;font-size:32rpx'>{{intaken_percentage}}%</text>
     </view>
-    <view class="space-between-view">
-      <text class='gray_text'>每日平均: {{average_energy}}千卡</text>
-      <text class='gray_text'>目标: {{target_energy}}千卡</text>
-    </view>
-    <view class="chart_container">
-      <ff-canvas id="nutrition_chart" canvas-id="nutrition_chart" opts="{{ opts }}"></ff-canvas>
-    </view>
+    <progress percent='{{intaken_percentage}}' border-radius='20px' activeColor="{{progress_color}}"></progress>
+    <text class="small-text-font">{{intaken_num}}/{{total_num}}{{unit}}</text>
   </view>
+</template>
 
-  <view class="horizontal_card">
-    <view class="card small-cube-card" wx:for="{{cardList}}" catchtap='redirectToPage' data-redirect-path="{{item.card_redirect_path}}">
-      <view class="color_bar" style='background-color:{{item.card_bar_color}}' />
-      <text class="small-cube-title">{{item.card_title}}</text>
-      <view class="small-cube-block">
-        <view wx:if="{{item.card_weight_value > 0 }}">
-          <text class="small-cube-weight-value">{{item.card_weight_value}}</text>
-          <text class="small-cube-desc-unit">{{item.card_desc}}</text>
+<!-- meal card template -->
+<template name="meal-card">
+  <view class='meal-card'>
+    <view class="space-between-layout">
+      <view>
+         <text class="mealName">{{mealName}}</text>
+         <text class="suggested-intake">推荐{{suggestedIntake}}千卡</text>
+      </view>
+      <text class="mealEngry">当前{{mealEngry}}千卡</text>
+    </view>
+    <view class="image_container">
+    <!-- weui-uploader__file {{(item.isUploading||item.isUploadFailed)?'weui-uploader__file_status':''}} -->
+      <view class="food-image-container " wx:for="{{meals}}" wx:for-index="idx">
+      <!-- weui-uploader__img -->
+        <view class='image-and-mask'> 
+          <view class='image-tip' style="border-color:{{item.tip_color[idx]}} {{item.tip_color[idx]}} transparent transparent;"></view>
+          <image class="food-image " src="{{item.img_key == ''?'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-icon.png':'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/food-image/'+item.img_key}}" mode="aspectFill" catchtap='naviToFoodDetail' data-meal-index="{{index}}" data-image-index="{{idx}}"></image>
+          <!-- <view class="weui-uploader__file-content" hidden="{{!item.isUploading && !item.isUploadFailed}}">
+            <icon type="warn" size="25" color="#F43530" catchtap='reUploadImage' data-meal-index="{{index}}" hidden="{{!item.isUploadFailed}}"></icon>
+            <text hidden="{{!item.isUploading}}">{{item.uploadPercentage}}%</text>
+          </view> -->
+          <view class='image-mask'>
+            <view class='mask'></view>
+            <view class='image-mask-text'>{{item.img_engry}}千卡</view>
+          </view>
         </view>
+      </view>
+      <view class='add' catchtap="addFoodImage" data-meal-index="{{index}}">
+        <image class="" src="../../images/plus.png"  />
+      </view>
+    </view>
 
-        <view wx:else>
-          <text class="small-cube-desc">{{item.card_desc}}</text>
+    <view class="food-wrap" wx:if="{{mealSummary.length!==0}}">
+      <view class="food-item" wx:for="{{mealSummary}}" wx:key='index'>
+        <view class="name-weight">
+          <view class="tip" style="background:{{item.tip_color}}"></view>
+          <view class='food-name'>{{item.foodName+' '}} <text>{{ item.weight}}g</text></view>
+          <!-- <view class="portion">{{item.weight}}{{item.unitName}}</view> -->
         </view>
+        <view class="energy">{{item.energy}}千卡</view>
+      </view>
+    </view>
 
+  </view>
+</template>
+
+<!-- main layout -->
+
+<cover-view class='nav-custom' style="height:{{menuInfo.bottom+10}}px;">
+  <cover-view class='nav-data-wrap' style="height:{{menuInfo.height}}px;margin-top:{{menuInfo.top}}px">
+    <cover-view bindtap='triggerBindgetdate'>{{navTitleTime}}</cover-view>
+    <cover-view bindtap='triggerBindgetdate' class="down">▼</cover-view>
+  </cover-view>
+</cover-view>
+
+<!-- 日历组件 -->
+<calendar selected="{{selected}}" bindselect="bindselect" bindgetdate="bindgetdate" id='calendar'/>
+<view class="page" style="top:{{menuInfo.bottom+10}}px;">
+  <view class='bg-top'></view>
+  <view class="public-card" catchtap="onDailyReportClick">
+    <view class='score-wrap'>
+      <view class='score-wrap-left'>
+        <image src='/images/home/score.png'></image>
+        <view>今日已摄入量</view>
+      </view>
+      <view class='score-wrap-right'>
+        <view class='score-text'>得分</view>
+        <view class='score-num'>{{score}}</view>
+        <image src='../../images/rightArrow.png'></image>
+      </view>
+    </view>
+    <view class="lists">    
+      <view wx:for="{{nutrientSummary}}" class="nutrient_container" wx:key='{{index}}'>
+        <circle id='circle{{index}}' bg='circle_bg' draw='circle_draw'>
+          <view class="circle_info">
+            <text class='circle_percentage'> {{item.intaken_percentage+'%'}}</text>
+            <text class='circle_label'> {{item.nutrient_name}}  </text>
+          </view>
+        </circle>
+        <text class="small-text-font">{{item.intaken_num}}/{{item.total_num}}{{item.unit}}</text>
       </view>
     </view>
   </view>
-
-  <view class="article_card_container card">
-    <view class="title_view">
-      <image src="/images/icon_fire.png" style='width:20px;height:20px;' />
-      <text class="title_text" style="margin-left:10px">今日任务</text>
+  <view class="public-card">
+    <view class='score-wrap' catchtap="goWeightRecord">
+      <view class='score-wrap-left'>
+        <image src='/images/home/weight_history.png'></image>
+        <view>体重记录</view>
+      </view>
+      <view class='score-wrap-right'>
+        <view class='score-text'>+</view>
+        <view class='score-text add-weight'>今日体重</view>
+      </view>
     </view>
-    <view class="card_list" wx:for="{{activityCardList}}" bindtap="redirectFromFeed" data-card-id="{{item.cardId}}" data-card-type="{{item.cardType}}" data-card-desc="{{item.description}}" data-card-link="{{item.contentLink}}" data-card-index="{{index}}">
-      <template is="card_type_{{item.cardType}}" data='{{...item}}' />
+    <view class="weight-wrap">    
+      <view class="weigth-text">
+        <text>{{latest_weight}}</text>公斤
+      </view>
+      <view class="weigth-line">
+        <ff-canvas id="scroll" canvas-id="scrollLine" opts="{{ opts }}" style="width:100%;height:100%;"></ff-canvas>
+      </view>
     </view>
   </view>
-  <!-- <button type="primary" style="height:100px;" show-message-card="true" open-type="contact" /> -->
-  <!--use the empty footer to fill in the bottom-->
+  <view class="public-card">
+    <view class='score-wrap' catchtap="onDailyReportClick">
+      <view class='score-wrap-left'>
+        <image src='/images/home/today_food.png'></image>
+        <view>今日饮食记录</view>
+      </view>
+      <view class='score-wrap-right'>
+        <view class='score-text check-analysis'>查看分析</view>
+        <image src='../../images/rightArrow.png'></image>
+      </view>
+    </view>
+    <view class="new-meals">
+        <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}"></template>
+    </view>
+  </view>
+
+  <view class="public-card">
+    <view class='score-wrap' catchtap="goNutritionalDatabasePage">
+      <view class='score-wrap-left'>
+        <image src='/images/home/nutrition_information.png'></image>
+        <view>营养资讯</view>
+      </view>
+      <view class='score-wrap-right'>
+        <view class='score-text check-analysis'>查看更多</view>
+        <image src='../../images/rightArrow.png'></image>
+      </view>
+    </view>
+    <view class='nutrition-information'>
+      <scroll-view scroll-x class="scroll-view">
+        <navigator class='info-item-wrap' wx:for='{{infoLists}}'  wx:key='{{index}}' url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}">
+          <view class='info-item'>
+            <image src='{{item.image}}'></image>
+            <view class="mask-wrap">
+              <view class="info-mask"></view>
+              <view class="info-title">{{item.title}}</view>
+            </view>
+          </view>
+        </navigator>
+      </scroll-view>
+    </view>
+  </view>
+
   <view class="empty-footer"></view>
 </view>
-
-<!-- show feedback dialog-->
-<modal-input show="{{showFeedbackDlg}}" height='55' bindupdate="modalUpdate">
-  <view class='modal-content'>
-    <view class="feedback-card-title">留言给营养师</view>
-    <view class="feedback-card-desc">我们周末结合你的报告一起答复。</view>
-    <textarea class="feedback-card-textarea" placeholder-class="phcolor" placeholder='请填写问题' bindinput='bindFeedbackQuestionInput' value="{{questionText}}"></textarea>
-    <view class="nextButton-container" catchtap="onFeedbackDlgBtnSubmit">提交</view>
-  </view>
-</modal-input>
-<!--show questionnaire dialog-->
-<modal-input show="{{showQuesDlg}}" height='55' bindupdate="modalUpdate">
-  <view class='modal-content'>
-    <view class="color_bar" style='background-color:#ed2c48' />
-    <view class="feedback-card-title">问题</view>
-    <!-- <view class="feedback-card-desc">{{question}}</view> -->
-    <view class="feedback-card-desc">{{quesTitle}}</view>
-    <view class="gray-line" />
-    <view class="answer-area">
-
-      <view class="{{isAnswerPositive?'answer-block-selected':'answer-block'}}" catchtap='onQuesDlgBtnPress' data-selection='{{true}}'>对</view>
-      <view class="{{isAnswerPositive?'answer-block':'answer-block-selected'}}" catchtap='onQuesDlgBtnPress' data-selection='{{false}}'>不对</view>
-    </view>
-    <view class="nextButton-container" catchtap="onQuesDlgBtnSubmit">提交</view>
-  </view>
-</modal-input>

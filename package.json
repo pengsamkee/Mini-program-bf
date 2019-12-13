@@ -10,8 +10,8 @@
     "typescript": "^3.1.6"
   },
   "dependencies": {
-    "miniprogram-custom-navigation-bar": "^0.1.2",
     "@antv/f2-canvas": "^1.0.5",
+    "miniprogram-custom-navigation-bar": "^0.1.2",
     "moment": "^2.24.0"
   }
 }

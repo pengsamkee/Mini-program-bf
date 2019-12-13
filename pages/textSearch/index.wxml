@@ -1,5 +1,5 @@
 <!--pages/textSearch/index.wxml-->
-<view class="page">
+<!-- <view class="page">
   <view class="search-line">
     <view class="weui-search-bar__form top-input-area">
       <view class="weui-search-bar__box search-input">
@@ -43,4 +43,178 @@
       </view>
     </view>
   </view>
+</view> -->
+
+
+<!-- <van-button type="primary">按钮</van-button> -->
+<view class='wrap w-100'>
+  <view class='search-wrap'>
+    <view class="search-line">
+      <view class="weui-search-bar__form top-input-area">
+        <view class="weui-search-bar__box search-input">
+          <icon class="self-weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input search-input" placeholder-class="phcolor" placeholder="搜索食物" value="{{keyword}}" confirm-type="search" bindconfirm="performSearch" bindinput="inputTyping" focus/>
+          <view class="self-weui-icon-clear" wx:if="{{keyword.length > 0}}" bindtap="clearInput">
+            <icon class="self-weui-icon-clear" type="clear" size="14"></icon>
+          </view>
+        </view>
+      </view>
+      <text class="top-text-area" catchtap="performSearch">搜索</text>
+    </view>
+  </view>
+  <view class="noDate" wx:if='{{resultError===true}}'>没有找到与您查询的 “{{keyword}}” 食物名称</view>
+  <view class='w-100' wx:else>
+    <view class="w-100 resultList" wx:if='{{resultList.length>0}}'>
+      <view catchtap='onTextSearchResultSelect' class="weui-cell navigator" hover-class="weui-cell_active" wx:for="{{resultList}}" wx:key='{{item.id}}' data-text-index="{{index}}">
+        <view>
+          <view style="margin-left:10px;">{{item.foodName}}</view>
+          <view style="margin-left:10px;font-size:12px;color:#e09c51;">{{item.energy}}千卡/{{item.unit}}</view>
+        </view>
+        </view>
+    </view>
+    <view class='w-100' wx:else>
+      <view class='public-wrap' wx:if='{{recentList.length>0}}'>
+        <view class="title-wrap w-100">
+          <view>历史搜索</view>
+          <image src='../../images/delete.png' catchtap="deleteTextSearchCache"></image>
+        </view>
+
+        <view class="food-lists w-100">
+          <view 
+            wx:for="{{recentList}}" 
+            wx:key='{{item.foodId}}' 
+            catchtap='onRecentResultSelect' 
+            data-text-index="{{index}}" 
+          >
+            <view class='food-item'>{{item.foodName}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='public-wrap'>
+        <view class="title-wrap w-100">
+          <view>常见</view>
+          <view></view>
+        </view>
+        <view class="food-lists w-100">
+          <block wx:for='545454' wx:key='{{item.id}}'>
+            <view class='food-item' bindtap='deleteHistory'>炒黄瓜</view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
+<view>
+  <van-popup
+    show="{{ showChoosedLists }}"
+    position="bottom"
+    bind:close="onClose"
+    closeable
+    custom-class='choosed-lists-popup-custom'
+  >
+    <view class="lists">
+      <block wx:for='{{choosedLists}}' wx:key='{{item+index}}'>
+        <view class='item'>
+          <view>
+            <view class="name">{{item.foodName}}</view>
+            <view class="weight">{{item.weightNumber+item.choosedUnit}}</view>
+          </view>
+          <view class="calories-num">
+            {{item.weightNumber*item.unitEnergy}}千卡
+            <image class='delete-icon' src="./../../images/delete.png" bindtap='handleDeleteChoosedItem' data-index='{{index}}'/>
+          </view>
+        </view>
+      </block>
+    </view>
+  </van-popup>
+</view>
+<!-- 已选食物列表 -->
+<view class='choose-food-container'>
+  <van-popup
+    show="{{ choosedLists.length > 0 }}"
+    position="bottom"
+    overlay='{{false}}'
+    custom-class='choosed-popup-custom-class'
+  >
+    <image src="../../images/arrow_up.png" bindtap='toggleChoosedLists'></image>
+    <view class="choose-content" bindtap='toggleChoosedLists'>
+      <view class="choose-number">
+        已选食物: {{choosedLists.length}}
+      </view>
+      <view class="total-energy">
+        总热量: {{totalEnergy}}千卡
+      </view>
+    </view>
+    <view class="confirm" hover-class="view-hover" bindtap='handleConfirmBtn'>
+      确认记录
+    </view>
+  </van-popup>
+</view>
+  
+<view class="popup-container">
+  <van-popup
+    show="{{ showPopup }}"
+    position="bottom"
+    bind:close="onClose"
+    custom-class='popup-custom-class'
+    closeable
+  >
+  <view class='popup-content'>
+    <view class="title-name">
+      {{recentList[recentResultSelectIndex].foodName}}
+    </view>
+    <view class="calories">
+      {{foodNumValue*foodUnitAndUnitEnergy[chooseUinitIndex].unitEnergy}}千卡/{{foodNumValue}}{{unitArr[chooseUinitIndex]}}
+    </view>
+    <view class="weight-container">
+      <view class='public'>
+        <view class="text">分量:</view>
+        <input 
+        class='value' 
+        value='{{foodNumValue}}' 
+        bindinput="handleFoodNumInput" 
+        type="digit"
+        maxlength="{{foodNumValueMaxlength}}"
+      />
+      </view>
+      <view class='public' bindtap='showPicker'>
+        <view class="text">单位:</view>
+        <view class="value space-between">
+          {{unitArr[chooseUinitIndex]}}
+          <image src="./../../images/rightArrow.png"/>
+        </view>
+      </view>
+    </view>
+    <view class="estimate">如何估算分量?</view>
+    <view class="add-food-item" hover-class="view-hover" bindtap='handleAddFood'>
+      添加至已选
+    </view>
+  </view>
+  </van-popup>
+</view>
+
+<view>
+  <van-popup
+    show="{{ showPicker }}"
+    position="bottom"
+    bind:close="onConfirm"
+    custom-class=''
+  >
+  <van-picker
+    show-toolbar
+    title=""
+    columns="{{ unitArr }}"
+    bind:cancel="onConfirm"
+    bind:confirm="onConfirm"
+    bind:change='onChange'
+    custom-class='picker-custom-class'
+    active-class='active-class'
+    toolbar-class='toolbar-class'
+    column-class='column-class'
+  />
+   </van-popup>
+</view>
+  
+  
+  
+  

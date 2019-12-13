@@ -89,7 +89,6 @@ class FoodSharePage {
             imgHeight: canChangeHeight,
             percent:1 // 只是为了在画图之前250ms，让进度条先显示出来
           }
-          console.log('================getImageInfo');
           setTimeout(() => {
             that.drawImage()
           }, 250)
@@ -101,12 +100,11 @@ class FoodSharePage {
   }
 
   public handleImageLoad(){
-    console.log('================handleImageLoad');
   }
   
   public onBackFoodDiary(){
     wx.switchTab({
-      url:'/pages/foodDiary/index'
+      url:'/pages/home/index'
     })
   }
 

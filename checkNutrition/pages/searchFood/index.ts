@@ -65,7 +65,6 @@ class SearchFood {
         }
         results.push(result);
       }
-      console.log('results=====',results);
       (this as any).setData({
         resultList: results,
         resultError: false

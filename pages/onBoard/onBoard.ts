@@ -610,7 +610,7 @@ class onBoard {
 
   public confirmSubmit() {
     wx.reLaunch({
-      url: "../../pages/foodDiary/index",
+      url: "../../pages/home/index",
     })
   }
 

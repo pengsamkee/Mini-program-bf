@@ -26,13 +26,23 @@ class textSearch {
     inputShowed: false,
     resultList: [],
     resultError: [],
-    recentList: []
+    recentList: [],
+    showChoosedLists:false,
+    showChoosedConfirm:false,
+    showPopup: false,
+    showPicker:false,
+    choosedLists:[],  // 已经添加的食物信息列表
+    unitArr:['克','碗','把','捧','盆','瓢'],
+    foodUnitAndUnitEnergy:[],
+    chooseUinitIndex:0, // 用户选择了picker中的index
+    foodNumValue:100,
+    foodNumValueMaxlength:3,
+    recentResultSelectIndex:0, // 用户点击了历史缓存中的index
+    totalEnergy:0,
   }
 
   public onLoad(options: any) {
     webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
-    console.log(wx.getStorageSync(globalEnum.globalKey_token));
-    // webAPI.SetAuthToken("bimlkbqkh52pa0ta7asg");
     let title = options.title;
     this.filterType = parseInt(options.filterType);
     this.mealType = parseInt(options.mealType);
@@ -80,10 +90,12 @@ class textSearch {
   public performSearch() {
     let keyword = this.data.keyword;
     let req = { query: keyword, filter_type: this.filterType, meal_type: this.mealType };
-    console.log(req);
     var that = this;
+    wx.showLoading({
+      title:'加载中...'
+    })
     webAPI.RetrieveTextSearch(req).then(resp => {
-      console.log(resp);
+      wx.hideLoading()
       that.setResultList(resp);
     }).catch(err => console.log(err));
   }
@@ -169,10 +181,33 @@ class textSearch {
 
   public onRecentResultSelect(event: any){
     let index = event.currentTarget.dataset.textIndex;
-    let foodId = this.data.recentList[index].foodId;
-    let foodName = this.data.recentList[index].foodName;
-    let foodType = this.data.recentList[index].foodType;
-    let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
+    // let foodId = this.data.recentList[index].foodId;
+    // let foodName = this.data.recentList[index].foodName;
+    // let foodType = this.data.recentList[index].foodType;
+    // let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
+    const unit_option=[
+      {"unit_name":"克","weight":800,"unit_id":70},
+      {"unit_name":"鸡蛋大小","weight":36000,"unit_id":74},
+      {"unit_name":"碗","weight":21000,"unit_id":74}
+    ];
+    const arr = unit_option.map(item=>{
+      return ({ 
+        'name' : item.unit_name,
+        'unitEnergy' : item.weight/100,
+        'unit_id' : item.unit_id
+      })
+    })
+
+    const nameArr = arr.map(item=>item.name);
+    (this as any).setData({
+      foodNumValue:100, // 初始化数量100克
+      chooseUinitIndex:0, // 初始化数量100克
+      recentResultSelectIndex:index,
+      unitArr:nameArr,
+      foodUnitAndUnitEnergy:arr,
+      showPopup:true
+    })
+    return false
     if (this.naviType === 0) {
       //create meal here
       wx.showLoading({ title: "加载中...", mask: true });
@@ -210,6 +245,135 @@ class textSearch {
   public deleteTextSearchCache(event: any){
     textCache.clearAll();
     this.getRecentList();
+  }
+  /**
+   * 关闭弹窗popup框
+   */
+  public onClose(){
+    (this as any).setData({ showPopup: false,showChoosedLists:false});
+  }
+/**
+ * 切换已选食物列表的显示与隐藏
+ */
+  public toggleChoosedLists(){
+    (this as any).setData({showChoosedLists:!this.data.showChoosedLists})
+  }
+  /**
+   * 点击添加按钮，将食物添加至已选
+   */
+  public handleAddFood(){
+    let item:any = this.data.recentList[this.data.recentResultSelectIndex];
+    item = {
+      ...item,
+      choosedUnit:this.data.unitArr[this.data.chooseUinitIndex],
+      weightNumber:this.data.foodNumValue,
+      unitEnergy:this.data.foodUnitAndUnitEnergy[this.data.chooseUinitIndex].unitEnergy,
+      unit_id:this.data.foodUnitAndUnitEnergy[this.data.chooseUinitIndex].unit_id
+    };
+    this.data.choosedLists.push(item);
+    (this as any).setData({ 
+      choosedLists : this.data.choosedLists,
+      showPopup : false
+    },()=>{
+      this.sumEnergy();
+      console.log(this.data.choosedLists)
+    })
+  }
+  /**
+   * @param 计算用户食物一共有多少热量
+   */
+  public sumEnergy(){
+    const totalEnergy = this.data.choosedLists.reduce((pre,next)=>{
+      return next.weightNumber*next.unitEnergy+pre
+    },0);
+    (this as any).setData({totalEnergy:totalEnergy})
+  }
+
+  /**
+   * 用户输入食物的份数
+   */
+  public handleFoodNumInput(e:any){
+    (this as any).setData({foodNumValue:parseInt(e.detail.value)})
+  }
+  /**
+   * 展示picker，选择食物单位
+   */
+  public showPicker(){
+    (this as any).setData({showPicker:true,showPopup:false})
+  }
+  public onConfirm(){
+    (this as any).setData({showPicker:false,showPopup:true})
+  }
+  public onChange(e:any){
+    let chooseUinitIndex:number = e.detail.index;
+    if(this.data.unitArr[chooseUinitIndex]==='克'){
+      (this as any).setData({foodNumValueMaxlength:3})
+    }
+    (this as any).setData({chooseUinitIndex:chooseUinitIndex})
+  }
+  /**
+   * 删除选中列表中的某一项
+   */
+  public handleDeleteChoosedItem(e:any){
+    let index = e.currentTarget.dataset.index;
+    this.data.choosedLists.splice(index,1);
+    (this as any).setData({choosedLists:this.data.choosedLists},()=>{
+      this.sumEnergy()
+      if(this.data.choosedLists.length===0){
+        (this as any).setData({showChoosedLists:false})
+      }
+    })
+  }
+  /**
+   * 批量添加食物整合参数
+   */
+  public handleConfirmBtn(){
+    wx.showLoading({ title: "加载中...", mask: true });
+    let foodList:any[] = [];
+    this.data.choosedLists.map((item:any) => {
+      let results = [{ food_id: item.foodId, food_name: item.foodName, food_type: item.foodType }];
+      let food = { 
+        food_id: item.foodId, 
+        food_type: item.foodType, 
+        recognition_results: results,
+        input_type: 2, 
+        amount:parseInt(item.weightNumber)*100,
+        unit_id: item.unit_id
+      };
+      foodList.push(food)
+    })
+    let req = { meal_id: -1, meal_type: this.mealType, meal_date: this.mealDate, food_list: foodList };
+    console.log('请求参数req',req)
+    this.CreateOrUpdateMealLog(req);
+  }
+  /**
+   * 格式化数据后，发出请求，获得meal_id
+   */
+  public CreateOrUpdateMealLog(req:any){
+    let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
+    webAPI.CreateOrUpdateMealLog(req).then(resp => {
+      // let param:any = {};
+      // param.mealId = resp.meal_id;
+      // param.imageUrl = imageUrl;
+      // param.showShareBtn = false;
+      // let paramJson = JSON.stringify(param);
+      this.ConfirmMealLog(resp.meal_id)
+    }).catch(err => {
+      wx.showToast({title: '请求失败',icon: 'none'});
+      wx.hideLoading({});
+    });
+  }
+  /**
+   * 发出请求，创建记录
+   */
+  public ConfirmMealLog(meal_id:number){
+    let req = { meal_id: meal_id };
+    webAPI.ConfirmMealLog(req).then(resp => {
+      wx.hideLoading({});
+      wx.navigateTo({ url: "/pages/foodShare/index?mealId=" + meal_id })
+    }).catch(err => {
+      wx.showToast({title: '提交食物记录失败',icon: 'none'});
+    });
   }
 
 }

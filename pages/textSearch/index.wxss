@@ -1,29 +1,25 @@
 /* pages/textSearch/index.wxss */
-
-.search-input {
+/* .search-input {
   color: white;
   border-radius: 20px;
   background-color: #d52c45;
   height: 35px;
   align-items: center;
-}
-
-.top-input-area{
+} */
+/* .top-input-area{
   background-color: #d52c45;
   flex-direction: row;
   width: 0%;
   margin: 10px 10px;
   border-radius: 20px;
   border: none;
-}
-
-.self-weui-icon-search_in-box {
+} */
+/* .self-weui-icon-search_in-box {
   position:absolute;
   left:10px;
   top:10px;
-}
-
-.self-weui-icon-clear {
+} */
+/* .self-weui-icon-clear {
   right: 2px !important;
   top: 1px !important;
 }
@@ -34,21 +30,18 @@
   right:0;
   padding:7px 8px;
   font-size:0;
-}
-
-.top-text-area{
+} */
+/* .top-text-area{
   width: 15%;
   align-items: center;
   text-align: center;
   color:white;
   font-size:16px;
-}
-
-.phcolor {
+} */
+/* .phcolor {
   color: white;
-}
-
-.search-line{
+} */
+/* .search-line{
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -66,4 +59,337 @@
 
 .text-search-bd {
   margin-top: 10px;
+} */
+/* 下方是粘贴过来的 */
+/* 来源于checkNutrition/pages/searchFood/index.wxss */
+.wrap {
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+}
+.w-100 {
+  width: 100%;
+}
+.h-100 {
+  height: 100%;
+}
+.wh-100 {
+  width: 100%;
+  height: 100%;
+}
+.wrap {
+  width: 100%;
+}
+.search-wrap {
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  padding: 0 10rpx;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+}
+/* 下方是粘贴过来的search框的信息 */
+.search-input {
+  color: #2E2D2D;
+  border-radius: 20px;
+  background: #f6f6f6;
+  height: 35px;
+  align-items: center;
+}
+.top-input-area {
+  flex-direction: row;
+  width: 0%;
+  margin: 32rpx 10px 20rpx;
+  border-radius: 20px;
+  border: none;
+}
+.self-weui-icon-search_in-box {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.self-weui-icon-clear {
+  right: 2px !important;
+  top: 1px !important;
+}
+.self-weui-icon-clear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 7px 8px;
+  font-size: 0;
+}
+.top-text-area {
+  margin: 0 34rpx 0 10rpx;
+  align-items: center;
+  text-align: center;
+  color: #848484;
+  font-size: 24rpx;
+}
+.phcolor {
+  color: #848484;
+}
+.search-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  width: 100%;
+}
+.search-container {
+  margin-top: 0;
+}
+.no-result {
+  text-align: center;
+}
+.text-search-bd {
+  margin-top: 10px;
+}
+.public-wrap {
+  width: 100%;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  margin-top: 56rpx;
+}
+.title-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24rpx;
+  color: #848484;
+  margin-bottom: 10rpx;
+}
+.title-wrap image {
+  width: 24rpx;
+  height: 30rpx;
+  display: block;
+}
+.weui-cell {
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+.weui-cell:before {
+  left: 0px;
+}
+.food-lists {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -12rpx;
+}
+.food-item {
+  font-size: 22rpx;
+  color: #2e2d2d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f7f7f7;
+  border-radius: 27rpx;
+  padding: 10rpx 26rpx 12rpx 26rpx;
+  margin: 10rpx;
+}
+.resultList {
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+.noDate {
+  width: 100%;
+  margin-top: 20%;
+  color: #aaa;
+  text-align: center;
+}
+.choosed-lists-popup-custom {
+  width: 100%;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  border-radius: 24rpx 24rpx 0px 0px;
+}
+.choosed-lists-popup-custom .lists {
+  padding: 54rpx 32rpx 158rpx 34rpx;
+  box-sizing: border-box;
+}
+.choosed-lists-popup-custom .lists .item {
+  height: 136rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #F7F7F7;
+}
+.choosed-lists-popup-custom .lists .item:nth-last-of-type(1) {
+  border: none;
+}
+.choosed-lists-popup-custom .lists .item image {
+  height: 30rpx;
+  width: 24rpx;
+  margin-left: 40rpx;
+}
+.choosed-lists-popup-custom .lists .item .name {
+  font-size: 28rpx;
+  color: #353535;
+}
+.choosed-lists-popup-custom .lists .item .weight {
+  font-size: 24rpx;
+  color: #febd2e;
+}
+.choosed-lists-popup-custom .lists .item .calories-num {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #888888;
+}
+.choose-food-container .choosed-popup-custom-class {
+  margin-left: 32rpx;
+  margin-bottom: 34rpx;
+  display: flex;
+  align-items: center;
+  width: 686rpx;
+  height: 96rpx;
+  background: #ffffff;
+  box-shadow: 0px 4rpx 14rpx 0px rgba(0, 0, 0, 0.18);
+  border-radius: 65rpx;
+}
+.choose-food-container .choosed-popup-custom-class image {
+  display: block;
+  margin: 0 20rpx 0 26rpx;
+  width: 24rpx;
+  height: 24rpx;
+}
+.choose-food-container .choosed-popup-custom-class .choose-content {
+  flex: 1;
+}
+.choose-food-container .choosed-popup-custom-class .choose-content .choose-number {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #353535;
+}
+.choose-food-container .choosed-popup-custom-class .choose-content .total-energy {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #f3465a;
+}
+.choose-food-container .choosed-popup-custom-class .confirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 192rpx;
+  height: 96rpx;
+  background: #ed2c48;
+  border-radius: 0px 65rpx 65rpx 0px;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #ffffff;
+}
+.choose-food-container .choosed-popup-custom-class .view-hover {
+  background: #D33939;
+  transition: all 0.1s;
+}
+.popup-container {
+  width: 100%;
+  font-family: PingFangSC-Medium, PingFang SC;
+}
+.popup-container .popup-custom-class {
+  border-top-left-radius: 24rpx;
+  border-top-right-radius: 24rpx;
+}
+.popup-container .popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.popup-container .popup-content .title-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #353535;
+  margin: 34rpx 0 8rpx 0;
+}
+.popup-container .popup-content .calories {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #bcbcbc;
+  letter-spacing: 1px;
+}
+.popup-container .popup-content .weight-container {
+  display: flex;
+  margin: 56rpx 0 40rpx 0;
+  width: 100%;
+}
+.popup-container .popup-content .weight-container .public {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.popup-container .popup-content .weight-container .public .text {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #a1a1a1;
+  align-self: flex-start;
+  margin-left: 26rpx;
+  margin-bottom: 10rpx;
+}
+.popup-container .popup-content .weight-container .public .value {
+  display: flex;
+  align-items: center;
+  width: 320rpx;
+  height: 94rpx;
+  border-radius: 10rpx;
+  border: 2rpx solid #c9cacb;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #353535;
+  padding-left: 58rpx;
+  box-sizing: border-box;
+}
+.popup-container .popup-content .weight-container .public .value image {
+  margin-right: 26rpx;
+  width: 14rpx;
+  height: 22rpx;
+  transform: rotate(90deg);
+}
+.popup-container .popup-content .weight-container .public .space-between {
+  justify-content: space-between;
+}
+.popup-container .popup-content .estimate {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #02c2c6;
+  text-decoration: underline;
+  align-self: flex-end;
+  margin-right: 26rpx;
+}
+.popup-container .popup-content .add-food-item {
+  width: 686rpx;
+  height: 80rpx;
+  background: #ed2c48;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 64rpx 0rpx 74rpx 0;
+}
+.popup-container .popup-content .view-hover {
+  background: #D33939;
+  transition: all 0.1s;
+}
+.picker-custom-class .active-class {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ed2c48;
+}
+.picker-custom-class .toolbar-class {
+  font-size: 28px;
+}
+.picker-custom-class .toolbar-class .van-picker__cancel {
+  color: #646464;
+}
+.picker-custom-class .toolbar-class .van-picker__confirm {
+  color: #ed2c48;
+}
+.picker-custom-class .column-class {
+  font-size: 28rpx;
+  color: #444;
 }

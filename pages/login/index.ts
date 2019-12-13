@@ -71,7 +71,7 @@ class LoginPage {
             });
           }else{
             wx.reLaunch({
-              url: '../../pages/foodDiary/index'
+              url: '../../pages/home/index'
             });
           }
         }else{
