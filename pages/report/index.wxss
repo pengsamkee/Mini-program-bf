@@ -38,6 +38,21 @@ page{
   border-bottom-left-radius: 24rpx;
   border-right:none;
 }
+.special{
+  height: 60rpx;
+  width:210rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size:28rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(110,108,108,1);
+  background: #ed2c48;
+  border-radius: 24rpx;
+  color:#fff;
+
+}
 .week{
   border-top-right-radius: 24rpx;
   border-bottom-right-radius: 24rpx;
@@ -171,19 +186,6 @@ page{
   width:8rpx;
   height:26rpx;
 }
-/* .space-between-view{
-  margin: 0px 32rpx;
-  display: flex;
-  flex-direction: space-between;
-  justify-content: space-between;
-}
-
-.gray_text{
-  font-family:PingFangSC-Regular;
-  font-size:28rpx;
-  color:#888888;
-  text-align:left;
-} */
 .chart_container {
   width: 100%;
   flex:1;
@@ -198,7 +200,7 @@ ff-canvas {
 
 
 
-/* 下面是原来的，不要乱动 */
+/* 下面是原来的，不要乱动，某些样式还在用 */
 
 .card {
   margin: 10px;

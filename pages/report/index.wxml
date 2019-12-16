@@ -4,8 +4,9 @@
 <view class='wrap' >
 
   <view class="day-or-week">
-    <view class="day public {{choose==0?'active':''}}" bindtap='choose' data-num="0">每日</view>
-    <view class="week public {{choose==1?'active':''}}" bindtap='choose' data-num="1">每周</view>
+    <view class="special" bindtap='choose' data-num="0">每日报告</view>
+    <!-- <view class="day public {{choose==0?'active':''}}" bindtap='choose' data-num="0">每日报告</view> -->
+    <!-- <view class="week public {{choose==1?'active':''}}" bindtap='choose' data-num="1">每周</view> -->
   </view>
   <view class='lists' wx:if='{{choose==0}}'>
     <scroll-view class='scroll-view' scroll-y="true" bindscrolltolower='scrollToLower'>
