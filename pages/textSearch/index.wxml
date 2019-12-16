@@ -96,8 +96,8 @@
           <view></view>
         </view>
         <view class="food-lists w-100">
-          <block wx:for='545454' wx:key='{{item.id}}'>
-            <view class='food-item' bindtap='deleteHistory'>炒黄瓜</view>
+          <block wx:for='{{commonFoodList}}' wx:key='{{item.id}}'>
+            <view class='food-item' catchtap='handleTapCommonFoodItem' data-text-index="{{index}}">{{item.foodName}}</view>
           </block>
         </view>
       </view>
@@ -161,7 +161,9 @@
   >
   <view class='popup-content'>
     <view class="title-name">
-      {{recentResultSelectIndex!==null?recentList[recentResultSelectIndex].foodName:resultList[textSearchResultSelectIndex].foodName }}
+      {{recentResultSelectIndex!==null?recentList[recentResultSelectIndex].foodName:
+      (textSearchResultSelectIndex!==null?resultList[textSearchResultSelectIndex].foodName:commonFoodList[commonFoodIndex].foodName )
+      }}
     </view>
     <view class="calories">
       {{foodNumValue*foodUnitAndUnitEnergy[chooseUinitIndex].unitEnergy}}千卡/{{foodNumValue}}{{unitArr[chooseUinitIndex]}}

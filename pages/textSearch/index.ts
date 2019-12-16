@@ -28,6 +28,7 @@ class textSearch {
     resultList: [],
     resultError: [],
     recentList: [],
+    commonFoodList:[], // 常见食物列表
     showChoosedLists:false,
     showChoosedConfirm:false,
     showPopup: false,
@@ -40,6 +41,7 @@ class textSearch {
     chooseUinitIndex:0, // 用户选择了picker中的index
     textSearchResultSelectIndex:null, // 用户点击文字搜索列表中的哪一项
     recentResultSelectIndex:null, // 用户点击了历史缓存数组中的index
+    commonFoodIndex:null, // 常见列表中的index
     totalEnergy:0,
   }
 
@@ -53,22 +55,20 @@ class textSearch {
     wx.setNavigationBarTitle({
       title: "添加" + title//页面标题为路由参数
     });
+    this.getCommonFoodList();
   }
 
   public onShow() {
-    if (this.data.resultList.length === 0){
-      this.getRecentList();
-      this.getCommonFoodList();
-    }
+    this.getRecentList();
   }
   /**
    * 获取常见的食物列表
    */
   public getCommonFoodList(){
+    const that = this
     request.commonFoodList({
-
     }).then(res=>{
-      console.log(res)
+      that.setData({commonFoodList:res})
     }).catch(err=>{
       console.log(err)
     })
@@ -90,7 +90,8 @@ class textSearch {
   public clearInput() {
     (this as any).setData({
       keyword: "",
-      resultError: false
+      resultError: false,
+      resultList:[]
     });
   }
 
@@ -174,6 +175,7 @@ class textSearch {
     const nameArr = arr.map(item=>item.name);
     (this as any).setData({
       recentResultSelectIndex:null,
+      commonFoodIndex:null,
       foodNumValue:100, // 初始化数量100克
       chooseUinitIndex:0, // 初始化数量100克
       textSearchResultSelectIndex:index,
@@ -182,6 +184,7 @@ class textSearch {
       showPopup:true
     },()=>{
       textCache.setValue(this.data.resultList[index]);
+      this.getRecentList();
     })
     
     // if (this.naviType === 0) {
@@ -214,6 +217,34 @@ class textSearch {
 
     // textCache.setValue(this.data.resultList[index]);
   }
+  public handleTapCommonFoodItem(event: any){
+    let index = event.currentTarget.dataset.textIndex;
+    const unit_option=[
+      {"unit_name":"克","weight":800,"unit_id":70},
+      {"unit_name":"鸡蛋大小","weight":36000,"unit_id":74},
+      {"unit_name":"碗","weight":21000,"unit_id":74}
+    ];
+    const arr = unit_option.map(item=>{
+      return ({ 
+        'name' : item.unit_name,
+        'unitEnergy' : item.weight/100,
+        'unit_id' : item.unit_id
+      })
+    })
+
+    const nameArr = arr.map(item=>item.name);
+    (this as any).setData({
+      textSearchResultSelectIndex:null,
+      recentResultSelectIndex:null,
+      foodNumValue:100, // 初始化数量100克
+      chooseUinitIndex:0, // 初始化数量100克
+      commonFoodIndex:index,
+      unitArr:nameArr,
+      foodUnitAndUnitEnergy:arr,
+      showPopup:true
+    })
+    textCache.setValue(this.data.commonFoodList[index]);
+  }
 
   public onRecentResultSelect(event: any){
     let index = event.currentTarget.dataset.textIndex;
@@ -237,6 +268,7 @@ class textSearch {
     const nameArr = arr.map(item=>item.name);
     (this as any).setData({
       textSearchResultSelectIndex:null,
+      commonFoodIndex:null,
       foodNumValue:100, // 初始化数量100克
       chooseUinitIndex:0, // 初始化数量100克
       recentResultSelectIndex:index,
@@ -301,7 +333,14 @@ class textSearch {
   public handleAddFood(){
     let textSearchResultSelectIndex = this.data.textSearchResultSelectIndex;
     let recentResultSelectIndex = this.data.recentResultSelectIndex;
-    let item:any = recentResultSelectIndex === null ? this.data.resultList[textSearchResultSelectIndex] : this.data.recentList[recentResultSelectIndex];
+    let commonFoodIndex = this.data.commonFoodIndex;
+    if(recentResultSelectIndex !== null ){
+      let item:any = this.data.recentList[recentResultSelectIndex];
+    }else if(textSearchResultSelectIndex !== null){
+      let item:any = this.data.resultList[textSearchResultSelectIndex];
+    }else{
+      let item:any = this.data.commonFoodList[commonFoodIndex];
+    }
     item = {
       ...item,
       choosedUnit:this.data.unitArr[this.data.chooseUinitIndex],
@@ -315,11 +354,9 @@ class textSearch {
       showPopup : false
     },()=>{
       this.sumEnergy();
-      if(recentResultSelectIndex !== null){
+      if(recentResultSelectIndex !== null){ // 为历史搜索重新排序
         textCache.setValue(this.data.recentList[recentResultSelectIndex])
-        if (this.data.resultList.length === 0){
-          this.getRecentList();
-        }
+        this.getRecentList();
       }
       console.log(this.data.choosedLists)   
     })
