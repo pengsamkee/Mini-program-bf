@@ -1,4 +1,5 @@
 import * as webAPI from '../../api/app/AppService';
+import request from '../../api/app/interface';
 import { RetrieveTextSearchReq, RetrieveTextSearchResp, CreateOrUpdateMealLogReq, AddRecipeItemReq, MealLogResp } from "/api/app/AppServiceObjs"
 import * as globalEnum from '../../api/GlobalEnum'
 import * as textCache from './textCache/TextCache'
@@ -34,10 +35,11 @@ class textSearch {
     choosedLists:[],  // 已经添加的食物信息列表
     unitArr:['克','碗','把','捧','盆','瓢'],
     foodUnitAndUnitEnergy:[],
-    chooseUinitIndex:0, // 用户选择了picker中的index
     foodNumValue:100,
     foodNumValueMaxlength:3,
-    recentResultSelectIndex:0, // 用户点击了历史缓存中的index
+    chooseUinitIndex:0, // 用户选择了picker中的index
+    textSearchResultSelectIndex:null, // 用户点击文字搜索列表中的哪一项
+    recentResultSelectIndex:null, // 用户点击了历史缓存数组中的index
     totalEnergy:0,
   }
 
@@ -55,13 +57,25 @@ class textSearch {
 
   public onShow() {
     if (this.data.resultList.length === 0){
-       this.getRecentList();
+      this.getRecentList();
+      this.getCommonFoodList();
     }
+  }
+  /**
+   * 获取常见的食物列表
+   */
+  public getCommonFoodList(){
+    request.commonFoodList({
+
+    }).then(res=>{
+      console.log(res)
+    }).catch(err=>{
+      console.log(err)
+    })
   }
 
   public getRecentList(){
     let recentList = textCache.getAllValue();
-    console.log(recentList);
     (this as any).setData({
       recentList: recentList
     });
@@ -109,7 +123,6 @@ class textSearch {
         resultError: true
       })
     } else {
-
       for (let index in resp.result_list) {
         let item = resp.result_list[index];
         let result = {
@@ -141,42 +154,65 @@ class textSearch {
    */
   public onTextSearchResultSelect(event: any) {
     let index = event.currentTarget.dataset.textIndex;
-    let foodId = this.data.resultList[index].foodId;
-    let foodName = this.data.resultList[index].foodName;
-    let foodType = this.data.resultList[index].foodType;
-    let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
-    if (this.naviType === 0) {
-      //create meal here
-      wx.showLoading({ title: "加载中...", mask: true });
-      let results = [{ food_id: foodId, food_name: foodName, food_type: foodType }];
-      let food = { food_id: foodId, input_type: 2, food_type: foodType, recognition_results: results };
-      let foodList = [food];
-      let req = { meal_id: -1, meal_type: this.mealType, meal_date: this.mealDate, food_list: foodList };
-      webAPI.CreateOrUpdateMealLog(req).then(resp => {
-        wx.hideLoading({});
-        let param = {};
-        param.mealId = resp.meal_id;
-        param.imageUrl = imageUrl;
-        param.showShareBtn = false;
-        let paramJson = JSON.stringify(param);
-        wx.navigateTo({
-          url: "/pages/foodDetail/index?paramJson=" + paramJson
-        });
-      }).catch(err => {
-        console.log(err);
-        wx.hideLoading({});
-        });
-    } else {
-      let pages = getCurrentPages();
-      let prevPage = pages[pages.length - 2];
-      //set text search result to prev pages
-      prevPage.textSearchFood = { food_id: foodId, food_name: foodName, food_type: foodType }
-      wx.navigateBack({
-        delta: 1
+    // let foodId = this.data.resultList[index].foodId;
+    // let foodName = this.data.resultList[index].foodName;
+    // let foodType = this.data.resultList[index].foodType;
+    // let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
+    const unit_option=[
+      {"unit_name":"克","weight":800,"unit_id":70},
+      {"unit_name":"鸡蛋大小","weight":36000,"unit_id":74},
+      {"unit_name":"碗","weight":21000,"unit_id":74}
+    ];
+    const arr = unit_option.map(item=>{
+      return ({ 
+        'name' : item.unit_name,
+        'unitEnergy' : item.weight/100,
+        'unit_id' : item.unit_id
       })
-    }
-    //recent LRU
-    textCache.setValue(this.data.resultList[index]);
+    })
+
+    const nameArr = arr.map(item=>item.name);
+    (this as any).setData({
+      recentResultSelectIndex:null,
+      foodNumValue:100, // 初始化数量100克
+      chooseUinitIndex:0, // 初始化数量100克
+      textSearchResultSelectIndex:index,
+      unitArr:nameArr,
+      foodUnitAndUnitEnergy:arr,
+      showPopup:true
+    },()=>{
+      textCache.setValue(this.data.resultList[index]);
+    })
+    
+    // if (this.naviType === 0) {
+    //   wx.showLoading({ title: "加载中...", mask: true });
+    //   let results = [{ food_id: foodId, food_name: foodName, food_type: foodType }];
+    //   let food = { food_id: foodId, input_type: 2, food_type: foodType, recognition_results: results };
+    //   let foodList = [food];
+    //   let req = { meal_id: -1, meal_type: this.mealType, meal_date: this.mealDate, food_list: foodList };
+    //   webAPI.CreateOrUpdateMealLog(req).then(resp => {
+    //     wx.hideLoading({});
+    //     let param = {};
+    //     param.mealId = resp.meal_id;
+    //     param.imageUrl = imageUrl;
+    //     param.showShareBtn = false;
+    //     let paramJson = JSON.stringify(param);
+    //     wx.navigateTo({
+    //       url: "/pages/foodDetail/index?paramJson=" + paramJson
+    //     });
+    //   }).catch(err => {
+    //     wx.hideLoading({});
+    //     });
+    // } else {
+    //   let pages = getCurrentPages();
+    //   let prevPage = pages[pages.length - 2];
+    //   prevPage.textSearchFood = { food_id: foodId, food_name: foodName, food_type: foodType }
+    //   wx.navigateBack({
+    //     delta: 1
+    //   })
+    // }
+
+    // textCache.setValue(this.data.resultList[index]);
   }
 
   public onRecentResultSelect(event: any){
@@ -200,46 +236,47 @@ class textSearch {
 
     const nameArr = arr.map(item=>item.name);
     (this as any).setData({
+      textSearchResultSelectIndex:null,
       foodNumValue:100, // 初始化数量100克
       chooseUinitIndex:0, // 初始化数量100克
       recentResultSelectIndex:index,
       unitArr:nameArr,
       foodUnitAndUnitEnergy:arr,
       showPopup:true
+    },()=>{
+      
     })
-    return false
-    if (this.naviType === 0) {
-      //create meal here
-      wx.showLoading({ title: "加载中...", mask: true });
-      let results = [{ food_id: foodId, food_name: foodName, food_type: foodType }];
-      let food = { food_id: foodId, input_type: 2, food_type: foodType, recognition_results: results };
-      let foodList = [food];
-      let req = { meal_id: -1, meal_type: this.mealType, meal_date: this.mealDate, food_list: foodList };
-      webAPI.CreateOrUpdateMealLog(req).then(resp => {
-        wx.hideLoading({});
-        let param = {};
-        param.mealId = resp.meal_id;
-        param.imageUrl = imageUrl;
-        param.showShareBtn = false;
-        let paramJson = JSON.stringify(param);
-        wx.navigateTo({
-          url: "/pages/foodDetail/index?paramJson=" + paramJson
-        });
-      }).catch(err => {
-        console.log(err);
-        wx.hideLoading({});
-      });
-    } else {
-      let pages = getCurrentPages();
-      let prevPage = pages[pages.length - 2];
-      //set text search result to prev pages
-      prevPage.textSearchFood = { food_id: foodId, food_name: foodName, food_type: foodType }
-      wx.navigateBack({
-        delta: 1
-      })
-    }
-    //recent LRU
-    textCache.setValue(this.data.recentList[index]);
+    // textCache.setValue(this.data.recentList[index]);
+
+    // if (this.naviType === 0) {
+    //   wx.showLoading({ title: "加载中...", mask: true });
+    //   let results = [{ food_id: foodId, food_name: foodName, food_type: foodType }];
+    //   let food = { food_id: foodId, input_type: 2, food_type: foodType, recognition_results: results };
+    //   let foodList = [food];
+    //   let req = { meal_id: -1, meal_type: this.mealType, meal_date: this.mealDate, food_list: foodList };
+    //   webAPI.CreateOrUpdateMealLog(req).then(resp => {
+    //     wx.hideLoading({});
+    //     let param = {};
+    //     param.mealId = resp.meal_id;
+    //     param.imageUrl = imageUrl;
+    //     param.showShareBtn = false;
+    //     let paramJson = JSON.stringify(param);
+    //     wx.navigateTo({
+    //       url: "/pages/foodDetail/index?paramJson=" + paramJson
+    //     });
+    //   }).catch(err => {
+    //     console.log(err);
+    //     wx.hideLoading({});
+    //   });
+    // } else {
+    //   let pages = getCurrentPages();
+    //   let prevPage = pages[pages.length - 2];
+    //   prevPage.textSearchFood = { food_id: foodId, food_name: foodName, food_type: foodType }
+    //   wx.navigateBack({
+    //     delta: 1
+    //   })
+    // }
+   
   }
 
   public deleteTextSearchCache(event: any){
@@ -262,7 +299,9 @@ class textSearch {
    * 点击添加按钮，将食物添加至已选
    */
   public handleAddFood(){
-    let item:any = this.data.recentList[this.data.recentResultSelectIndex];
+    let textSearchResultSelectIndex = this.data.textSearchResultSelectIndex;
+    let recentResultSelectIndex = this.data.recentResultSelectIndex;
+    let item:any = recentResultSelectIndex === null ? this.data.resultList[textSearchResultSelectIndex] : this.data.recentList[recentResultSelectIndex];
     item = {
       ...item,
       choosedUnit:this.data.unitArr[this.data.chooseUinitIndex],
@@ -276,7 +315,13 @@ class textSearch {
       showPopup : false
     },()=>{
       this.sumEnergy();
-      console.log(this.data.choosedLists)
+      if(recentResultSelectIndex !== null){
+        textCache.setValue(this.data.recentList[recentResultSelectIndex])
+        if (this.data.resultList.length === 0){
+          this.getRecentList();
+        }
+      }
+      console.log(this.data.choosedLists)   
     })
   }
   /**
@@ -370,7 +415,7 @@ class textSearch {
     let req = { meal_id: meal_id };
     webAPI.ConfirmMealLog(req).then(resp => {
       wx.hideLoading({});
-      wx.navigateTo({ url: "/pages/foodShare/index?mealId=" + meal_id })
+      wx.navigateTo({ url: `../../homeSub/pages/mealAnalysis/index?mealDate=${this.mealDate}&mealType=${this.mealType}`})
     }).catch(err => {
       wx.showToast({title: '提交食物记录失败',icon: 'none'});
     });

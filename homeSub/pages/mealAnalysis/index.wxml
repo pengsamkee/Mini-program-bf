@@ -1,0 +1,15 @@
+<!-- homeSub/pages/mealAnalysis/index.wxml -->
+<view class='wrap'>
+  <view class="title">就餐分析</view>
+  <view class="canvas-info">
+    <view class='left'>
+      <view class='canvas-wrap'>
+        <ff-canvas id='canvasf2' canvas-id="canvasf2" opts="{{ opts }}"></ff-canvas>
+      </view>
+    </view>
+    <view class='right'>
+      <view class='right-enegry'>{{totalEnergy}}</view>
+      <view class='right-total-enegry'>千卡</view>
+    </view>
+  </view>
+</view>

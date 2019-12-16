@@ -161,7 +161,7 @@
   >
   <view class='popup-content'>
     <view class="title-name">
-      {{recentList[recentResultSelectIndex].foodName}}
+      {{recentResultSelectIndex!==null?recentList[recentResultSelectIndex].foodName:resultList[textSearchResultSelectIndex].foodName }}
     </view>
     <view class="calories">
       {{foodNumValue*foodUnitAndUnitEnergy[chooseUinitIndex].unitEnergy}}千卡/{{foodNumValue}}{{unitArr[chooseUinitIndex]}}

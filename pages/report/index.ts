@@ -101,15 +101,15 @@ class ReportPage {
     dayConuter:0,
     showLoading: false,
   }
- 
+
+  public onReady(){
+    this.initHomePageInfo();
+  }
+
   public choose(e:any){
     (this as any).setData({
       choose:Number(e.target.dataset.num)
     })
-  }
-
-  public onReady(){
-    this.initHomePageInfo();
   }
 
   public stop(e){

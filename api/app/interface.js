@@ -3,9 +3,14 @@ export default {
   MealLogShare(data){
     return fetch('/MiniprogramWebService.MealLogShare', data, 'POST')
   },
-  FoodNutritions(data) {
+  foodNutritions(data) {
     return fetch('/knowledgeCenter/foodNutritions', data, 'GET')
   },
+  commonFoodList(data) {
+    return fetch('http://192.168.110.241:18082/rc/miniProgram/commonFoodList', data, 'GET')
+  },
+
+  
   // getPoidetail(data) {
   //   return fetch('/api/poi/' + data.id + '.json', {}, 'GET')
   // },

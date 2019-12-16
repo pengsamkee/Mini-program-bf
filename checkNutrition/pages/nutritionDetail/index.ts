@@ -81,7 +81,7 @@ class NutritionDetail {
   public getFoodNutritions(options:any){
     const that:any = this
     wx.showLoading({ title: "加载中..."});
-    request.FoodNutritions(options).then(res => {
+    request.foodNutritions(options).then(res => {
       const { foodInfo, micro } = res
       foodInfo.contentEnergy = Math.round(foodInfo.contentEnergy)
       let total:Number = 0;

@@ -5,6 +5,8 @@ var baseUrl = globalEnum.baseUrl;
 
 const fetch = (url, data, method) => {
   let requestUrl = baseUrl + url;
+  if (url ==='http://192.168.110.241:18082/rc/miniProgram/commonFoodList')
+    requestUrl = url
   return new Promise((resolve, reject) => {
     wx.request({
       url: requestUrl,

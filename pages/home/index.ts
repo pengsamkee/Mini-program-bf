@@ -280,10 +280,6 @@ class FoodDiaryPage {
           wx.getUserInfo({
             success: res => {
               app.globalData.userInfo = res.userInfo
-              /**
-              * 下面一行是为了自动更新数据库头像昵称丢失的问题，发布一段时间后可删除代码
-              */
-              that.userInfo = res.userInfo
             },
             fail: err => {
               console.log(err)

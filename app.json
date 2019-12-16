@@ -1,10 +1,10 @@
 {
   "pages": [
     "pages/home/index",
+    "pages/report/index",
     "pages/textSearch/index",
     "pages/onBoard/onBoard",
     "pages/checkNutrition/index",
-    "pages/report/index",
     "pages/login/index",
     "pages/portfolio/index",
     "pages/medicalCase/index",
@@ -35,8 +35,8 @@
       {
         "pagePath": "pages/home/index",
         "text": "首页",
-        "iconPath": "images/Fill2@3x.png",
-        "selectedIconPath": "images/home@3x.png"
+        "iconPath": "images/tabbar_home.png",
+        "selectedIconPath": "images/tabbar_home_active.png"
       },
       {
         "pagePath": "pages/checkNutrition/index",
@@ -62,6 +62,12 @@
   "cloud": true,
   "sitemapLocation": "sitemap.json",
   "subpackages": [
+    {
+      "root": "homeSub",
+      "pages": [
+        "pages/mealAnalysis/index"
+      ]
+    },
     {
       "root": "checkNutrition",
       "pages": [

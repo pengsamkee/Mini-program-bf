@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "分析",
+  "usingComponents": {
+    "ff-canvas": "@antv/f2-canvas"
+  }
+}
