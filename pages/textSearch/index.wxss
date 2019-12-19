@@ -374,22 +374,29 @@
   background: #D33939;
   transition: all 0.1s;
 }
-.picker-custom-class .active-class {
+.popup {
+  width: 100%;
+}
+.popup .popup-custom-class {
+  box-shadow: 0px -4rpx 22rpx 0px rgba(0, 0, 0, 0.15);
+  border-radius: 24rpx 24rpx 4rpx 4rpx;
+}
+.popup .picker-custom-class .active-class {
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #ed2c48;
 }
-.picker-custom-class .toolbar-class {
+.popup .picker-custom-class .toolbar-class {
   font-size: 28px;
 }
-.picker-custom-class .toolbar-class .van-picker__cancel {
+.popup .picker-custom-class .toolbar-class .van-picker__cancel {
   color: #646464;
 }
-.picker-custom-class .toolbar-class .van-picker__confirm {
+.popup .picker-custom-class .toolbar-class .van-picker__confirm {
   color: #ed2c48;
 }
-.picker-custom-class .column-class {
+.popup .picker-custom-class .column-class {
   font-size: 28rpx;
   color: #444;
 }

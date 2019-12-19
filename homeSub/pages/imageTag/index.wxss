@@ -1,0 +1,417 @@
+/* pages/imageTag/index.wxss */
+page {
+  height: 100%;
+}
+.fixed {
+  height: 100%;
+  overflow: hidden;
+}
+.page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+}
+.page .food-number {
+  position: absolute;
+  left: 24rpx;
+  top: -60rpx;
+  width: 702rpx;
+  height: 128rpx;
+  background: #ffffff;
+  box-shadow: 0px 2rpx 8rpx 0px rgba(0, 0, 0, 0.1);
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+}
+.page .food-number .num {
+  font-size: 32rpx;
+  color: #434343;
+}
+.page .food-number .tips {
+  font-size: 24rpx;
+  color: #acacac;
+}
+.page .food-list {
+  margin: 96rpx 0 160rpx 0;
+  width: 702rpx;
+}
+.page .food-list .food-item {
+  width: 702rpx;
+  background: #ffffff;
+  box-shadow: 0px 2rpx 8rpx 0px rgba(0, 0, 0, 0.1);
+  border-radius: 12rpx;
+  margin-bottom: 30rpx;
+  padding: 30rpx 24rpx 24rpx 26rpx;
+  box-sizing: border-box;
+}
+.page .food-list .food-item image {
+  width: 24rpx;
+  height: 30rpx;
+}
+.page .food-list .food-item .item-top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+.page .food-list .food-item .item-top .num-name {
+  display: flex;
+  align-items: center;
+}
+.page .food-list .food-item .item-top .num-name .num {
+  width: 46rpx;
+  height: 46rpx;
+  border-radius: 35rpx;
+  border: 1px solid #ed2c48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  color: #ed2c48;
+  margin-right: 20rpx;
+}
+.page .food-list .food-item .item-top .num-name .name {
+  font-size: 28rpx;
+  color: #535353;
+}
+.page .food-list .food-item .item-middle {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.page .food-list .food-item .item-middle .similar-name {
+  width: 202rpx;
+  height: 70rpx;
+  background: #f1f1f1;
+  border-radius: 35rpx;
+  font-size: 24rpx;
+  color: #535353;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+.page .food-list .food-item .item-middle .selectedPos {
+  background: #ed2c48;
+  color: #ffffff;
+  transition: 0.2s all;
+}
+.page .food-list .food-item .goTextSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18rpx;
+  font-size: 24rpx;
+  color: #b5b5b5;
+}
+.page .food-list .food-item .goTextSearch image {
+  width: 8rpx;
+  height: 20rpx;
+  margin-left: 14rpx;
+}
+.page .next-button {
+  width: 100%;
+  height: 128rpx;
+  box-shadow: 0px -2rpx 12rpx 0px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24rpx 0 34rpx;
+  box-sizing: border-box;
+  background: #fff;
+}
+.page .next-button .number .total-num {
+  font-size: 32rpx;
+  color: #434343;
+}
+.page .next-button .number .text {
+  font-size: 24rpx;
+  color: #acacac;
+}
+.page .next-button .next {
+  width: 266rpx;
+  height: 70rpx;
+  background: #ed2c48;
+  border-radius: 35rpx;
+  font-size: 28rpx;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom-popup {
+  box-shadow: 0px -4rpx 22rpx 0px rgba(0, 0, 0, 0.15);
+  border-radius: 24rpx 24rpx 4rpx 4rpx;
+}
+.custom-popup .search-container {
+  min-height: 50vh;
+  max-height: 70vh;
+  transition: all 3.5s;
+}
+.custom-popup .search-container .add-name {
+  font-size: 28rpx;
+  color: #353535;
+  margin: 50rpx 0 20rpx 32rpx;
+}
+.custom-popup .search-wrap {
+  margin-bottom: 18rpx;
+}
+.custom-popup .search-wrap .slot-search {
+  color: red;
+  margin: 0 30rpx;
+  font-size: 24rpx;
+  color: #848484;
+}
+.custom-popup .noDate {
+  width: 100%;
+  margin-top: 20%;
+  color: #aaa;
+  text-align: center;
+}
+.custom-popup .resultList {
+  padding-bottom: 30rpx;
+}
+.custom-popup .resultList .item {
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  height: 128rpx;
+  border-top: 1px solid #F7F7F7;
+}
+.custom-popup .resultList .item .search-food-name {
+  margin: 22rpx 0 8rpx 0;
+  font-size: 28rpx;
+  color: #353535;
+}
+.custom-popup .resultList .item .search-energy {
+  font-size: 24rpx;
+  color: #e09c51;
+}
+.w-100 {
+  width: 100%;
+}
+.h-100 {
+  height: 100%;
+}
+.wh-100 {
+  width: 100%;
+  height: 100%;
+}
+.dot-image {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+}
+.movable-area-wrap {
+  width: 100%;
+  height: 720rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.dot-view-container {
+  vertical-align: middle;
+}
+.image-background {
+  width: 100%;
+  min-height: 720rpx;
+  max-height: 1000rpx;
+  filter: blur(10rpx);
+  position: absolute;
+  z-index: -22;
+}
+.fix-image {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.annotated-image {
+  /* height: 100%; */
+  vertical-align: middle;
+}
+.card-title {
+  margin-left: 32rpx;
+  margin-top: 40rpx;
+  font-family: PingFangSC-Thin;
+  font-size: 28rpx;
+  color: #434343;
+  letter-spacing: 0.02px;
+  text-align: left;
+  position: relative;
+}
+.label-view {
+  align-items: center;
+  margin-top: 10rpx;
+}
+.movable-tag {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-family: PingFangSC-Medium, PingFang SC;
+  color: #ffffff;
+}
+.movable-tag .tag-number {
+  border-radius: 50%;
+  font-weight: 500;
+  font-size: 36rpx;
+  width: 60rpx;
+  height: 60rpx;
+  background: rgba(21, 21, 21, 0.97);
+  opacity: 0.67;
+  border: 4rpx solid #d5d5d5;
+}
+.movable-tag .tag-name {
+  padding: 4rpx 18rpx;
+  font-size: 24rpx;
+  white-space: nowrap;
+  background: rgba(21, 21, 21, 0.97);
+  border-radius: 38rpx;
+  opacity: 0.67;
+  border: 1px solid #d5d5d5;
+}
+.movable-tag image {
+  width: 30rpx;
+  height: 34rpx;
+  position: absolute;
+  top: 68rpx;
+  background: rgba(21, 21, 21, 0.97);
+}
+.movable-label {
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #757575;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.tag-candidates-list {
+  display: flex;
+  flex-wrap: wrap;
+  word-break: keep-all;
+  margin-top: 8rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  padding: 5px;
+  background: #ffffff;
+  box-shadow: 0 12rpx 34rpx 0 rgba(0, 0, 0, 0.1);
+  border-radius: 12rpx;
+}
+.round-tag {
+  padding: 24rpx 36rpx;
+  margin: 15rpx 10rpx;
+  border-radius: 50rpx;
+  border: 2rpx solid #757575;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular;
+  color: #353535;
+  text-align: left;
+}
+.round-tag-more {
+  padding: 24rpx 36rpx;
+  margin: 15rpx 10rpx;
+  border-radius: 50rpx;
+  border: 2rpx solid #757575;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular;
+  color: #888888;
+  text-align: left;
+}
+.selected-round-tag {
+  color: white;
+  background-color: #757575;
+  padding: 24rpx 36rpx;
+  margin: 15rpx 10rpx;
+  border-radius: 50rpx;
+  border: 2rpx solid #757575;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular;
+  text-align: left;
+}
+.card {
+  margin: 10px;
+  box-shadow: 2rpx 2rpx 2rpx 2rpx #d3d3d3;
+  border-radius: 2%;
+}
+.primary-btn {
+  border-radius: 20rpx;
+  margin: 20rpx 40rpx;
+  padding: 5px;
+  font-size: 35rpx;
+}
+.next-step-btn {
+  color: white;
+  background-color: #ed2c48;
+  border-radius: 20rpx;
+  width: 676rpx;
+  height: 108rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  letter-spacing: 0.14rpx;
+  text-align: center;
+  margin-top: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-more-btn {
+  background-color: #f8f8f8;
+  border-radius: 20rpx;
+  background: #f8f8f8;
+  border: 2px solid rgba(5, 5, 5, 0.1);
+  width: 676rpx;
+  height: 108rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #353535;
+  letter-spacing: 0.14rpx;
+  text-align: center;
+  margin-top: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-tagging-banner {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  z-index: 999;
+  background-color: #f1f1f1;
+}
+.image-banner-text {
+  color: #7f7f7f;
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+}
+.image-banner-delete-btn {
+  width: 17px;
+  height: 17px;
+  margin-top: 3px;
+  margin-right: 10px;
+  float: right;
+  text-align: center;
+  align-content: center;
+}
+.round-tag-more-text {
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  color: #888888;
+  text-align: left;
+}

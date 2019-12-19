@@ -1,0 +1,174 @@
+<!--pages/imageTag/index.wxml-->
+<view class="{{showPopup?'fixed':''}}">
+	
+<!-- <view class="image-tagging-banner" hidden='{{hideBanner}}'>
+	<text class="image-banner-text">长按图中食物，增加标签</text>
+	<image class="image-banner-delete-btn" src="/images/image_banner_tag_delete_icon.png" catchtap='dismissBanner' />
+</view> -->
+<image class='image-background' src='{{imageUrl}}' wx:if='{{imageHeight===720}}'/>
+
+<view class='movable-area-wrap' style="height:{{imageHeight}}rpx">
+	<movable-area 
+		class="dot-view-container" 
+		style='width:{{imageWidth}}rpx;height:{{imageHeight}}rpx'
+	>
+		<view class='fix-image'>
+			<image
+			 class="annotated-image"
+			 src="{{imageUrl}}"
+			 style='width:{{imageWidth}}rpx;height:{{imageHeight}}rpx'
+			 bindlongtap='handleCreateTag'
+			/>
+		</view>
+		<movable-view
+			x="{{item.tag_x}}"
+			y="{{item.tag_y}}"
+			class="movable-tag"
+			direction="all"
+			wx:for="{{taggs}}"
+			wx:key="{{index}}"
+			bindchange="onTagMove"
+			data-tag-index="{{index}}"
+			out-of-bounds="{{true}}"
+		>
+			<!-- bindtouchstart="onStartTouchTag" -->
+			<!-- style="height: {{item.tag_height}}px; width:{{item.result_list[item.selectedPos].food_name.length*18}}px;" -->
+			<!-- hidden='{{item.isDeleted}}' -->
+			<!-- <image src="{{currentTagIndex === index?'/images/selected_tag.png':'/images/unselected_tag.png'}}" style="width:36px;height:36px;" />
+			<view style="width:{{item.result_list[item.selectedPos].food_name.length*20}}px;" class="label-view">
+				<text class="movable-label" catchtap='onToggleDeleteTag' data-tag-index="{{index}}" style='font-size:14px; color: white;height: 20px;'>{{item.result_list[item.selectedPos].food_name}}</text>
+			</view>
+			<image
+			 src="/images/round_delete_icon.png"
+			 wx:if="{{currentTagIndex === index?true:false}}"
+			 catchtap='deleteTag'
+			 data-tag-index="{{index}}"
+			 style='width:30px;height:30px'
+			/> -->
+			<view class="tag-number">{{index+1}}</view>
+			<view class="tag-name">{{item.result_list[item.selectedPos].food_name}}</view>
+			<image
+			 src="/images/delete.png"
+			 catchtap='handleDeleteTag'
+			 data-text-index="{{index}}"
+			/>
+		</movable-view>
+	</movable-area>
+</view>
+
+<view class="page">
+  <view class="food-number">
+    <view class="num">共发现{{taggs.length}}种食物</view>
+    <view class="tips">如有漏掉食物，可长按图片增加标签哦～</view>
+  </view>
+  <view class="food-list">    
+    <block wx:for="{{taggs}}" wx:key='{{index+item}}'>
+      <view class="food-item">
+        <view class='item-top'>
+          <view class='num-name'>
+              <view class='num'>{{index+1}}</view>
+              <view class="name">{{item.result_list[item.selectedPos].food_name}}</view>
+          </view>
+          <image src='/images/delete_icon.png' data-text-index='{{index}}' bindtap='handleDeleteTag'/>
+        </view>
+        <view class='item-middle'>
+          <block 
+		  	wx:for="{{item.result_list}}" 
+			wx:key="{{index+it}}"
+			wx:for-item='it'
+			wx:for-index='idx'
+			>
+			<view 
+				class="similar-name {{idx===item.selectedPos?'selectedPos':''}}" 
+				wx:if='{{idx<6}}'
+				data-text-index='{{index}}'
+				data-text-idx='{{idx}}'
+				bindtap="handleTapSimilarName"
+			>{{it.food_name}}</view>
+          </block>
+        </view>
+		<view 
+			class='goTextSearch' 
+			data-text-index='{{index}}' 
+			bindtap='handleInputNameBySelf'
+			wx:if='{{item.tagType!==3}}'
+		>
+          <text>都不是 点击校准</text>
+          <image src="/images/rightArrow.png"/>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="next-button">
+    <view class="number">
+      <view class="total-num">{{taggs.length}}种食物</view>
+      <view class="text">待设置摄入分量</view>
+    </view>
+    <view class="next" bindtap='goConfirmMeal'>下一步</view>
+  </view>
+</view>
+
+<view>
+  <van-popup
+    show="{{ showPopup }}"
+    position="bottom"
+    bind:close="handleClosePopup"
+    closeable
+    custom-class='custom-popup'
+  >
+    <view class="search-container">
+		<view class="add-name">{{showPopupTitle}}</view>
+		<view class='search-wrap'>
+			<van-search
+				value="{{ keyword }}"
+				placeholder="请输入食物名称"
+				shape='round'
+				clearable
+				action-text='搜索'
+				show-action
+				use-action-slot
+				bind:change="handleInputSearchValue"
+				bind:search="performSearch"
+			>
+				<view slot="action" class='slot-search' bind:tap="performSearch">搜索</view>
+			</van-search>
+  		</view>
+		<view class="noDate" wx:if='{{resultError===true}}'>没有搜索到相关数据</view>
+		<view class='w-100' wx:else>
+			<view class="w-100 resultList" wx:if='{{resultList.length>0}}'>
+				<view catchtap='handleTapResultItem' class="item" wx:for="{{resultList}}" wx:key='{{item.id}}' data-text-index="{{index}}">
+					<view>
+						<view class="search-food-name">{{item.foodName}}</view>
+						<view class="search-energy">{{item.energy}}千卡/{{item.unit}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+  </van-popup>
+</view>
+
+
+<!-- <view class="page">
+	<view class="tag-candidates-list">
+		<text 
+      class="{{taggs[currentTagIndex].selectedPos===index?'selected-round-tag':'round-tag'}}" 
+      wx:for="{{taggs[currentTagIndex].result_list}}" 
+      wx:for-item="candidate" 
+      data-candidates-index="{{index}}" 
+      catchtap='onChangeTagPosition'
+    >{{candidate.food_name}}</text>
+		<view class="round-tag-more" catchtap='onAddTextSearchTag'>
+			<image src="/images/gray_plus_small.png" style="width:10px;height:10px;margin-right:5px;" />
+			<text class="round-tag-more-text">其他食物</text>
+		</view>
+	</view>
+
+	<view class="bottom">
+		<button class='next-step-btn' catchtap='naviToFoodDetailPage'>下一步</button>
+	</view>
+</view> -->
+
+
+</view>
+  

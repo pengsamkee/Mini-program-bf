@@ -4,10 +4,16 @@ export default {
     return fetch('/MiniprogramWebService.MealLogShare', data, 'POST')
   },
   foodNutritions(data) {
-    return fetch('/knowledgeCenter/foodNutritions', data, 'GET')
+    return fetch('/kc/miniProgram/nutrients', data, 'GET')
   },
   commonFoodList(data) {
-    return fetch('http://192.168.110.241:18082/rc/miniProgram/commonFoodList', data, 'GET')
+    return fetch('/rc/miniProgram/commonFoodList', data, 'GET')
+  },
+  getFoodUnitOption(data) {
+    return fetch('/kc/miniProgram/getFoodUnitOption', data, 'POST')
+  },
+  getFoodUnitOptionList(data) {
+    return fetch('/kc/miniProgram/getFoodUnitOptionList', data, 'POST')
   },
 
   

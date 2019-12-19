@@ -131,6 +131,7 @@ class FoodDiaryPage {
 
 
   public onLoad() {
+    wx.navigateTo({url:'./../../homeSub/pages/confirmMeal/index'})
     /**
      * 获取右上角胶囊尺寸，计算自定义标题栏位置
      */
@@ -661,14 +662,7 @@ class FoodDiaryPage {
         wx.showLoading({ title: "上传中...", mask: true });
         that.showPersonCheckLoading = true;
         let imagePath = res.tempFilePaths[0];
-        that.path = imagePath
-        //crop image then upload, follow by tagging process
-        // wx.navigateTo({
-        //   url: "/pages/weCropperPage/upload?imageUrl=" + imagePath + "&mealType=" + that.mealType + "&mealDate=" + that.mealDate
-
-          // url: "/pages/imageTag/index?imageUrl=" + imagePath + "&mealType=" + that.mealType + "&mealDate=" + that.mealDate
-            
-        // });
+        that.path = imagePath;
         uploadFile(imagePath, that.onImageUploadSuccess, that.onImageUploadFailed, that.onUploadProgressing, 0, 0);
       },
       fail: function (err: any) {
@@ -679,9 +673,8 @@ class FoodDiaryPage {
 
   public onImageUploadSuccess(){
     console.log("uploadSucess" + this.mealType + "," + this.mealDate);
-    // wx.hideLoading();
     wx.navigateTo({
-      url: '/pages/imageTag/index?imageUrl=' + this.path + "&mealType=" + this.mealType + "&mealDate=" + this.mealDate,
+      url: './../../homeSub/pages/imageTag/index?imageUrl=' + this.path + "&mealType=" + this.mealType + "&mealDate=" + this.mealDate,
     });
   }
 

@@ -46,10 +46,6 @@ page {
     text-align: left;
     font-size: 14px;
 }
-.theme-color,.theme-color-b{
-  background: #ed2c48;
-}
-
 
 /* 分页加载中...的样式 */
 .loading-wrap {

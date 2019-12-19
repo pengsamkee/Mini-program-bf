@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "识别结果",
+  "usingComponents": {
+    "van-popup":"./../../../components/vant/popup/index",
+    "van-picker":"./../../../components/vant/picker/index"
+  }
+}

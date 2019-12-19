@@ -90,7 +90,7 @@
           </view>
         </view>
       </view>
-      <view class='public-wrap'>
+      <view class='public-wrap' wx:if='{{commonFoodList.length>0}}'>
         <view class="title-wrap w-100">
           <view>常见</view>
           <view></view>
@@ -136,7 +136,7 @@
     overlay='{{false}}'
     custom-class='choosed-popup-custom-class'
   >
-    <image src="../../images/arrow_up.png" bindtap='toggleChoosedLists'></image>
+    <image src="{{showChoosedLists?'/images/textSearchDown.png':'/images/textSearchUp.png'}}" bindtap='toggleChoosedLists'></image>
     <view class="choose-content" bindtap='toggleChoosedLists'>
       <view class="choose-number">
         已选食物: {{choosedLists.length}}
@@ -195,17 +195,17 @@
   </van-popup>
 </view>
 
-<view>
+<view class="popup">
   <van-popup
     show="{{ showPicker }}"
     position="bottom"
     bind:close="onConfirm"
-    custom-class=''
+    custom-class='popup-custom-class'
   >
   <van-picker
     show-toolbar
     title=""
-    columns="{{ unitArr }}"
+    columns="{{[1,2,3,4,5,6]}}"
     bind:cancel="onConfirm"
     bind:confirm="onConfirm"
     bind:change='onChange'
@@ -216,7 +216,6 @@
   />
    </van-popup>
 </view>
-  
   
   
   

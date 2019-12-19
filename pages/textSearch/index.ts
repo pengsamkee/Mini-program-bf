@@ -3,6 +3,8 @@ import request from '../../api/app/interface';
 import { RetrieveTextSearchReq, RetrieveTextSearchResp, CreateOrUpdateMealLogReq, AddRecipeItemReq, MealLogResp } from "/api/app/AppServiceObjs"
 import * as globalEnum from '../../api/GlobalEnum'
 import * as textCache from './textCache/TextCache'
+import commonFoodList from './list.js'
+import moment = require('moment');
 
 type data = {
   keyword: String;
@@ -65,12 +67,61 @@ class textSearch {
    * 获取常见的食物列表
    */
   public getCommonFoodList(){
+    // const that = this
+    // request.commonFoodList({
+    // }).then(res=>{
+    //   that.setData({commonFoodList:res})
+    // }).catch(err=>{
+    //   console.log(err)
+    // })
+    let hour = parseInt(moment().format('HH'));
+    if(hour>=16){
+      (this as any).setData({commonFoodList:commonFoodList.c})
+      return
+    }else if(hour>=10){
+      (this as any).setData({commonFoodList:commonFoodList.b})
+      return
+    }else{
+      (this as any).setData({commonFoodList:commonFoodList.a})
+    }
+  }
+
+  /**
+   * 获取食物单位信息
+   */
+  public getFoodUnitOption(item){
     const that = this
-    request.commonFoodList({
+    request.getFoodUnitOption({
+      foodId:item.foodId,
+      foodType:item.foodType
     }).then(res=>{
-      that.setData({commonFoodList:res})
+      console.log('getFoodUnitOption',res)
+      that.parseFoodUnitOptionResp(res)
     }).catch(err=>{
-      console.log(err)
+      wx.showToast({
+        title:'获取食物信息失败',
+        icon:'none'
+      })
+    })
+  }
+  /**
+   * 解析获取到的食物单位信息
+   */
+  public parseFoodUnitOptionResp(res){
+    const arr = res.unitOption.map(item=>{
+      return {
+        name:item.unitName,
+        unitEnergy : Math.round(item.energy),
+        unit_id : item.unitId
+      }
+    })
+    const nameArr = arr.map(item=>item.name);
+    (this as any).setData({
+      foodNumValue:res.unitOption[0].unitWeight/100,
+      chooseUinitIndex:0, // 初始化数量100克
+      unitArr:nameArr,
+      foodUnitAndUnitEnergy:arr,
+      showPopup:true
     })
   }
 
@@ -117,7 +168,6 @@ class textSearch {
 
   public setResultList(resp: RetrieveTextSearchResp) {
     let results = [];
-
     if (resp.result_list.length==0) {
       (this as any).setData({
         resultList: [],
@@ -141,174 +191,42 @@ class textSearch {
         resultError: false
       });
     }
-
-
     console.log(this.data.resultList);
   }
 
-  /**
-   * three case
-   * 1.foodDiary -> textsearch -> foodDetailPage(return ingredient/receipe)
-   * 2.imageTag -> textsearch -> imageTag(return ingredient/receipe)
-   * 3.foodDetail -> textsearch -> foodDetail(return ingredient)
-   * common solution: set prevPage.data.textSearchItem
-   */
+ 
   public onTextSearchResultSelect(event: any) {
     let index = event.currentTarget.dataset.textIndex;
-    // let foodId = this.data.resultList[index].foodId;
-    // let foodName = this.data.resultList[index].foodName;
-    // let foodType = this.data.resultList[index].foodType;
-    // let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
-    const unit_option=[
-      {"unit_name":"克","weight":800,"unit_id":70},
-      {"unit_name":"鸡蛋大小","weight":36000,"unit_id":74},
-      {"unit_name":"碗","weight":21000,"unit_id":74}
-    ];
-    const arr = unit_option.map(item=>{
-      return ({ 
-        'name' : item.unit_name,
-        'unitEnergy' : item.weight/100,
-        'unit_id' : item.unit_id
-      })
-    })
-
-    const nameArr = arr.map(item=>item.name);
+    this.getFoodUnitOption(this.data.resultList[index]);
     (this as any).setData({
       recentResultSelectIndex:null,
       commonFoodIndex:null,
-      foodNumValue:100, // 初始化数量100克
-      chooseUinitIndex:0, // 初始化数量100克
       textSearchResultSelectIndex:index,
-      unitArr:nameArr,
-      foodUnitAndUnitEnergy:arr,
-      showPopup:true
     },()=>{
       textCache.setValue(this.data.resultList[index]);
       this.getRecentList();
     })
-    
-    // if (this.naviType === 0) {
-    //   wx.showLoading({ title: "加载中...", mask: true });
-    //   let results = [{ food_id: foodId, food_name: foodName, food_type: foodType }];
-    //   let food = { food_id: foodId, input_type: 2, food_type: foodType, recognition_results: results };
-    //   let foodList = [food];
-    //   let req = { meal_id: -1, meal_type: this.mealType, meal_date: this.mealDate, food_list: foodList };
-    //   webAPI.CreateOrUpdateMealLog(req).then(resp => {
-    //     wx.hideLoading({});
-    //     let param = {};
-    //     param.mealId = resp.meal_id;
-    //     param.imageUrl = imageUrl;
-    //     param.showShareBtn = false;
-    //     let paramJson = JSON.stringify(param);
-    //     wx.navigateTo({
-    //       url: "/pages/foodDetail/index?paramJson=" + paramJson
-    //     });
-    //   }).catch(err => {
-    //     wx.hideLoading({});
-    //     });
-    // } else {
-    //   let pages = getCurrentPages();
-    //   let prevPage = pages[pages.length - 2];
-    //   prevPage.textSearchFood = { food_id: foodId, food_name: foodName, food_type: foodType }
-    //   wx.navigateBack({
-    //     delta: 1
-    //   })
-    // }
-
-    // textCache.setValue(this.data.resultList[index]);
   }
   public handleTapCommonFoodItem(event: any){
     let index = event.currentTarget.dataset.textIndex;
-    const unit_option=[
-      {"unit_name":"克","weight":800,"unit_id":70},
-      {"unit_name":"鸡蛋大小","weight":36000,"unit_id":74},
-      {"unit_name":"碗","weight":21000,"unit_id":74}
-    ];
-    const arr = unit_option.map(item=>{
-      return ({ 
-        'name' : item.unit_name,
-        'unitEnergy' : item.weight/100,
-        'unit_id' : item.unit_id
-      })
-    })
-
-    const nameArr = arr.map(item=>item.name);
+    this.getFoodUnitOption(this.data.commonFoodList[index]);
     (this as any).setData({
       textSearchResultSelectIndex:null,
       recentResultSelectIndex:null,
-      foodNumValue:100, // 初始化数量100克
-      chooseUinitIndex:0, // 初始化数量100克
       commonFoodIndex:index,
-      unitArr:nameArr,
-      foodUnitAndUnitEnergy:arr,
-      showPopup:true
     })
     textCache.setValue(this.data.commonFoodList[index]);
+    this.getRecentList()
   }
 
   public onRecentResultSelect(event: any){
     let index = event.currentTarget.dataset.textIndex;
-    // let foodId = this.data.recentList[index].foodId;
-    // let foodName = this.data.recentList[index].foodName;
-    // let foodType = this.data.recentList[index].foodType;
-    // let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
-    const unit_option=[
-      {"unit_name":"克","weight":800,"unit_id":70},
-      {"unit_name":"鸡蛋大小","weight":36000,"unit_id":74},
-      {"unit_name":"碗","weight":21000,"unit_id":74}
-    ];
-    const arr = unit_option.map(item=>{
-      return ({ 
-        'name' : item.unit_name,
-        'unitEnergy' : item.weight/100,
-        'unit_id' : item.unit_id
-      })
-    })
-
-    const nameArr = arr.map(item=>item.name);
+    this.getFoodUnitOption(this.data.recentList[index]);
     (this as any).setData({
       textSearchResultSelectIndex:null,
       commonFoodIndex:null,
-      foodNumValue:100, // 初始化数量100克
-      chooseUinitIndex:0, // 初始化数量100克
       recentResultSelectIndex:index,
-      unitArr:nameArr,
-      foodUnitAndUnitEnergy:arr,
-      showPopup:true
-    },()=>{
-      
     })
-    // textCache.setValue(this.data.recentList[index]);
-
-    // if (this.naviType === 0) {
-    //   wx.showLoading({ title: "加载中...", mask: true });
-    //   let results = [{ food_id: foodId, food_name: foodName, food_type: foodType }];
-    //   let food = { food_id: foodId, input_type: 2, food_type: foodType, recognition_results: results };
-    //   let foodList = [food];
-    //   let req = { meal_id: -1, meal_type: this.mealType, meal_date: this.mealDate, food_list: foodList };
-    //   webAPI.CreateOrUpdateMealLog(req).then(resp => {
-    //     wx.hideLoading({});
-    //     let param = {};
-    //     param.mealId = resp.meal_id;
-    //     param.imageUrl = imageUrl;
-    //     param.showShareBtn = false;
-    //     let paramJson = JSON.stringify(param);
-    //     wx.navigateTo({
-    //       url: "/pages/foodDetail/index?paramJson=" + paramJson
-    //     });
-    //   }).catch(err => {
-    //     console.log(err);
-    //     wx.hideLoading({});
-    //   });
-    // } else {
-    //   let pages = getCurrentPages();
-    //   let prevPage = pages[pages.length - 2];
-    //   prevPage.textSearchFood = { food_id: foodId, food_name: foodName, food_type: foodType }
-    //   wx.navigateBack({
-    //     delta: 1
-    //   })
-    // }
-   
   }
 
   public deleteTextSearchCache(event: any){

@@ -413,24 +413,37 @@
         }
     }
 }
-.picker-custom-class{
-    .active-class{
-        font-size:32rpx;
-        font-family:PingFangSC-Regular,PingFang SC;
-        font-weight:400;
-        color:@base-color;
+.popup {
+    width: 100%;
+
+    .popup-custom-class {
+        box-shadow: 0px -4rpx 22rpx 0px rgba(0, 0, 0, 0.15);
+        border-radius: 24rpx 24rpx 4rpx 4rpx;
     }
-    .toolbar-class{
-        font-size:28px;
-        .van-picker__cancel{
-            color:rgba(100,100,100,1);
+
+    .picker-custom-class {
+        .active-class {
+            font-size: 32rpx;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: @base-color;
         }
-        .van-picker__confirm{
-            color:@base-color;
+
+        .toolbar-class {
+            font-size: 28px;
+
+            .van-picker__cancel {
+                color: rgba(100, 100, 100, 1);
+            }
+
+            .van-picker__confirm {
+                color: @base-color;
+            }
         }
-    }
-    .column-class{
-        font-size:28rpx;
-        color:#444;
+
+        .column-class {
+            font-size: 28rpx;
+            color: #444;
+        }
     }
 }
