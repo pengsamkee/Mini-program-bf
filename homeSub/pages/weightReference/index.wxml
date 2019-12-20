@@ -1,2 +1,31 @@
 <!--homeSub/pages/weightReference/index.wxml-->
-<text>homeSub/pages/weightReference/index.wxml</text>
+<view class="pages">
+    <view class="left-wrap">
+        <scroll-view class='scroll-left' scroll-y="true" >
+            <block wx:for="{{mock}}" wx:key="{{index}}">  
+                <view 
+                    class="left-item {{index===choosedIndex?'left-item-active':''}}" 
+                    bindtap="handleChooseCategory" 
+                    data-index="{{index}}"
+                >
+                    {{item.name}}
+                </view>  
+            </block>  
+        </scroll-view>
+    </view>
+    <view class="right-wrap">
+        <scroll-view class='scroll-right' scroll-y="true" enable-flex='{{true}}'>
+            <!-- <view class="ruler">
+                <view> 工具尺 </view>
+                <van-icon name="arrow" custom-class='icon'/>
+            </view> -->
+            <block wx:for="{{mock[choosedIndex].data}}" wx:key="{{index}}">  
+                <view class="right-item" bindtap="" data-id="{{index}}">
+                    <image class="" src="" />
+                    <view> {{item.text}}</view> 
+                </view>  
+            </block>  
+        </scroll-view>
+    </view>
+</view>
+  

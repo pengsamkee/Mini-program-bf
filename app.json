@@ -67,7 +67,8 @@
         "pages/mealAnalysis/index",
         "pages/imageTag/index",
         "pages/confirmMeal/index",
-        "pages/weightReference/index"
+        "pages/weightReference/index",
+        "pages/foodDetail/index"
       ]
     },
     {

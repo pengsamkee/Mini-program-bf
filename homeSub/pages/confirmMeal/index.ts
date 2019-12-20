@@ -234,6 +234,12 @@ class ConfirmMeal {
         totalEnergy = Math.round(totalEnergy);
         (this as any).setData({totalEnergy:totalEnergy})
     }
+    /**
+     * 跳转到分量估算页面
+     */
+    public handleGoWeightReferencePage(){
+        wx.navigateTo({ url: './../weightReference/index' })
+    }
 }
 
 Page(new ConfirmMeal());

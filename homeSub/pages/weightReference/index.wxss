@@ -1,1 +1,71 @@
-/* homeSub/pages/weightReference/index.wxss */
+page {
+  height: 100%;
+  width: 100%;
+}
+.pages {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+}
+.pages .left-wrap {
+  width: 180rpx;
+  height: 100%;
+}
+.pages .left-wrap .scroll-left {
+  height: 100%;
+  width: 100%;
+  background: #f6f6f6;
+}
+.pages .left-wrap .scroll-left .left-item {
+  height: 154rpx;
+  width: 100%;
+  color: #363636;
+  background: #f6f6f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pages .left-wrap .scroll-left .left-item-active {
+  background: #ffffff;
+}
+.pages .right-wrap {
+  flex: 1;
+  height: 100%;
+}
+.pages .right-wrap .scroll-right {
+  height: 100%;
+  width: 100%;
+}
+.pages .right-wrap .scroll-right .ruler {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #ff7f29;
+  padding: 50rpx 34rpx 0rpx 0;
+  box-sizing: border-box;
+}
+.pages .right-wrap .scroll-right .ruler .icon {
+  margin: 0 34rpx 0rpx 10rpx;
+}
+.pages .right-wrap .scroll-right .right-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pages .right-wrap .scroll-right .right-item:nth-of-type(1) {
+  margin-top: 50rpx;
+}
+.pages .right-wrap .scroll-right .right-item image {
+  width: 506rpx;
+  height: 224rpx;
+  border-radius: 8rpx;
+  background: #949494;
+}
+.pages .right-wrap .scroll-right .right-item view {
+  color: #787878;
+  margin: 16rpx 0 32rpx 0;
+}

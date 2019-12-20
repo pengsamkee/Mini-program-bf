@@ -136,7 +136,7 @@
     overlay='{{false}}'
     custom-class='choosed-popup-custom-class'
   >
-    <image src="{{showChoosedLists?'/images/textSearchDown.png':'/images/textSearchUp.png'}}" bindtap='toggleChoosedLists'></image>
+    <image src='/images/textSearchUp.png' bindtap='toggleChoosedLists' class="{{showChoosedLists?'up':'down'}}"/>
     <view class="choose-content" bindtap='toggleChoosedLists'>
       <view class="choose-number">
         已选食物: {{choosedLists.length}}
@@ -166,7 +166,7 @@
       }}
     </view>
     <view class="calories">
-      {{foodNumValue*foodUnitAndUnitEnergy[chooseUinitIndex].unitEnergy}}千卡/{{foodNumValue}}{{unitArr[chooseUinitIndex]}}
+      {{foodNumValue*foodUnitAndUnitEnergy[chooseUinitIndex].unitEnergy}}千卡/{{unitArr[chooseUinitIndex]==='100克'?foodNumValue+'x':foodNumValue}}{{unitArr[chooseUinitIndex]}}
     </view>
     <view class="weight-container">
       <view class='public'>
@@ -176,7 +176,7 @@
         value='{{foodNumValue}}' 
         bindinput="handleFoodNumInput" 
         type="digit"
-        maxlength="{{foodNumValueMaxlength}}"
+        maxlength="2"
       />
       </view>
       <view class='public' bindtap='showPicker'>
@@ -205,7 +205,7 @@
   <van-picker
     show-toolbar
     title=""
-    columns="{{[1,2,3,4,5,6]}}"
+    columns="{{unitArr}}"
     bind:cancel="onConfirm"
     bind:confirm="onConfirm"
     bind:change='onChange'

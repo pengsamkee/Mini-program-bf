@@ -131,7 +131,7 @@ class FoodDiaryPage {
 
 
   public onLoad() {
-    wx.navigateTo({url:'./../../homeSub/pages/confirmMeal/index'})
+    // wx.navigateTo({url:'./../../homeSub/pages/foodDetail/index'})
     /**
      * 获取右上角胶囊尺寸，计算自定义标题栏位置
      */

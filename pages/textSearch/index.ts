@@ -39,7 +39,6 @@ class textSearch {
     unitArr:['克','碗','把','捧','盆','瓢'],
     foodUnitAndUnitEnergy:[],
     foodNumValue:100,
-    foodNumValueMaxlength:3,
     chooseUinitIndex:0, // 用户选择了picker中的index
     textSearchResultSelectIndex:null, // 用户点击文字搜索列表中的哪一项
     recentResultSelectIndex:null, // 用户点击了历史缓存数组中的index
@@ -215,8 +214,8 @@ class textSearch {
       recentResultSelectIndex:null,
       commonFoodIndex:index,
     })
-    textCache.setValue(this.data.commonFoodList[index]);
-    this.getRecentList()
+    // textCache.setValue(this.data.commonFoodList[index]);
+    // this.getRecentList()
   }
 
   public onRecentResultSelect(event: any){
@@ -293,7 +292,9 @@ class textSearch {
    * 用户输入食物的份数
    */
   public handleFoodNumInput(e:any){
-    (this as any).setData({foodNumValue:parseInt(e.detail.value)})
+    let foodNumValue = parseInt(e.detail.value);
+    // foodNumValue = isNaN(foodNumValue) ? 0 : foodNumValue;
+    (this as any).setData({foodNumValue:foodNumValue})
   }
   /**
    * 展示picker，选择食物单位
@@ -306,9 +307,6 @@ class textSearch {
   }
   public onChange(e:any){
     let chooseUinitIndex:number = e.detail.index;
-    if(this.data.unitArr[chooseUinitIndex]==='克'){
-      (this as any).setData({foodNumValueMaxlength:3})
-    }
     (this as any).setData({chooseUinitIndex:chooseUinitIndex})
   }
   /**

@@ -1,0 +1,84 @@
+
+<view class="{{showPopup?'fixed':''}}">
+
+<image class='image-background' src='{{imageUrl}}' wx:if='{{imageHeight===720}}'/>
+
+<view class='movable-area-wrap' style="height:{{imageHeight}}rpx">
+	<movable-area 
+		class="dot-view-container" 
+		style='width:{{imageWidth}}rpx;height:{{imageHeight}}rpx'
+	>
+		<view class='fix-image'>
+			<image
+			 class="annotated-image"
+			 src="{{imageUrl}}"
+			 style='width:{{imageWidth}}rpx;height:{{imageHeight}}rpx'
+			/>
+		</view>
+		<movable-view
+			x="{{item.tagX}}"
+			y="{{item.tagY}}"
+			class="movable-tag"
+			direction="all"
+			wx:for="{{taggs}}"
+			wx:key="{{index}}"
+			bindchange="onTagMove"
+			data-tag-index="{{index}}"
+			out-of-bounds="{{true}}"
+		>
+			<view class="tag-number">{{index+1}}</view>
+			<view class="tag-name">{{item.resultList[item.selectedPos].food_name}}</view>
+			<image
+                src="/images/delete.png"
+                catchtap='handleDeleteTag'
+                data-text-index="{{index}}"
+			/>
+		</movable-view>
+	</movable-area>
+</view>
+
+<view class="page">
+  <view class="canvas-info">
+    <view class='left'>
+      <view class='canvas-wrap'>
+        <ff-canvas id='canvasf2' canvas-id="canvasf2" opts="{{ opts }}"></ff-canvas>
+      </view>
+    </view>
+    <view class='right'>
+      <view class='right-enegry'>{{totalEnergy}}145</view>
+      <view class='right-total-enegry'>千卡</view>
+    </view>
+  </view>
+
+
+  <view class="tag-list">
+	<block wx:for="{{taggs}}" wx:key='{{taggs.foodId}}'>
+		<view class="item">
+			<view class="tag-left">{{index+1}}</view>
+			<view class="tag-right">
+				<view class="food-info">
+					<view class="food-name">{{item.foodName}}</view>
+					<view class="food-weight">
+						{{}}6574}千卡、2分
+					</view>
+				</view>
+				<van-icon name='delete' color='#FFB400' custom-class='icon-custom-class'
+				data-text-index = '{{index}}'
+				bind:click='handleDeleteTag'/>
+			</view>
+			  
+		</view>
+	</block>
+  </view>
+	
+
+  <view class="next-button">
+	  <view class="share" bindtap='handleGoSharePage'>
+		  <van-icon name="share" size='40rpx'/>
+		  <view>生成美图并分享</view>
+	  </view>
+  </view>
+</view>
+
+</view>
+  

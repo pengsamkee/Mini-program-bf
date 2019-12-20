@@ -152,7 +152,7 @@ class ImageTagPage {
     var that:any = this;
     webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token)); 
     (this as any).setData({ imageUrl: option.imageUrl });
-    console.log(option.mealType + "," + option.mealDate);
+    console.log('页面加载时的option.imageurl',option.imageUrl)
     wx.getImageInfo({
       src: option.imageUrl,
       success(res) {

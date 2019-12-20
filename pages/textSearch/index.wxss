@@ -254,6 +254,13 @@
   width: 24rpx;
   height: 24rpx;
 }
+.choose-food-container .choosed-popup-custom-class .up {
+  transition: all 0.6s;
+}
+.choose-food-container .choosed-popup-custom-class .down {
+  transition: all 0.6s;
+  transform: rotate(180deg);
+}
 .choose-food-container .choosed-popup-custom-class .choose-content {
   flex: 1;
 }
