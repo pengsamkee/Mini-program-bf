@@ -75,6 +75,9 @@ page {
   height: 146rpx;
   width: 100%;
 }
+.page .tag-list .item:nth-last-of-type(1) .tag-right {
+  border-bottom: 1px solid #fff;
+}
 .page .tag-list .item .tag-left {
   width: 46rpx;
   height: 46rpx;

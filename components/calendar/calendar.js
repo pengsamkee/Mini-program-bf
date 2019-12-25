@@ -68,7 +68,6 @@ Component({
       if (this.data.isOpen) {
         return
       }
-      console.log('触发dateSelection')
       let self = this;
       if (self.data.calShow) {
         self.setData({
@@ -210,7 +209,6 @@ Component({
       }
 
       canlender = canlender.concat(dates.lastMonthDays, dates.currentMonthDys, dates.nextMonthDays)
-      console.log('canlender=====', canlender)
       // 拼接数组  上个月开始几天 + 本月天数+ 下个月开始几天
       for (let i = 0; i < canlender.length; i++) {
         if (i % 7 == 0) {

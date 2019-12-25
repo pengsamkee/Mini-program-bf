@@ -15,6 +15,21 @@ export default {
   getFoodUnitOptionList(data) {
     return fetch('/kc/miniProgram/getFoodUnitOptionList', data, 'POST')
   },
+  recognizeFood(data) {
+    return fetch('/rc/miniProgram/recognizeFood', data, 'POST')
+  },
+  createMealLog(data) {
+    return fetch('/rc/miniProgram/createMealLog', data, 'POST')
+  },
+  getMealLogSummary(data) {
+    return fetch('/rc/miniProgram/getMealLogSummary', data, 'POST')
+  },
+  deleteMealLog(data) {
+    return fetch('/rc/miniProgram/deleteMealLog', data, 'POST')
+  },
+  deleteFoodLog(data) {
+    return fetch('/rc/miniProgram/deleteFoodLog', data, 'POST')
+  },
 
   
   // getPoidetail(data) {

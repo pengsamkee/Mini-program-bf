@@ -62,7 +62,7 @@
       <text class="top-text-area" catchtap="performSearch">搜索</text>
     </view>
   </view>
-  <view class="noDate" wx:if='{{resultError===true}}'>没有找到与您查询的 “{{keyword}}” 食物名称</view>
+  <view class="noDate" wx:if='{{resultError===true}}'>没有找到您查询的 “{{keyword}}” 食物名称</view>
   <view class='w-100' wx:else>
     <view class="w-100 resultList" wx:if='{{resultList.length>0}}'>
       <view catchtap='onTextSearchResultSelect' class="weui-cell navigator" hover-class="weui-cell_active" wx:for="{{resultList}}" wx:key='{{item.id}}' data-text-index="{{index}}">
@@ -187,7 +187,7 @@
         </view>
       </view>
     </view>
-    <view class="estimate">如何估算分量?</view>
+    <view class="estimate" bindtap='goWeightReferencePage'>如何估算分量?</view>
     <view class="add-food-item" hover-class="view-hover" bindtap='handleAddFood'>
       添加至已选
     </view>

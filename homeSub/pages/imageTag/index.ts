@@ -1,6 +1,7 @@
 import * as webAPI from '../../../api/app/AppService';
 import { RetrieveRecognitionReq, RetrieveRecognitionResp } from "/api/app/AppServiceObjs";
 import * as globalEnum from '../../../api/GlobalEnum';
+import request from '../../../api/app/interface'
 
 
 type Data = {
@@ -12,37 +13,31 @@ type Data = {
   imageWidth:number;
 }
 type Tag = {
-  isDeleted: boolean;
-  tag_x: number;
-  tag_y: number;
-  bbox_x:number;
-  bbox_y: number;
-  bbox_w: number;
-  bbox_h: number;
-  tag_height: number;
-  food_type: number;  //1.receipe 2. receipe
+  tagX: number;
+  tagY: number;
+  bboxX:number;
+  bboxY: number;
+  bboxW: number;
+  bboxH: number;
+  foodType: number;  //1.receipe 2. receipe
   tagType: number; //1 recognition, 2 textSearch 3.additionalSearch
-  showDeleteBtn: false;
   selectedPos: number;
-  result_list: Result[];
-}
-
-type Result = {
-  food_id: number;
-  food_name: string;
-  food_type: number;
+  resultList: Result[];
 }
 
 class ImageTagPage {
   public mealId = -1;
   public incrementalId = 0;
-  public textSearchFood: Result = undefined;
-  public mealDate = 0;
-  public mealType = 0;
+  public textSearchFood = undefined;
+  public mealDate = 0; // 首页传递进来的
+  public mealType = 0; // 首页传递进来的
   // public screenWidth = 0;
   public divideproportion=0;//真实宽度除以720rpx；
   public scrollTop = 0; // 为了自动滚动到之前的位置
   public createTag = null; // 用户长按图片所创建的临时tag
+  public imgH = null; // 识别图片后，后台返回的图片高度
+  public imgW = null; // 识别图片后，后台返回的图片宽度
+  public imgKey =null; // 裁剪上个页面传来的img路径得到
   public data: Data = {
     //mockup tag list
     currentTagIndex: 0,
@@ -52,92 +47,7 @@ class ImageTagPage {
     hideBanner: false,
     imageWidth:0,
     imageHeight:0,
-    screenWidth:0,
-    res:{
-      img_key: "wx4714ce5383005530.o6zAJs0hy6nHM2owj6wIkyE1hfKg.leqHBlfKkOfW68a1a8e45f84ba38d33f958514ca4f55.jpg",
-      meal_id: 20551,
-      prediction: [
-        {
-          bbox_h: 100,
-          bbox_w: 91,
-          bbox_x: 0,
-          bbox_y: 193,
-          food_id: 469,
-          food_name: "柠檬",
-          food_type: 2,
-          result_list: [
-            {food_id: 469, food_type: 2, food_name: "柠檬", score: 95},
-            {food_id: 456, food_type: 2, food_name: "橙", score: 1},
-            {food_id: 492, food_type: 2, food_name: "哈密瓜", score: 1},
-            {food_id: 1321, food_type: 2, food_name: "橙汁", score: 0},
-            {food_id: 1322, food_type: 2, food_name: "柠檬汽水", score: 0},
-            {food_id: 362, food_type: 2, food_name: "长把梨", score: 0},
-            {food_id: 454, food_type: 2, food_name: "中华猕猴桃[毛叶猕猴桃,奇异果]", score: 0},
-          ],
-          tag_x: 45,
-          tag_y: 243,
-        },
-        {
-          bbox_h: 80,
-          bbox_w: 97,
-          bbox_x: 306,
-          bbox_y: 0,
-          food_id: 469,
-          food_name: "柠檬",
-          food_type: 2,
-          result_list: [
-            {food_id: 469, food_type: 2, food_name: "柠檬", score: 36},
-            {food_id: 353, food_type: 2, food_name: "青香蕉苹果", score: 29},
-            {food_id: 362, food_type: 2, food_name: "长把梨", score: 8},
-            {food_id: 492, food_type: 2, food_name: "哈密瓜", score: 4},
-            {food_id: 456, food_type: 2, food_name: "橙", score: 3},
-            {food_id: 1321, food_type: 2, food_name: "橙汁", score: 3},
-            {food_id: 1322, food_type: 2, food_name: "柠檬汽水", score: 3},
-          ],
-          tag_x: 354,
-          tag_y: 40,
-        },
-        {
-          bbox_h: 178,
-          bbox_w: 201,
-          bbox_x: 309,
-          bbox_y: 104,
-          food_id: 963,
-          food_name: "焦糖布丁",
-          food_type: 1,
-          result_list: [
-            {food_id: 963, food_type: 1, food_name: "焦糖布丁", score: 33},
-            {food_id: 220, food_type: 1, food_name: "香油鸡蛋羹", score: 33},
-            {food_id: 5, food_type: 1, food_name: "紫菜蛋汤", score: 26},
-            {food_id: 300, food_type: 1, food_name: "豆腐海带汤", score: 26},
-            {food_id: 162, food_type: 1, food_name: "大饼", score: 14},
-            {food_id: 244, food_type: 1, food_name: "玉米面饼", score: 14},
-            {food_id: 671, food_type: 1, food_name: "清炖鸡", score: 5}
-          ],
-          tag_x: 409,
-          tag_y: 193,
-        },
-        {
-          bbox_h: 297,
-          bbox_w: 239,
-          bbox_x: 50,
-          bbox_y: 32,
-          food_id: 122,
-          food_name: "水煮鱼片",
-          food_type: 1,
-          result_list: [
-            {food_id: 122, food_type: 1, food_name: "水煮鱼片", score: 100},
-            {food_id: 38, food_type: 1, food_name: "酸菜鱼", score: 100},
-            {food_id: 733, food_type: 1, food_name: "虾天妇罗", score: 0},
-            {food_id: 512, food_type: 1, food_name: "酥衣凤尾虾", score: 0},
-            {food_id: 666, food_type: 1, food_name: "雀巢黑椒牛柳", score: 0},
-            {food_id: 650, food_type: 1, food_name: "牛肉饭", score: 0}
-          ],
-          tag_x: 169,
-          tag_y: 180,
-        }
-      ]
-    },
+    // screenWidth:0,
     showPopup:false, // 是否展示popup，以供用户自己输入tag名字
     keyword:'',
     resultList: [],
@@ -148,7 +58,6 @@ class ImageTagPage {
   }
 
   public onLoad(option: any) {
-    // this.parseRecognitionData(this.data.res); // ===xinjiade===================================================================================================================================================
     var that:any = this;
     webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token)); 
     (this as any).setData({ imageUrl: option.imageUrl });
@@ -175,21 +84,15 @@ class ImageTagPage {
     this.mealDate = parseInt(option.mealDate);
     wx.getSystemInfo({
       success: function (res) {
-        // that.screenWidth = res.windowWidth;
+        that.screenWidth = res.windowWidth;
         (that as any).setData({
-          screenWidth: res.windowWidth
-        })
-        console.log("convert rate:" + 750 / res.windowWidth);
-        console.log("pixel ratio:" + res.pixelRatio);
-        (that as any).setData({
+          screenWidth: res.windowWidth,
           pixelRatio: res.pixelRatio
         })
       }
     });
-    var imagePath = option.imageUrl.split("/").pop();
-    console.log(imagePath);
-    this.getRecognitionResult(imagePath);//===yincangde===============================================================================
-    // this.getBannerStatus();
+    this.imgKey = option.imageUrl.split("/").pop();
+    this.getRecognitionResult(this.imgKey);
   }
 
   // public onShow() {
@@ -200,7 +103,7 @@ class ImageTagPage {
     //   let result = [{ food_id: this.textSearchFood.food_id, food_name: foodName, food_type: this.textSearchFood.food_type }];
     //   let tagY = this.data.taggs[this.data.currentTagIndex].tag_y;
     //   let tagX = this.data.taggs[this.data.currentTagIndex].tag_x;
-    //   let tag = { food_id: this.textSearchFood.food_id, food_name: this.textSearchFood.food_name, food_type: this.textSearchFood.food_type, isDeleted: false, selectedPos: 0, showDeleteBtn: false, tag_x: tagX, tag_y: tagY, tag_height: 95, result_list: result };
+    //   let tag = { food_id: this.textSearchFood.food_id, food_name: this.textSearchFood.food_name, food_type: this.textSearchFood.food_type, selectedPos: 0, showDeleteBtn: false, tag_x: tagX, tag_y: tagY, result_list: result };
     //   (this as any).setData({
     //     [operation]: tag,
     //   });
@@ -219,46 +122,21 @@ class ImageTagPage {
     this.scrollTop = e.scrollTop;
   }
 
-  // public getBannerStatus() {
-  //   let hideBanner = wx.getStorageSync(globalEnum.globalkey_hideBanner);
-  //   console.log(hideBanner);
-  //   (this as any).setData({
-  //     hideBanner: hideBanner
-  //   });
-  // }
-
-  // public dismissBanner(){
-  //   var that= this;
-  //   wx.showModal({
-  //     title:"",
-  //     content:"确定不再展示此提示?",
-  //     success(res) {
-  //       if (res.confirm) {
-  //         //setting global virable
-  //         wx.setStorageSync(globalEnum.globalkey_hideBanner,true);
-  //         (that as any).setData({
-  //           hideBanner: true
-  //         });
-  //       }
-  //     }
-  //   });
-  // }
 /**
  * 发出识别图片中食物的api
  */
   public getRecognitionResult(imageKey: String) {
     var that = this;
     wx.showLoading({ title: "识别中...", mask: true });
-    let req: RetrieveRecognitionReq = { img_key: imageKey, meal_date: this.mealDate, meal_type: this.mealType };
-    webAPI.RetrieveRecognition(req).then(resp => {
+    let req: RetrieveRecognitionReq = { mealType: this.mealType,mealDate:this.mealDate,imageKey};
+    request.recognizeFood(req).then(resp => {
       that.parseRecognitionData(resp);
-      wx.hideLoading({});
     }).catch(err => {
-      wx.hideLoading({});
+      wx.hideLoading();
       wx.showModal({
-          title: '获取识别结果失败',
-          content: JSON.stringify(err),
-          showCancel: false
+        title: '获取识别结果失败',
+        content: JSON.stringify(err),
+        showCancel: false
       });
     });
   }
@@ -268,33 +146,31 @@ class ImageTagPage {
    */
   public parseRecognitionData(resp: RetrieveRecognitionResp) {
     let taggs = [];
-    for (let index in resp.prediction) {
-      let predictionItem = resp.prediction[index];
-      let resultList = resp.prediction[index].result_list;
+    console.log('分辨率 ',this.data.pixelRatio)
+    for (let index in resp.predictionInfoList) {
+      let predictionItem = resp.predictionInfoList[index];
+      let resultList = resp.predictionInfoList[index].recognitionResultList;
       let item = {
-        tag_x: predictionItem.tag_x / (this.divideproportion * 2),
-        tag_y: predictionItem.tag_y / (this.divideproportion * 2),
-        bbox_x: predictionItem.bbox_x,
-        bbox_y: predictionItem.bbox_y,
-        bbox_w: predictionItem.bbox_w,
-        bbox_h: predictionItem.bbox_h,
-        food_id: predictionItem.food_id,
-        food_type: predictionItem.food_type,
-        food_name: predictionItem.food_name,
-        tag_height: index == 0 ? 95 : 65 ,
+        tagX: predictionItem.tagX / (this.divideproportion * 2),
+        tagY: predictionItem.tagY / (this.divideproportion * 2),
+        bboxX: predictionItem.bboxX,
+        bboxY: predictionItem.bboxY,
+        bboxW: predictionItem.bboxW,
+        bboxH: predictionItem.bboxH,
+        foodId: predictionItem.foodId,
+        foodType: predictionItem.foodType,
+        foodName: predictionItem.foodName,
         selectedPos: 0,
-        isDeleted: false,
-        showDeleteBtn: false,
-        result_list: resultList
+        resultList: resultList
       };
       taggs.push(item);
     }
-    this.mealId = resp.meal_id;
-    (this as any).setData({
-      taggs: taggs
-    },()=>{
-      console.log('整理得到初始taggs',this.data.taggs)
-    });
+    console.log(8787787878,taggs)
+    this.mealId = resp.mealId;
+    this.imgH = resp.imgH;
+    this.imgW = resp.imgW;
+    (this as any).setData({ taggs: taggs });
+    wx.hideLoading()
   }
   /**
    * 点击pos，用户选中某个pos
@@ -303,11 +179,10 @@ class ImageTagPage {
     const index = e.currentTarget.dataset.textIndex;
     const idx = e.currentTarget.dataset.textIdx;
     let taggs = [...this.data.taggs];
-    console.log(77777,taggs)
     taggs[index].selectedPos = idx;
-    taggs[index].food_name = taggs[index].result_list[idx].food_name;
-    taggs[index].food_id = taggs[index].result_list[idx].food_id;
-    taggs[index].food_type = taggs[index].result_list[idx].food_type;
+    taggs[index].foodName = taggs[index].resultList[idx].foodName;
+    taggs[index].foodId = taggs[index].resultList[idx].foodId;
+    taggs[index].foodType = taggs[index].resultList[idx].foodType;
     (this as any).setData({taggs:taggs},()=>{
       console.log(this.data.taggs)
     })
@@ -317,7 +192,8 @@ class ImageTagPage {
    */
   public handleDeleteTag(e:any){
     const index = e.currentTarget.dataset.textIndex;
-    let taggs = [...this.data.taggs];
+    // let taggs = [...this.data.taggs];
+    let taggs = JSON.parse(JSON.stringify(this.data.taggs));
     taggs.splice(index,1);
     (this as any).setData({taggs:taggs})
   }
@@ -341,6 +217,10 @@ class ImageTagPage {
    */
   public handleClosePopup(){
     (this as any).setData({showPopup:false});
+    wx.pageScrollTo({
+      scrollTop: this.data.scrollTop,
+      duration: 0
+    });
   }
   /**
    * 获取用户输入文字
@@ -362,7 +242,7 @@ class ImageTagPage {
   /**
   * 解析接口的数据
   */
-  public setResultList(resp: RetrieveTextSearchResp) {
+  public setResultList(resp) {
     let results = [];
     if (resp.result_list.length == 0) {
       (this as any).setData({
@@ -385,6 +265,8 @@ class ImageTagPage {
       (this as any).setData({
         resultList: results,
         resultError: false
+      },()=>{
+        console.log('resultList',this.data.resultList)
       });
     }
   }
@@ -398,41 +280,40 @@ class ImageTagPage {
     if(this.createTag){ // 用户长按图片
       this.createTag={
         ...this.createTag,
-        result_list: [{
-          food_id: item.foodId,
-          food_name: item.foodName,
-          food_type: item.foodType
+        resultList: [{
+          foodId: item.foodId,
+          foodName: item.foodName,
+          foodType: item.foodType
         }],
-        food_id: item.foodId,
-        food_name: item.foodName,
-        food_type: item.foodType
+        foodId: item.foodId,
+        foodName: item.foodName,
+        foodType: item.foodType
       }
       taggs.push(this.createTag);
       this.createTag = null;
       let resp = {
-        meal_id:this.mealId,
+        mealId:this.mealId,
         prediction:[...taggs],
       };
       (this as any).setData({
         taggs:taggs,
         showPopup:false,
       },()=>{
-        // this.parseRecognitionData(resp)
         wx.pageScrollTo({
           scrollTop: this.data.scrollTop,
           duration: 0
         });
       })
     }else{ // 用户点击校准按钮
-      taggs[this.data.tagIndex].result_list[0]={
-        food_id: item.foodId,
-        food_name: item.foodName,
-        food_type: item.foodType
+      taggs[this.data.tagIndex].resultList[0]={
+        foodId: item.foodId,
+        foodName: item.foodName,
+        foodType: item.foodType
       };
       taggs[this.data.tagIndex].selectedPos = 0;
-      taggs[this.data.tagIndex].food_id = item.foodId;
-      taggs[this.data.tagIndex].food_name = item.foodName;
-      taggs[this.data.tagIndex].food_type = item.foodType;
+      taggs[this.data.tagIndex].foodId = item.foodId;
+      taggs[this.data.tagIndex].foodName = item.foodName;
+      taggs[this.data.tagIndex].foodType = item.foodType;
       (this as any).setData({
         taggs:taggs,
         showPopup:false,
@@ -440,8 +321,7 @@ class ImageTagPage {
         wx.pageScrollTo({
           scrollTop: this.data.scrollTop,
           duration: 0
-        });
-        console.log('=====4',this.data.taggs)
+        })
       })
     }
   }
@@ -450,9 +330,18 @@ class ImageTagPage {
    * 点击下一步，进入确认分量页面
    */
   public goConfirmMeal(){
+    let taggsTemp = [...this.data.taggs];
+    taggsTemp.map(item=>{
+      item.tagX = item.tagX * this.divideproportion * 2
+      item.tagY = item.tagY * this.divideproportion * 2
+    });
     const mealInfo = {
-      mealId:this.mealId,
-      taggs:[...this.data.taggs]
+      mealDate:this.mealDate,
+      mealType:1,
+      imgKey:this.imgKey,
+      imgH:this.imgH,
+      imgW:this.imgW,
+      taggs:taggsTemp
     }
     const jsonMealInfo = JSON.stringify(mealInfo);
     wx.navigateTo({url:`./../confirmMeal/index?jsonMealInfo=${jsonMealInfo}`})
@@ -465,12 +354,10 @@ class ImageTagPage {
   //   let taggs = [
   //     {
   //       tagType: 1,
-  //       isDeleted: false,
   //       selectedPos: 0,
   //       result_list: [
   //         { food_id: 0, food_name: "西兰花炒腊肉" }, { food_id: 0, food_name: "水煮青菜" }, { food_id: 0, food_name: "木须肉" }, { food_id: 0, food_name: "番茄炒鸡蛋" }, { food_id: 0, food_name: "麻婆豆腐" },
   //       ],
-  //       showDeleteBtn: false,
   //       food_id: 0,
   //       food_name: "西兰花炒腊肉",
   //       tag_x: 50,
@@ -478,12 +365,10 @@ class ImageTagPage {
   //     },
   //     {
   //       tagType: 1,
-  //       isDeleted: false,
   //       selectedPos: 0,
   //       result_list: [
   //         { food_id: 0, food_name: "米饭" }, { food_id: 0, food_name: "花卷" }, { food_id: 0, food_name: "牛奶" }, { food_id: 0, food_name: "白巧克力" }
   //       ],
-  //       showDeleteBtn: false,
   //       food_id: 0,
   //       food_name: "米饭",
   //       tag_x: 300,
@@ -491,12 +376,10 @@ class ImageTagPage {
   //     },
   //     {
   //       tagType: 1,
-  //       isDeleted: false,
   //       selectedPos: 0,
   //       result_list: [
   //         { food_id: 0, food_name: "炒油麦菜" }, { food_id: 0, food_name: "炒小白菜" }, { food_id: 0, food_name: "炒地瓜叶" }, { food_id: 0, food_name: "炒空心菜" }
   //       ],
-  //       showDeleteBtn: false,
   //       food_id: 0,
   //       food_name: "炒油麦菜",
   //       tag_x: 100,
@@ -531,24 +414,23 @@ class ImageTagPage {
       src: that.data.imageUrl,
       success(res) {
         if(res.height/res.width>0.96){ // 高图
-          // that.divideproportion = res.height / 720
-          // that.setData({
-          //   imageHeight:720,
-          //   imageWidth: res.width * 720 / res.height
-          // })
-          that.createTag = {
-            tagType: 3,
-            tag_x: clientX,
-            tag_y: clientY,
-            selectedPos: 0
-          };
+          const query = wx.createSelectorQuery()
+          query.select('.fix-image').boundingClientRect()
+          query.exec(function(res){
+            let leftX = res[0].left
+            let tagX = clientX-leftX;
+            that.createTag = {
+              tagType: 3,
+              tagX: tagX,
+              tagY: clientY,
+              selectedPos: 0
+            };
+          })
         }else{ // 宽图
-          let touchX = clientX*res.width/375; // 相对于图片的位置
-          let touchY = touchX*res.height/res.width;
           that.createTag = {
             tagType: 3,
-            tag_x: clientX,
-            tag_y: clientY,
+            tagX: clientX,
+            tagY: clientY,
             selectedPos: 0
           };
         }
@@ -561,25 +443,12 @@ class ImageTagPage {
       resultError: false,
       showPopupTitle:`请搜索添加第${this.data.taggs.length+1}个食物`
     })
-    
-    // this.data.taggs.push(tag);
-    // (this as any).setData({
-    //   taggs: this.data.taggs,
-    //   currentTagIndex: this.data.taggs.length - 1
-    // });
-    // this.incrementalId++;
-    
-    // setTimeout(function () {
-    //   wx.navigateTo({
-    //     url: "/pages/textSearch/index?title=食物"
-    //   });
-    // }, 500)
   }
 
   public onTagMove(event: any) {
     let index = event.currentTarget.dataset.tagIndex;
-    let xOperation = "taggs[" + index + "].tag_x";
-    let yOperation = "taggs[" + index + "].tag_y";
+    let xOperation = "taggs[" + index + "].tagX";
+    let yOperation = "taggs[" + index + "].tagY";
     (this as any).setData({
       [xOperation]: event.detail.x,
       [yOperation]: event.detail.y
@@ -589,7 +458,6 @@ class ImageTagPage {
   // public onStartTouchTag(event: any) {
   //   console.log("on touch start");
   //   let index = event.currentTarget.dataset.tagIndex;
-  //   this.data.taggs[index].tag_height = 95;
   //   (this as any).setData({
   //     currentTagIndex: index,
   //     taggs:this.data.taggs
@@ -603,12 +471,10 @@ class ImageTagPage {
   //   let touchX = 10;
   //   let touchY = 10;
   //   let tag: Tag = {
-  //     isDeleted: false,
   //     x: touchX,
   //     y: touchY,
   //     dotColor: '#e015fa',
   //     dispalyMessage: tagName,
-  //     showDeleteBtn: false,
   //     realtedInfo: {}
   //   };
   //   //add into taggs and refresh
@@ -622,7 +488,6 @@ class ImageTagPage {
   // public onToggleDeleteTag(event: any) {
   //   let index = event.currentTarget.dataset.tagIndex;
   //   let operation = "taggs[" + index + "].showDeleteBtn";
-  //   let tagHeightOperation = "taggs[" + index + "].tag_height";
   //   let flag = this.data.taggs[index].showDeleteBtn;
   //   let height = flag ? 65 : 95;
   //   (this as any).setData({

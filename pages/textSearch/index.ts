@@ -3,7 +3,6 @@ import request from '../../api/app/interface';
 import { RetrieveTextSearchReq, RetrieveTextSearchResp, CreateOrUpdateMealLogReq, AddRecipeItemReq, MealLogResp } from "/api/app/AppServiceObjs"
 import * as globalEnum from '../../api/GlobalEnum'
 import * as textCache from './textCache/TextCache'
-import commonFoodList from './list.js'
 import moment = require('moment');
 
 type data = {
@@ -66,23 +65,13 @@ class textSearch {
    * 获取常见的食物列表
    */
   public getCommonFoodList(){
-    // const that = this
-    // request.commonFoodList({
-    // }).then(res=>{
-    //   that.setData({commonFoodList:res})
-    // }).catch(err=>{
-    //   console.log(err)
-    // })
-    let hour = parseInt(moment().format('HH'));
-    if(hour>=16){
-      (this as any).setData({commonFoodList:commonFoodList.c})
-      return
-    }else if(hour>=10){
-      (this as any).setData({commonFoodList:commonFoodList.b})
-      return
-    }else{
-      (this as any).setData({commonFoodList:commonFoodList.a})
-    }
+    const that = this
+    request.commonFoodList({
+    }).then(res=>{
+      (this as any).setData({commonFoodList:res})
+    }).catch(err=>{
+      console.log(err)
+    })
   }
 
   /**
@@ -327,23 +316,41 @@ class textSearch {
    */
   public handleConfirmBtn(){
     wx.showLoading({ title: "加载中...", mask: true });
-    let foodList:any[] = [];
+    let foodInfoList:any[] = [];
+    console.log(888,this.data.choosedLists)
     this.data.choosedLists.map((item:any) => {
-      let results = [{ food_id: item.foodId, food_name: item.foodName, food_type: item.foodType }];
+      //文字搜索，不再要recognitionResults，因为第一项和外面数据一样
+      // let results = [{ foodId: item.foodId, foodName: item.foodName, foodType: item.foodType }];
       let food = { 
-        food_id: item.foodId, 
-        food_type: item.foodType, 
-        recognition_results: results,
-        input_type: 2, 
-        amount:parseInt(item.weightNumber)*100,
-        unit_id: item.unit_id
+        foodId: item.foodId, 
+        foodType: item.foodType, 
+        // recognition_results: results,
+        inputType: 2, 
+        amount:parseInt(item.weightNumber),
+        unitId: item.unit_id
       };
-      foodList.push(food)
+      foodInfoList.push(food)
     })
-    let req = { meal_id: -1, meal_type: this.mealType, meal_date: this.mealDate, food_list: foodList };
+    let req = { mealType: this.mealType, mealDate: this.mealDate, foodInfoList};
     console.log('请求参数req',req)
-    this.CreateOrUpdateMealLog(req);
+    this.createMealLog(req);
   }
+
+  public createMealLog(req){
+    request.createMealLog(req).then(res=>{
+      console.log(res)
+      
+    }).catch(err=>{
+      wx.showToast({title: '提交食物记录失败',icon: 'none'});
+    })
+  }
+  
+
+
+
+
+
+
   /**
    * 格式化数据后，发出请求，获得meal_id
    */
@@ -372,6 +379,12 @@ class textSearch {
     }).catch(err => {
       wx.showToast({title: '提交食物记录失败',icon: 'none'});
     });
+  }
+  /**
+   * 去食物估算重量的页面
+   */
+  public goWeightReferencePage(){
+    wx.navigateTo({url:'./../../homeSub/pages/weightReference/index'})
   }
 
 }

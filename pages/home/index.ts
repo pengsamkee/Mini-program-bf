@@ -122,12 +122,14 @@ class FoodDiaryPage {
     ],
     navTitleTime:'',//导航栏处显示的时间
     latest_weight:' ',
+    showMask:false,
   };
   public mealType = 0;
   public mealDate = 0;
   public path = '';
   public showPersonCheckLoading = false;
-  public foodColorTipsArr = ['#0074d9', '#ffdc00','#7fdbff', '#39cccc', '#3d9970', '#2ecc40', '#01ff70', '#ff851b', '#001f3f', '#ff4136', '#85144b', '#f012be', '#b10dc9', '#111111', '#aaaaaa', '#dddddd']
+  public foodColorTipsArr = ['#0074d9', '#ffdc00','#7fdbff', '#39cccc', '#3d9970', '#2ecc40', '#01ff70', '#ff851b', '#001f3f', '#ff4136', '#85144b', '#f012be', '#b10dc9', '#111111', '#aaaaaa', '#dddddd'];
+  public mealIndex = 0;
 
 
   public onLoad() {
@@ -136,9 +138,7 @@ class FoodDiaryPage {
      * 获取右上角胶囊尺寸，计算自定义标题栏位置
      */
     const menuInfo = wx.getMenuButtonBoundingClientRect();
-    (this as any).setData({
-      menuInfo: menuInfo
-    })
+    (this as any).setData({ menuInfo: menuInfo })
     webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
     // let currentTimeStamp = Date.parse(String(new Date()));
     // this.retrieveFoodDiaryData(currentTimeStamp/1000);
@@ -146,6 +146,7 @@ class FoodDiaryPage {
 
   public onShow() {
     this.login();
+    // comfirmMeal页面添加完食物后 会触发
     if (this.mealDate !== 0) {
       this.retrieveFoodDiaryData(this.mealDate);
     }
@@ -475,7 +476,6 @@ class FoodDiaryPage {
           meals: resp.dinner,
           mealSummary: dinnerSummary
         };
-
       });
     //additional
     const that = this
@@ -509,9 +509,7 @@ class FoodDiaryPage {
     Promise.all([breakfastProms, lunchProms, dinnerProms]).then(
       result => {
         result.map(meal => mealList.push(meal));
-        (this as any).setData({
-          mealList: mealList,
-        })
+        (this as any).setData({ mealList: mealList })
       }
     );
 
@@ -570,29 +568,22 @@ class FoodDiaryPage {
     console.log(event);
   }
 
-  //when user select date
+  //默认主动会触发一次
   public bindgetdate(event: any) {
-    
     //Convert date to unix timestamp
     let time = event.detail;
     const navTitleTime = time.year + '/' + time.month + '/' + time.date;
-    (this as any).setData({
-      navTitleTime: navTitleTime
-    })
+    (this as any).setData({ navTitleTime: navTitleTime })
     let date = moment([time.year, time.month - 1, time.date]); // Moment month is shifted left by 1
     //get current timestamp
     this.mealDate = date.unix();
     const todayTimeStamp = moment(new Date());
     if (todayTimeStamp.isSame(date,'d')){
       console.log('选择的日期是今天');
-        (this as any).setData({
-        navTitleTime: '今日'
-      })
+        (this as any).setData({ navTitleTime: '今日' })
     } else {
       //他们不是在同一天
-      (this as any).setData({
-        navTitleTime: navTitleTime
-      })
+      (this as any).setData({ navTitleTime: navTitleTime })
     } 
     //request API
     this.retrieveFoodDiaryData(this.mealDate);
@@ -617,39 +608,67 @@ class FoodDiaryPage {
     }).catch(err => console.log(err))
   }
 
-
-
+  
   public addFoodImage(event: any) {
-    let mealIndex = event.currentTarget.dataset.mealIndex;
-    var that = this;
-    this.mealType = mealIndex + 1;
-    wx.showActionSheet({
-      itemList: ['拍照记录', '相册', '文字搜索'],
-      success(res: any) {
-        switch (res.tapIndex) {
-          case 0:
-            that.chooseImage('camera');
-            wx.reportAnalytics('record_type_select', {
-              sourcetype: 'camera',
-            });
-            break;
-          case 1:
-            that.chooseImage('album');
-            wx.reportAnalytics('record_type_select', {
-              sourcetype: 'album',
-            });
-            break;
-          case 2:
-            wx.navigateTo({
-              url: "../../pages/textSearch/index?title=" + that.data.mealList[mealIndex].mealName + "&mealType=" + that.mealType + "&naviType=0&filterType=0&mealDate=" + that.mealDate
-            });
-            wx.reportAnalytics('record_type_select', {
-              sourcetype: 'textSearch',
-            });
-            break;
-        }
-      }
-    });
+    this.mealIndex = event.currentTarget.dataset.mealIndex;
+    this.mealType = this.mealIndex + 1;
+    (this as any).setData({showMask:true})
+
+    // wx.showActionSheet({
+    //   itemList: ['拍照记录', '相册', '文字搜索'],
+    //   success(res: any) {
+    //     switch (res.tapIndex) {
+    //       case 0:
+    //         that.chooseImage('camera');
+    //         wx.reportAnalytics('record_type_select', {
+    //           sourcetype: 'camera',
+    //         });
+    //         break;
+    //       case 1:
+    //         that.chooseImage('album');
+    //         wx.reportAnalytics('record_type_select', {
+    //           sourcetype: 'album',
+    //         });
+    //         break;
+    //       case 2:
+    //         wx.navigateTo({
+    //           url: "../../pages/textSearch/index?title=" + that.data.mealList[mealIndex].mealName + "&mealType=" + that.mealType + "&naviType=0&filterType=0&mealDate=" + that.mealDate
+    //         });
+    //         wx.reportAnalytics('record_type_select', {
+    //           sourcetype: 'textSearch',
+    //         });
+    //         break;
+    //     }
+    //   }
+    // });
+  }
+
+  public handleChooseUploadType(e:any){
+    const that = this
+    const index = parseInt(e.currentTarget.dataset.index);
+    switch (index) {
+      case 0:
+        that.chooseImage('camera');
+        wx.reportAnalytics('record_type_select', {
+          sourcetype: 'camera',
+        });
+        break;
+      case 1:
+        that.chooseImage('album');
+        wx.reportAnalytics('record_type_select', {
+          sourcetype: 'album',
+        });
+        break;
+      case 2:
+        wx.navigateTo({
+          url: "../../pages/textSearch/index?title=" + that.data.mealList[this.mealIndex].mealName + "&mealType=" + that.mealType + "&naviType=0&filterType=0&mealDate=" + that.mealDate
+        });
+        wx.reportAnalytics('record_type_select', {
+          sourcetype: 'textSearch',
+        });
+        break;
+    }
+    ( this as any ).setData({showMask:false})
   }
 
   public chooseImage(sourceType: string) {
@@ -672,7 +691,6 @@ class FoodDiaryPage {
   }
 
   public onImageUploadSuccess(){
-    console.log("uploadSucess" + this.mealType + "," + this.mealDate);
     wx.navigateTo({
       url: './../../homeSub/pages/imageTag/index?imageUrl=' + this.path + "&mealType=" + this.mealType + "&mealDate=" + this.mealDate,
     });
@@ -697,12 +715,19 @@ class FoodDiaryPage {
     let param = {};
     param.mealId = mealId;
     param.imageUrl = imageUrl;
-    param.showDeleteBtn = true;
-    param.showShareBtn = imageKey != "";
     let paramJson = JSON.stringify(param);
     wx.navigateTo({
-      url: "/pages/foodDetail/index?paramJson=" + paramJson
+      url: "./../../homeSub/pages/foodDetail/index?paramJson=" + paramJson
     });
+  }
+  /**
+   * 关闭showMask
+   */
+  public handleHiddenMask(){
+    if(this.data.showMask){
+      (this as any).setData({showMask:false})
+      return false
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 export default {
-    a:[
+    breakfast:[
         {foodId:1261,foodName:"鸡蛋",foodType:2},
         {foodId:1223,foodName:"牛奶",foodType:2},
         {foodId:1078,foodName:"豆浆",foodType:2},
@@ -21,7 +21,7 @@ export default {
         {foodId:1040,foodName:"鲜玉米",foodType:2},
         {foodId:859,foodName:"葱油拌面",foodType:1}
     ],
-    b:[
+    lunch:[
         {foodId:1033,foodName:"蒸米饭",foodType:2},
         {foodId:1666,foodName:"番茄炒蛋",foodType:1},
         {foodId:209,foodName:"炒青菜",foodType:1},
@@ -40,7 +40,7 @@ export default {
         {foodId:154,foodName:"大白菜",foodType:2},
         {foodId:547,foodName:"猪肉",foodType:2}
     ],
-    c:[
+    dinner:[
         {foodId:1033,foodName:"蒸米饭",foodType:2},
         {foodId:209,foodName:"炒青菜",foodType:1},
         {foodId:1223,foodName:"牛奶",foodType:2},

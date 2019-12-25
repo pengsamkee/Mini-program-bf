@@ -34,9 +34,7 @@
       <text class="mealEngry">当前{{mealEngry}}千卡</text>
     </view>
     <view class="image_container">
-    <!-- weui-uploader__file {{(item.isUploading||item.isUploadFailed)?'weui-uploader__file_status':''}} -->
       <view class="food-image-container " wx:for="{{meals}}" wx:for-index="idx">
-      <!-- weui-uploader__img -->
         <view class='image-and-mask'> 
           <view class='image-tip' style="border-color:{{item.tip_color[idx]}} {{item.tip_color[idx]}} transparent transparent;"></view>
           <image class="food-image " src="{{item.img_key == ''?'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-icon.png':'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/food-image/'+item.img_key}}" mode="aspectFill" catchtap='naviToFoodDetail' data-meal-index="{{index}}" data-image-index="{{idx}}"></image>
@@ -60,7 +58,6 @@
         <view class="name-weight">
           <view class="tip" style="background:{{item.tip_color}}"></view>
           <view class='food-name'>{{item.foodName+' '}} <text>{{ item.weight}}g</text></view>
-          <!-- <view class="portion">{{item.weight}}{{item.unitName}}</view> -->
         </view>
         <view class="energy">{{item.energy}}千卡</view>
       </view>
@@ -91,7 +88,7 @@
       <view class='score-wrap-right'>
         <view class='score-text'>得分</view>
         <view class='score-num'>{{score}}</view>
-        <image src='../../images/rightArrow.png'></image>
+        <image src='/images/rightArrow.png'></image>
       </view>
     </view>
     <view class="lists">    
@@ -138,7 +135,7 @@
       </view>
     </view>
     <view class="new-meals">
-        <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}"></template>
+        <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='{{index}}'></template>
     </view>
   </view>
 
@@ -170,3 +167,27 @@
 
   <view class="empty-footer"></view>
 </view>
+
+<cover-view 
+  class="choose-upload-type" 
+  wx:if='{{showMask}}' 
+  bindtap='handleHiddenMask'
+ >
+  <cover-view class="content">
+    <cover-view class="choose-type">
+      <cover-view class="item item1" bindtap='handleChooseUploadType' data-index='0'>
+        <cover-image src="/images/homeCamera.png"></cover-image>
+        <cover-view>拍照记录</cover-view>
+      </cover-view >
+      <cover-view class="item item2" bindtap='handleChooseUploadType' data-index='1'>
+        <cover-image src="/images/homeAlbum.png"></cover-image>
+        <cover-view>相册</cover-view>
+      </cover-view >
+      <cover-view class="item item3" bindtap='handleChooseUploadType' data-index='2'>
+        <cover-image src="/images/homeText.png"></cover-image>
+        <cover-view>文字搜索</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-image class="add-tip" src='/images/gray_plus_small.png'></cover-image>
+  </cover-view>
+</cover-view>

@@ -19,7 +19,7 @@
                         <view class="weight-text">份量:</view>
                         <input 
                           class="picker" 
-                          value="{{unitArr[index].amount/100===0?'':unitArr[index].amount/100}}" type="number" 
+                          value="{{unitArr[index].amount===0?'':unitArr[index].amount}}" type="number" 
                           maxlength="2" 
                           bindinput="handleAmountInput" 
                           bindfocus="handleAmountInputFocus"
@@ -38,19 +38,19 @@
             </view>
         </block>
     </view>
-    <view class="person-number">
+    <!-- <view class="person-number">
         <view class="person-number-text">这一餐共有几个人共享以上食物？</view> 
         <view class="picker picker-true w-100" bindtap='handleShowPicker' data-picker-index='person'>
             <view >{{persons[choosePersonNumIndex]}}</view>
             <image src="/images/rightArrow.png"/>
         </view>
-    </view>
+    </view> -->
   <view class="next-button">
     <view class="number">
       <view class="total-num">{{taggs.length}}种食物</view>
       <view class="text">总共{{totalEnergy}}千卡</view>
     </view>
-    <view class="next" bindtap='handleConfirmMeal'>确认本餐记录</view>
+    <view class="next" bindtap='createMealLog'>确认本餐记录</view>
   </view>
 </view>
 <view class="popup">
