@@ -1,7 +1,7 @@
 <!--homeSub/pages/comfirmMeal/index.wxml-->
 <view class="page">
     <view class="page-top">
-        <view class="set-text">请设置份量</view>
+        <view class="set-text">请设置您自己摄入的份量</view>
         <view class="how-set-text">
             <view class="tip-text">精确的份量有助于精确分析哦~</view>
             <view class="tip-how" bindtap='handleGoWeightReferencePage'>如何估算份量</view>
@@ -19,8 +19,9 @@
                         <view class="weight-text">份量:</view>
                         <input 
                           class="picker" 
-                          value="{{unitArr[index].amount===0?'':unitArr[index].amount}}" type="number" 
-                          maxlength="2" 
+                          value="{{unitArr[index].amount===0?'':unitArr[index].amount}}" 
+                          type="digit" 
+                          maxlength="3" 
                           bindinput="handleAmountInput" 
                           bindfocus="handleAmountInputFocus"
                           bindblur="handleAmountInputBlur"
@@ -63,7 +64,8 @@
     <van-picker
       show-toolbar
       title="选择{{pickerIndex==='person'?'人数':'单位'}}"
-      columns="{{columns}}"
+      columns="{{columnsForWXml}}"
+      default-index="{{unitArr[pickerIndex].chooseUnitIndex}}"
       bind:cancel="onConfirm"
       bind:confirm="onConfirm"
       bind:change='onChange'

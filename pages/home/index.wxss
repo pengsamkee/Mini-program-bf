@@ -8,7 +8,7 @@ page .show-mask-page {
   filter: blur(6px);
 }
 .choose-upload-type {
-  z-index: 10000002;
+  z-index: 200;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -60,6 +60,7 @@ page .show-mask-page {
   color: #353535;
   width: 40rpx;
   height: 40rpx;
+  animation: cricle 0.5s ease-in-out 0s;
 }
 @keyframes show {
   0% {
@@ -69,45 +70,12 @@ page .show-mask-page {
     opacity: 1;
   }
 }
-@keyframes beat1 {
-  0% {
-    bottom: 0rpx;
-  }
-  80% {
-    bottom: 90rpx;
-  }
-  100% {
-    bottom: 0rpx;
-  }
-}
-@keyframes beat2 {
-  0% {
-    bottom: 0rpx;
-  }
-  80% {
-    bottom: 90rpx;
-  }
-  100% {
-    bottom: 0rpx;
-  }
-}
-@keyframes beat3 {
-  0% {
-    bottom: 0rpx;
-  }
-  80% {
-    bottom: 90rpx;
-  }
-  100% {
-    bottom: 0rpx;
-  }
-}
 @keyframes cricle {
   0% {
     transform: rotate(-45deg);
   }
   100% {
-    transform: rotate(30deg);
+    transform: rotate(135deg);
   }
 }
 .nav-custom {
@@ -116,7 +84,7 @@ page .show-mask-page {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10000000;
+  z-index: 100;
 }
 .nav-data-wrap {
   width: 100%;
@@ -164,7 +132,7 @@ page .show-mask-page {
 .score-wrap-left {
   display: flex;
   align-items: center;
-  font-size: 28rpx;
+  font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #353535;
@@ -192,8 +160,8 @@ page .show-mask-page {
   margin: 0 18rpx 0 12rpx;
 }
 .score-wrap-right image {
-  width: 6rpx;
-  height: 20rpx;
+  width: 14rpx;
+  height: 24rpx;
 }
 .check-analysis {
   margin-right: 18rpx;
@@ -248,7 +216,7 @@ page .show-mask-page {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 5555;
+  z-index: 89;
 }
 .food-image {
   width: 100%;
@@ -441,17 +409,6 @@ page .show-mask-page {
 }
 .calendar-wrapper.active {
   transform: translateY(0%);
-}
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  height: 100rpx;
-  /* width: 100%; */
-  background: #fff;
-  padding: 0 30rpx;
-  z-index: 10000;
 }
 .top-jiantou {
   width: 100rpx;

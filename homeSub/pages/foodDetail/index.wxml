@@ -2,16 +2,16 @@
 <view class="{{showPopup?'fixed':''}}">
 
 <image class='image-background' src='{{imageUrl}}' wx:if='{{imageHeight===720}}'/>
-<view class='movable-area-wrap' style="height:{{imageHeight}}rpx">
+<view class='movable-area-wrap' style="height:{{imageHeight}}rpx" >
 	<movable-area 
 		class="dot-view-container" 
 		style='width:{{imageWidth}}rpx;height:{{imageHeight}}rpx'
 	>
 		<view class='fix-image'>
 			<image
-			class="annotated-image"
-			src="{{imageUrl}}"
-			style='width:{{imageWidth}}rpx;height:{{imageHeight}}rpx'
+				class="annotated-image"
+				src="{{imageUrl}}"
+				style='width:{{imageWidth}}rpx;height:{{imageHeight}}rpx'
 			/>
 		</view>
 		<movable-view
@@ -24,6 +24,7 @@
 			bindchange="onTagMove"
 			data-tag-index="{{index}}"
 			out-of-bounds="{{true}}"
+			wx:if="{{imageUrl&&imageUrl!='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png'}}"
 		>
 			<view class="tag-number">{{index+1}}</view>
 			<view class="tag-name">{{item.foodName}}</view>

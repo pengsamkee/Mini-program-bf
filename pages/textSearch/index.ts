@@ -1,27 +1,15 @@
 import * as webAPI from '../../api/app/AppService';
 import request from '../../api/app/interface';
-import { RetrieveTextSearchReq, RetrieveTextSearchResp, CreateOrUpdateMealLogReq, AddRecipeItemReq, MealLogResp } from "/api/app/AppServiceObjs"
+import { RetrieveTextSearchReq, RetrieveTextSearchResp, AddRecipeItemReq, MealLogResp } from "/api/app/AppServiceObjs"
 import * as globalEnum from '../../api/GlobalEnum'
 import * as textCache from './textCache/TextCache'
-import moment = require('moment');
-
-type data = {
-  keyword: String;
-  resultList: Result[];
-}
-
-type Result = {
-  foodId: number;
-  displayName: String;
-  foodType: number;
-  engry: number;
-}
 
 class textSearch {
   public filterType = 0; //0.all 1.recipe 2.ingreident
   public mealType = 0; //1.breakfast 2.lunch 3.dinner 4.snack
   public naviType = 0; //0.textsearch => detail 1.textsearch => tag 2.textsearch=> ingredient
   public mealDate = 0; //prev page must pass mealDate to textSearch page
+  public title = 0; //prev page must pass mealDate to textSearch page
 
   public data = {
     keyword: "",
@@ -35,9 +23,10 @@ class textSearch {
     showPopup: false,
     showPicker:false,
     choosedLists:[],  // 已经添加的食物信息列表
-    unitArr:['克','碗','把','捧','盆','瓢'],
+    unitArr:[],
+    nameArrForWXML:[],
     foodUnitAndUnitEnergy:[],
-    foodNumValue:100,
+    foodNumValue:1,
     chooseUinitIndex:0, // 用户选择了picker中的index
     textSearchResultSelectIndex:null, // 用户点击文字搜索列表中的哪一项
     recentResultSelectIndex:null, // 用户点击了历史缓存数组中的index
@@ -47,14 +36,12 @@ class textSearch {
 
   public onLoad(options: any) {
     webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
-    let title = options.title;
+    wx.setNavigationBarTitle({ title: "添加" + options.title });
+    this.title = options.title;
     this.filterType = parseInt(options.filterType);
     this.mealType = parseInt(options.mealType);
     this.naviType = parseInt(options.naviType);
     this.mealDate = parseInt(options.mealDate);
-    wx.setNavigationBarTitle({
-      title: "添加" + title//页面标题为路由参数
-    });
     this.getCommonFoodList();
   }
 
@@ -100,14 +87,19 @@ class textSearch {
       return {
         name:item.unitName,
         unitEnergy : Math.round(item.energy),
-        unit_id : item.unitId
+        unit_id : item.unitId,
+        unitWeight:item.unitWeight
       }
     })
-    const nameArr = arr.map(item=>item.name);
+    const nameArr = arr.map(item=>{
+      return item.name==='100克'?item.name:item.name+'（'+item.unitWeight+'克）'
+    });
+    const nameArrForWXML = arr.map(item=>item.name);
     (this as any).setData({
-      foodNumValue:res.unitOption[0].unitWeight/100,
-      chooseUinitIndex:0, // 初始化数量100克
+      foodNumValue:1,
+      chooseUinitIndex:0,
       unitArr:nameArr,
+      nameArrForWXML,
       foodUnitAndUnitEnergy:arr,
       showPopup:true
     })
@@ -179,7 +171,6 @@ class textSearch {
         resultError: false
       });
     }
-    console.log(this.data.resultList);
   }
 
  
@@ -247,12 +238,15 @@ class textSearch {
     }else{
       let item:any = this.data.commonFoodList[commonFoodIndex];
     }
+    const choosedUnit = this.data.nameArrForWXML[this.data.chooseUinitIndex];
+    const foodUnitAndUnitEnergyItem = this.data.foodUnitAndUnitEnergy[this.data.chooseUinitIndex];
     item = {
       ...item,
-      choosedUnit:this.data.unitArr[this.data.chooseUinitIndex],
-      weightNumber:this.data.foodNumValue,
-      unitEnergy:this.data.foodUnitAndUnitEnergy[this.data.chooseUinitIndex].unitEnergy,
-      unit_id:this.data.foodUnitAndUnitEnergy[this.data.chooseUinitIndex].unit_id
+      choosedUnit,
+      weightNumber:Number(this.data.foodNumValue),
+      unitEnergy:foodUnitAndUnitEnergyItem.unitEnergy,
+      unit_id:foodUnitAndUnitEnergyItem.unit_id,
+      unitWeight:foodUnitAndUnitEnergyItem.unitWeight
     };
     this.data.choosedLists.push(item);
     (this as any).setData({ 
@@ -264,7 +258,6 @@ class textSearch {
         textCache.setValue(this.data.recentList[recentResultSelectIndex])
         this.getRecentList();
       }
-      console.log(this.data.choosedLists)   
     })
   }
   /**
@@ -274,16 +267,22 @@ class textSearch {
     const totalEnergy = this.data.choosedLists.reduce((pre,next)=>{
       return next.weightNumber*next.unitEnergy+pre
     },0);
-    (this as any).setData({totalEnergy:totalEnergy})
+    (this as any).setData({totalEnergy:totalEnergy.toFixed(1)})
   }
 
   /**
    * 用户输入食物的份数
    */
   public handleFoodNumInput(e:any){
-    let foodNumValue = parseInt(e.detail.value);
-    // foodNumValue = isNaN(foodNumValue) ? 0 : foodNumValue;
-    (this as any).setData({foodNumValue:foodNumValue})
+    const {value} = e.detail;
+    // if(value==='0' || value==='0.'){
+      var foodNumValue = value;
+    // }else{
+    //   var foodNumValue = Number(value);
+    // }
+    (this as any).setData({foodNumValue},()=>{
+  
+    })
   }
   /**
    * 展示picker，选择食物单位
@@ -317,30 +316,35 @@ class textSearch {
   public handleConfirmBtn(){
     wx.showLoading({ title: "加载中...", mask: true });
     let foodInfoList:any[] = [];
-    console.log(888,this.data.choosedLists)
     this.data.choosedLists.map((item:any) => {
       //文字搜索，不再要recognitionResults，因为第一项和外面数据一样
       // let results = [{ foodId: item.foodId, foodName: item.foodName, foodType: item.foodType }];
       let food = { 
         foodId: item.foodId, 
         foodType: item.foodType, 
-        // recognition_results: results,
         inputType: 2, 
-        amount:parseInt(item.weightNumber),
-        unitId: item.unit_id
+        amount:item.weightNumber,
+        unitId: item.unit_id,
+        unitWeight: item.unitWeight,
+        unitName:item.choosedUnit,
+        // recognition_results: results,
       };
       foodInfoList.push(food)
     })
     let req = { mealType: this.mealType, mealDate: this.mealDate, foodInfoList};
-    console.log('请求参数req',req)
+    console.log('请求参数req',req);
     this.createMealLog(req);
   }
 
   public createMealLog(req){
     request.createMealLog(req).then(res=>{
-      console.log(res)
-      
+      wx.hideLoading()
+      wx.showToast({title:'食物记录成功'})
+      setTimeout(()=>{
+        wx.reLaunch({url: `./../../homeSub/pages/mealAnalysis/index?mealLogId=${res.mealLogId}&mealType=${this.mealType}&mealDate=${this.mealDate}&title=${this.title}`});
+      },1450)
     }).catch(err=>{
+      wx.hideLoading()
       wx.showToast({title: '提交食物记录失败',icon: 'none'});
     })
   }
@@ -351,35 +355,30 @@ class textSearch {
 
 
 
-  /**
-   * 格式化数据后，发出请求，获得meal_id
-   */
-  public CreateOrUpdateMealLog(req:any){
-    let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
-    webAPI.CreateOrUpdateMealLog(req).then(resp => {
-      // let param:any = {};
-      // param.mealId = resp.meal_id;
-      // param.imageUrl = imageUrl;
-      // param.showShareBtn = false;
-      // let paramJson = JSON.stringify(param);
-      this.ConfirmMealLog(resp.meal_id)
-    }).catch(err => {
-      wx.showToast({title: '请求失败',icon: 'none'});
-      wx.hideLoading({});
-    });
-  }
-  /**
-   * 发出请求，创建记录
-   */
-  public ConfirmMealLog(meal_id:number){
-    let req = { meal_id: meal_id };
-    webAPI.ConfirmMealLog(req).then(resp => {
-      wx.hideLoading({});
-      wx.navigateTo({ url: `../../homeSub/pages/mealAnalysis/index?mealDate=${this.mealDate}&mealType=${this.mealType}`})
-    }).catch(err => {
-      wx.showToast({title: '提交食物记录失败',icon: 'none'});
-    });
-  }
+  // /**
+  //  * 格式化数据后，发出请求，获得meal_id
+  //  */
+  // public CreateOrUpdateMealLog(req:any){
+  //   let imageUrl = "https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png";
+  //   webAPI.CreateOrUpdateMealLog(req).then(resp => {
+  //     this.ConfirmMealLog(resp.meal_id)
+  //   }).catch(err => {
+  //     wx.showToast({title: '请求失败',icon: 'none'});
+  //     wx.hideLoading({});
+  //   });
+  // }
+  // /**
+  //  * 发出请求，创建记录
+  //  */
+  // public ConfirmMealLog(meal_id:number){
+  //   let req = { meal_id: meal_id };
+  //   webAPI.ConfirmMealLog(req).then(resp => {
+  //     wx.hideLoading({});
+  //     wx.navigateTo({ url: `../../homeSub/pages/mealAnalysis/index?mealDate=${this.mealDate}&mealType=${this.mealType}`})
+  //   }).catch(err => {
+  //     wx.showToast({title: '提交食物记录失败',icon: 'none'});
+  //   });
+  // }
   /**
    * 去食物估算重量的页面
    */

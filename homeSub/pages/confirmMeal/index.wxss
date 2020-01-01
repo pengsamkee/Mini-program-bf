@@ -80,7 +80,7 @@
   width: 306rpx;
   height: 80rpx;
   border-radius: 10rpx;
-  border: 1rpx solid #c9cacb;
+  border: 1px solid #c9cacb;
 }
 .page .picker-true {
   display: flex;

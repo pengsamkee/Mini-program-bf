@@ -188,6 +188,9 @@
   padding: 10rpx 26rpx 12rpx 26rpx;
   margin: 10rpx;
 }
+.hover-food-item {
+  background: #ddd;
+}
 .resultList {
   padding: 0 15px;
   box-sizing: border-box;

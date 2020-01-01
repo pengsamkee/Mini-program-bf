@@ -4,22 +4,22 @@
 <template name="nutrition_block">
   <view style="width:{{width_percentage}}vw;margin-left:2%;margin-right:2%;">
     <view class="space-between-layout">
-      <text style='color:#434343;font-size:20rpx'>{{nutrient_name}}</text>
-      <text style='color:#434343;font-size:20rpx'>{{intaken_percentage}}%</text>
+      <text style='color:#434343;font-size:20rpx'>{{name}}</text>
+      <text style='color:#434343;font-size:20rpx'>{{percent}}%</text>
     </view>
-    <progress percent='{{intaken_percentage}}' border-radius='20px' activeColor="{{progress_color}}"></progress>
-    <text class="small-text-font">{{intaken_num}}/{{total_num}}{{unit}}</text>
+    <progress percent='{{percent}}' border-radius='20px' activeColor="{{progress_color}}"></progress>
+    <text class="small-text-font">{{intakeNum}}/{{totalNum}}{{unit}}</text>
   </view>
 </template>
 <!-- nutrition summary block progress template -->
 <template name="summary_block">
   <view style="width:{{width_percentage}}vw;margin-left:2%;margin-right:2%;">
     <view class="space-between-layout">
-      <text style='font-family:PingFangSC-Light;color:#353535;font-size:32rpx'>{{nutrient_name}}</text>
-      <text style='font-family:PingFangSC-Light;color:#353535;font-size:32rpx'>{{intaken_percentage}}%</text>
+      <text style='font-family:PingFangSC-Light;color:#353535;font-size:32rpx'>{{name}}</text>
+      <text style='font-family:PingFangSC-Light;color:#353535;font-size:32rpx'>{{percent}}%</text>
     </view>
-    <progress percent='{{intaken_percentage}}' border-radius='20px' activeColor="{{progress_color}}"></progress>
-    <text class="small-text-font">{{intaken_num}}/{{total_num}}{{unit}}</text>
+    <progress percent='{{percent}}' border-radius='20px' activeColor="{{progress_color}}"></progress>
+    <text class="small-text-font">{{intakeNum}}/{{totalNum}}{{unit}}</text>
   </view>
 </template>
 
@@ -28,23 +28,19 @@
   <view class='meal-card'>
     <view class="space-between-layout">
       <view>
-         <text class="mealName">{{mealName}}</text>
-         <text class="suggested-intake">推荐{{suggestedIntake}}千卡</text>
+         <text class="mealName">{{mealTypeName}}</text>
+         <text class="suggested-intake">推荐{{recommendedEnergyIntake}}千卡</text>
       </view>
-      <text class="mealEngry">当前{{mealEngry}}千卡</text>
+      <text class="mealEngry">当前{{energyIntake}}千卡</text>
     </view>
     <view class="image_container">
-      <view class="food-image-container " wx:for="{{meals}}" wx:for-index="idx">
+      <view class="food-image-container " wx:for="{{mealLogSummaryVOS}}" wx:for-index="idx" wx:key='mealLogId'>
         <view class='image-and-mask'> 
-          <view class='image-tip' style="border-color:{{item.tip_color[idx]}} {{item.tip_color[idx]}} transparent transparent;"></view>
-          <image class="food-image " src="{{item.img_key == ''?'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-icon.png':'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/food-image/'+item.img_key}}" mode="aspectFill" catchtap='naviToFoodDetail' data-meal-index="{{index}}" data-image-index="{{idx}}"></image>
-          <!-- <view class="weui-uploader__file-content" hidden="{{!item.isUploading && !item.isUploadFailed}}">
-            <icon type="warn" size="25" color="#F43530" catchtap='reUploadImage' data-meal-index="{{index}}" hidden="{{!item.isUploadFailed}}"></icon>
-            <text hidden="{{!item.isUploading}}">{{item.uploadPercentage}}%</text>
-          </view> -->
+          <view class='image-tip' style="border-color:{{item.colorTip}} {{item.colorTip}} transparent transparent"></view>
+          <image class="food-image " src="{{item.imageUrl == ''?'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-icon.png':item.imageUrl}}" mode="aspectFill" catchtap='naviToFoodDetail' data-meal-index="{{index}}" data-image-index="{{idx}}"/>
           <view class='image-mask'>
             <view class='mask'></view>
-            <view class='image-mask-text'>{{item.img_engry}}千卡</view>
+            <view class='image-mask-text'>{{item.energy}}千卡</view>
           </view>
         </view>
       </view>
@@ -56,8 +52,8 @@
     <view class="food-wrap" wx:if="{{mealSummary.length!==0}}">
       <view class="food-item" wx:for="{{mealSummary}}" wx:key='index'>
         <view class="name-weight">
-          <view class="tip" style="background:{{item.tip_color}}"></view>
-          <view class='food-name'>{{item.foodName+' '}} <text>{{ item.weight}}g</text></view>
+          <view class="tip" style="background:{{item.colorTip}}"></view>
+          <view class='food-name'>{{item.foodName+' '}} <text>{{ item.intake}}g</text></view>
         </view>
         <view class="energy">{{item.energy}}千卡</view>
       </view>
@@ -92,14 +88,14 @@
       </view>
     </view>
     <view class="lists">    
-      <view wx:for="{{nutrientSummary}}" class="nutrient_container" wx:key='{{index}}'>
+      <view wx:for="{{nutrientSummary}}" class="nutrient_container" wx:key='index'>
         <circle id='circle{{index}}' bg='circle_bg' draw='circle_draw'>
           <view class="circle_info">
-            <text class='circle_percentage'> {{item.intaken_percentage+'%'}}</text>
-            <text class='circle_label'> {{item.nutrient_name}}  </text>
+            <text class='circle_percentage'> {{item.percent+'%'}}</text>
+            <text class='circle_label'> {{item.name}}  </text>
           </view>
         </circle>
-        <text class="small-text-font">{{item.intaken_num}}/{{item.total_num}}{{item.unit}}</text>
+        <text class="small-text-font">{{item.intakeNum}}/{{item.totalNum}}{{item.unit}}</text>
       </view>
     </view>
   </view>
@@ -111,7 +107,7 @@
       </view>
       <view class='score-wrap-right'>
         <view class='score-text'>+</view>
-        <view class='score-text add-weight'>今日体重</view>
+        <view class='score-text add-weight'>添加记录</view>
       </view>
     </view>
     <view class="weight-wrap">    
@@ -135,7 +131,7 @@
       </view>
     </view>
     <view class="new-meals">
-        <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='{{index}}'></template>
+        <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='index'></template>
     </view>
   </view>
 
@@ -152,7 +148,7 @@
     </view>
     <view class='nutrition-information'>
       <scroll-view scroll-x class="scroll-view">
-        <navigator class='info-item-wrap' wx:for='{{infoLists}}'  wx:key='{{index}}' url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}">
+        <navigator class='info-item-wrap' wx:for='{{infoLists}}'  wx:key='index' url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}">
           <view class='info-item'>
             <image src='{{item.image}}'></image>
             <view class="mask-wrap">

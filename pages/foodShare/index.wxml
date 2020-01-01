@@ -103,7 +103,7 @@
             </view>
             <view class='public draw_canvas'>
               <view class="public-weight draw_canvas" data-type="text" data-text="{{multi.fat.value+multi.fat.unit}}">{{multi.fat.value+multi.fat.unit}}</view>
-              <view class="public-name draw_canvas" data-type="text" data-text="脂肪">脂肪</view>
+              <view class="public-name draw_canvas fat-name" data-type="text" data-text="脂肪">脂肪</view>
             </view>
             <view class="public draw_canvas">
               <view class="public-weight draw_canvas" data-type="text" data-text="{{multi.carb.value+multi.carb.unit}}">{{multi.carb.value+multi.carb.unit}}</view>
@@ -121,7 +121,7 @@
     </view>
   </view>
   <view class="button-layer" wx:if='{{imageUrl}}'>
-    <button class="save-album-btn" catchtap='onBackFoodDiary'>看日记</button>
+    <button class="save-album-btn" catchtap='onBackFoodDiary'>回首页</button>
     <button class="save-album-btn" catchtap='onSaveToAlbumBtnPressed'>保存</button>
     <button open-type="share" class="share-btn">分享给朋友</button>
   </view>

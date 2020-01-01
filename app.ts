@@ -24,19 +24,16 @@ globalConfig.init()
 
 App<IMyApp>({
   onLaunch() {
-    // 展示本地存储能力
-    // var logs: number[] = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
-    console.log("app launch...");
-    //network status
-    console.log("set up network status change");
+    /**
+     * 获取右上角胶囊尺寸，计算自定义标题栏位置
+     */
+    const menuInfo = wx.getMenuButtonBoundingClientRect();
+    this.globalData.menuInfo = menuInfo;
     wx.onNetworkStatusChange(function (res) {
       var networkType = res.networkType
       var isConnected = res.isConnected
       let token = wx.getStorageSync("token");
-      console.log(networkType);
-      if (isConnected && !token) { } //re-login when no token storage and connect to Internet
+      if (isConnected && !token) { } 
     })
     // 获取用户信息
     wx.getSetting({
@@ -61,5 +58,6 @@ App<IMyApp>({
   },
   globalData: {
     config: globalConfig,
+    menuInfo:null
   }
 })

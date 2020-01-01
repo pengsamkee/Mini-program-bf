@@ -30,6 +30,20 @@ export default {
   deleteFoodLog(data) {
     return fetch('/rc/miniProgram/deleteFoodLog', data, 'POST')
   },
+  getSimpleDailyAnalysis(data) {
+    return fetch('/rc/miniProgram/getSimpleDailyAnalysis', data, 'POST')
+  },
+  getMealMacronutrientAnalysis(data) {
+    return fetch('/rc/miniProgram/getMealMacronutrientAnalysis', data, 'POST')
+  },
+  // 得到首页饮食记录数据
+  getDailyMealLogGroupFoodLogDetail(data) {
+    return fetch('/rc/miniProgram/getDailyMealLogGroupFoodLogDetail', data, 'POST')
+  },
+  // 得到首页canvas数据
+  getDailyMacronutrientSummary(data) {
+    return fetch('/rc/miniProgram/getDailyMacronutrientSummary', data, 'POST')
+  },
 
   
   // getPoidetail(data) {

@@ -58,8 +58,6 @@ class PortfolioPage {
     var that = this;
     wx.showLoading({ title: "加载中...", mask: true })
     webAPI.RetrieveUserProfile(req).then(resp => {
-      console.log("Retrieving user profile...");
-      console.log(resp);
       wx.hideLoading({});
       //-1 value filtering
       let keys = Object.keys(resp); 
@@ -68,7 +66,6 @@ class PortfolioPage {
         let key = keys[i]
         if (resp[key] === -1 || resp[key] === '') {
           errorChecking[i] = true;
-
         } else {
           errorChecking[i] = false;
         }
@@ -76,8 +73,6 @@ class PortfolioPage {
           errorChecking: errorChecking
         });
       }
-      console.log("get data", this.data);
-
       // parse pregnancyDate timestamp
       let tempDate: moment;
       if (resp.expected_birth_date == -1) {

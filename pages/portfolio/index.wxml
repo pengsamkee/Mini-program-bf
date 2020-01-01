@@ -82,7 +82,7 @@
       </view>
     </view>
 
-    <view class="weui-cells weui-cells_after-title section" hidden='{{genderIndex == 1}}'>
+    <view class="weui-cells weui-cells_after-title section" hidden='{{genderIndex !== 2}}'>
       <!--pregnancy status-->
       <picker class="weui-cell {{errorChecking[1]==true?'error-red-border':''}}" mode="selector" bindchange='pregnancyStatusSelect' range='{{pregnancyStatusArray}}' value='{{pregnancyStatusIndex}}'>
         <view class="space-between-view">

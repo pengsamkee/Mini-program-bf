@@ -9,13 +9,15 @@ class reportPage {
   }
 
   public onLoad(options): void {
+    let url = options.url; 
+    const index = url.lastIndexOf('/');
+    if(index!==-1){
+      url = url.substr(index+1)
+    }
     (this as any).setData({
-      url: options.url + "?time=" + moment().utc()
+      url: url + "?time=" + moment().utc()
     });
-    console.log(this.data.url);
   }
-
-  // 
 }
 
 Page(new reportPage());

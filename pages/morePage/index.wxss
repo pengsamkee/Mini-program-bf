@@ -78,7 +78,7 @@
   padding: 20rpx;
   background-color: white;
   border-top: 8rpx solid #ececec;
-  border-bottom: 2rpx solid #ececec;
+  /* border-bottom: 2rpx solid #ececec; */
 }
 
 .morepage-bottomarea {

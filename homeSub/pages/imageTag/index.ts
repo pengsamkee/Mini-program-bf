@@ -38,6 +38,7 @@ class ImageTagPage {
   public imgH = null; // 识别图片后，后台返回的图片高度
   public imgW = null; // 识别图片后，后台返回的图片宽度
   public imgKey =null; // 裁剪上个页面传来的img路径得到
+  public title =null; // 首页传来，供分析页点击继续添加用
   public data: Data = {
     //mockup tag list
     currentTagIndex: 0,
@@ -82,6 +83,7 @@ class ImageTagPage {
     })
     this.mealType = parseInt(option.mealType);
     this.mealDate = parseInt(option.mealDate);
+    this.title = option.title;
     wx.getSystemInfo({
       success: function (res) {
         that.screenWidth = res.windowWidth;
@@ -337,10 +339,11 @@ class ImageTagPage {
     });
     const mealInfo = {
       mealDate:this.mealDate,
-      mealType:1,
+      mealType:this.mealType,
       imgKey:this.imgKey,
       imgH:this.imgH,
       imgW:this.imgW,
+      title:this.title,
       taggs:taggsTemp
     }
     const jsonMealInfo = JSON.stringify(mealInfo);

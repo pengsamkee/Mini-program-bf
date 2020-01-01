@@ -86,7 +86,7 @@
             catchtap='onRecentResultSelect' 
             data-text-index="{{index}}" 
           >
-            <view class='food-item'>{{item.foodName}}</view>
+            <view class='food-item' hover-class="hover-food-item">{{item.foodName}}</view>
           </view>
         </view>
       </view>
@@ -97,7 +97,7 @@
         </view>
         <view class="food-lists w-100">
           <block wx:for='{{commonFoodList}}' wx:key='{{item.id}}'>
-            <view class='food-item' catchtap='handleTapCommonFoodItem' data-text-index="{{index}}">{{item.foodName}}</view>
+            <view class='food-item' hover-class="hover-food-item" catchtap='handleTapCommonFoodItem' data-text-index="{{index}}">{{item.foodName}}</view>
           </block>
         </view>
       </view>
@@ -113,14 +113,14 @@
     custom-class='choosed-lists-popup-custom'
   >
     <view class="lists">
-      <block wx:for='{{choosedLists}}' wx:key='{{item+index}}'>
+      <block wx:for='{{choosedLists}}' wx:key='index'>
         <view class='item'>
           <view>
             <view class="name">{{item.foodName}}</view>
-            <view class="weight">{{item.weightNumber+item.choosedUnit}}</view>
+            <view class="weight">{{(item.choosedUnit==='100克'?item.weightNumber+'x':item.weightNumber)+item.choosedUnit}}</view>
           </view>
           <view class="calories-num">
-            {{item.weightNumber*item.unitEnergy}}千卡
+            {{item.weightNumber*10*item.unitEnergy/10}}千卡
             <image class='delete-icon' src="./../../images/delete.png" bindtap='handleDeleteChoosedItem' data-index='{{index}}'/>
           </view>
         </view>
@@ -136,7 +136,7 @@
     overlay='{{false}}'
     custom-class='choosed-popup-custom-class'
   >
-    <image src='/images/textSearchUp.png' bindtap='toggleChoosedLists' class="{{showChoosedLists?'up':'down'}}"/>
+    <image src='/images/textSearchDown.png' bindtap='toggleChoosedLists' class="{{showChoosedLists?'up':'down'}}"/>
     <view class="choose-content" bindtap='toggleChoosedLists'>
       <view class="choose-number">
         已选食物: {{choosedLists.length}}
@@ -166,7 +166,7 @@
       }}
     </view>
     <view class="calories">
-      {{foodNumValue*foodUnitAndUnitEnergy[chooseUinitIndex].unitEnergy}}千卡/{{unitArr[chooseUinitIndex]==='100克'?foodNumValue+'x':foodNumValue}}{{unitArr[chooseUinitIndex]}}
+      {{foodNumValue*10*foodUnitAndUnitEnergy[chooseUinitIndex].unitEnergy/10}}千卡/{{nameArrForWXML[chooseUinitIndex]==='100克'?foodNumValue+'x':foodNumValue}}{{nameArrForWXML[chooseUinitIndex]}}
     </view>
     <view class="weight-container">
       <view class='public'>
@@ -176,13 +176,13 @@
         value='{{foodNumValue}}' 
         bindinput="handleFoodNumInput" 
         type="digit"
-        maxlength="2"
+        maxlength="3"
       />
       </view>
       <view class='public' bindtap='showPicker'>
         <view class="text">单位:</view>
         <view class="value space-between">
-          {{unitArr[chooseUinitIndex]}}
+          {{nameArrForWXML[chooseUinitIndex]}}
           <image src="./../../images/rightArrow.png"/>
         </view>
       </view>

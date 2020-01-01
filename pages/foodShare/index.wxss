@@ -173,8 +173,9 @@
 }
 .meal-detail .public{
   margin-left:50rpx;
-  /* width: 130rpx; */
-  /* background: #ccc; */
+}
+.fat-name{
+  min-width: 26rpx;
 }
 .meal-detail .public:nth-of-type(1){
   margin-left:0rpx;

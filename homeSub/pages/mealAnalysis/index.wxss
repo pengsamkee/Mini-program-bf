@@ -1,6 +1,14 @@
 page {
   width: 100%;
 }
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .wrap {
   width: 100%;
   display: flex;
@@ -9,6 +17,9 @@ page {
   justify-content: center;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  padding-bottom: 200rpx;
 }
 .wrap .title {
   font-size: 36rpx;
@@ -19,45 +30,190 @@ page {
   box-sizing: border-box;
   align-self: flex-start;
 }
-.canvas-info {
+.wrap .public {
   width: 100%;
-  height: 280rpx;
+  padding: 38rpx 30rpx;
+  box-sizing: border-box;
+  box-shadow: 0px 4rpx 14rpx 0px rgba(0, 0, 0, 0.12);
+  border-radius: 12rpx;
+  margin-top: 30rpx;
+}
+.wrap .public .canvas-title {
+  font-size: 28rpx;
+  color: #777;
+  animation: show 2s;
+}
+.wrap .public .spacial {
+  font-size: 30rpx;
+  color: #444;
+}
+.wrap .public .last-title {
+  margin-bottom: 38rpx;
+}
+.wrap .public .canvas-wrap {
+  width: 100%;
+  height: 240rpx;
+  position: relative;
+}
+.wrap .public .progress-container {
+  margin: 46rpx 0 13rpx 0;
+  position: relative;
+  width: 100%;
+  height: 70rpx;
+  font-size: 24rpx;
+  color: #737373;
+}
+.wrap .public .progress-container .top {
+  position: absolute;
+  top: -60rpx;
+  animation: show 2.5s;
+}
+.wrap .public .progress-container .progress {
+  margin: 90rpx 0;
+}
+.wrap .public .progress-container .bottom {
+  animation: show 4s;
+  position: absolute;
+  top: 30rpx;
+}
+.wrap .public .progress-container .bottom text {
+  color: #ed2c48;
+}
+.wrap .public .progress-last {
+  font-size: 24rpx;
+  color: #737373;
+}
+.wrap .public .progress-last view {
+  margin-bottom: 8rpx;
+}
+.wrap .public .progress-last .progress {
+  margin-bottom: 30rpx;
+}
+.wrap .public-canvas {
+  padding-bottom: 10rpx;
+}
+.fixed {
+  width: 100%;
+  height: 128rpx;
+  box-shadow: 0px -2rpx 14rpx 0px rgba(0, 0, 0, 0.12);
+  padding: 32rpx;
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 32rpx;
-  box-sizing: border-box;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #fff;
 }
-.canvas-info .left {
-  height: 100%;
-  flex: 1;
+.fixed .left {
+  text-align: center;
+}
+.fixed .left .van-icon {
+  color: #ed2c48;
+  margin-top: 14rpx;
+}
+.fixed .left view {
+  font-size: 24rpx;
+  color: #353535;
+  margin-top: -14rpx;
+}
+.fixed .right {
   display: flex;
   align-items: center;
-  position: relative;
-  box-sizing: border-box;
 }
-#canvasf2 {
-  overflow: visible;
+.fixed .right .continue {
+  width: 240rpx;
+  height: 74rpx;
+  border-radius: 37rpx;
+  border: 1px solid #ed2c48;
+  font-size: 28rpx;
+  color: #ed2c48;
 }
-.canvas-wrap {
+.fixed .right .confirm {
+  width: 240rpx;
+  height: 74rpx;
+  background: #ed2c48;
+  border-radius: 37rpx;
+  font-size: 28rpx;
+  margin-left: 26rpx;
+  color: #fff;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.choose-upload-type {
+  z-index: 200;
   width: 100%;
   height: 100%;
-  position: relative;
-}
-.right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  min-width: 180rpx;
-}
-.right-enegry {
-  font-size: 60rpx;
-  color: #353535;
-  line-height: 80rpx;
-}
-.right-total-enegry {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.97);
+  animation: show 0.3s ease-in-out;
   font-size: 24rpx;
-  font-weight: 300;
-  color: #888888;
-  margin-right: 20rpx;
+  color: #ed2c48;
+}
+.choose-upload-type .content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.choose-upload-type .content .choose-type {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.choose-upload-type .content .choose-type .item {
+  position: relative;
+  height: 270rpx;
+  width: 120rpx;
+  display: flex;
+  justify-content: center;
+  animation: show 0.5s ease;
+}
+.choose-upload-type .content .choose-type .item cover-image {
+  margin-bottom: 12rpx;
+  border-radius: 50%;
+  width: 120rpx;
+  height: 120rpx;
+  background: #f3465a;
+  position: absolute;
+  bottom: 40rpx;
+}
+.choose-upload-type .content .choose-type .item cover-view {
+  margin-top: 12rpx;
+  position: absolute;
+  bottom: 0rpx;
+  background: transparent;
+}
+.choose-upload-type .content .add-tip {
+  font-size: 100rpx;
+  margin: 50rpx auto 62rpx auto;
+  transform: rotate(-45deg);
+  color: #353535;
+  width: 40rpx;
+  height: 40rpx;
+  animation: cricle 0.5s ease-in-out 0s;
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes cricle {
+  0% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(135deg);
+  }
 }

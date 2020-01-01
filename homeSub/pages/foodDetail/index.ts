@@ -6,7 +6,6 @@ let data1 = [];
 function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
   const map = {};
   data1.forEach(function(obj) {
-    console.log(obj)
     if (obj.name==='蛋白质'){
       if(obj.percent>9){
         return map[obj.name] = `       `+ obj.percent + '%' + `    ` + obj.content + obj.unit;
@@ -150,6 +149,7 @@ class FoodDetail {
         ...item,
         tagX: item.tagX / (this.divideproportion * 2),
         tagY: item.tagY / (this.divideproportion * 2),
+        energy:Math.round(item.energy)
       }
       taggs.push(it);
     });
@@ -201,6 +201,10 @@ class FoodDetail {
         foodType: taggs[index].foodType
       }).then(res=>{
         if(res===true){
+          // 删除上个页面的本tag信息
+          let pages = getCurrentPages();    //获取当前页面信息栈
+          let prevPage = pages[pages.length-2]     //获取上一个页面信息栈
+          console.log('=======',prevPage)
           taggs.splice(index,1);
           (that as any).setData({taggs:taggs},()=>{
             //请求新的数据,做页面刷新

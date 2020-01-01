@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "分析",
   "usingComponents": {
-    "ff-canvas": "@antv/f2-canvas"
+    "ff-canvas": "@antv/f2-canvas",
+    "van-progress": "../../../components/vant/progress/index",
+    "van-icon": "../../../components/vant/icon/index"
   }
 }

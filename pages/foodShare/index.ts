@@ -62,7 +62,6 @@ class FoodSharePage {
     webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
     this.mealLogId = Number(option.mealId);
     this.mealLogShare()
-    console.log('this.mealLogId', this.mealLogId)
     // this.getSharePic();
   }
 
@@ -71,6 +70,30 @@ class FoodSharePage {
     request.MealLogShare({
       "meal_log_id": this.mealLogId
     }).then(res => {
+      console.log(4567,res)
+      if(res.single_dish){
+        for(let index in res.single_dish){
+          const item = res.single_dish[index];
+          if(res.single_dish[index].value){
+            if(index==='calorie'){
+              item.value = item.value.toFixed(0)
+            }else{
+              item.value = item.value.toFixed(1)
+            }
+          }
+        }
+      }else{
+        for(let index in res.multi_dish){
+          const item = res.multi_dish[index];
+          if(res.multi_dish[index].value){
+            if(index==='calorie'){
+              item.value = item.value.toFixed(0)
+            }else{
+              item.value = item.value.toFixed(1)
+            }
+          }
+        }
+      }
       const r = res
       const image_url = res.image_url
       that.setData({
@@ -78,24 +101,27 @@ class FoodSharePage {
         multi: res.multi_dish,
         single: res.single_dish,
         user_info: res.user_info
-      })
-      wx.getImageInfo({
-        src: image_url,
-        success(res) {
-          let h = res.height * that.data.imgWidth / res.width;
-          let canChangeHeight = r.multi_dish ? h:h+170;
-          that.setData({
-            // 图片默认是300px宽
-            imgHeight: canChangeHeight,
-            percent:1 // 只是为了在画图之前250ms，让进度条先显示出来
+      },()=>{
+        wx.getImageInfo({
+          src: image_url,
+          success(res) {
+            let h = res.height * that.data.imgWidth / res.width;
+            let canChangeHeight = r.multi_dish ? h:h+170;
+            that.setData({
+              // 图片默认是300px宽
+              imgHeight: canChangeHeight,
+              percent:1 // 只是为了在画图之前250ms，让进度条先显示出来
+            }
+            setTimeout(() => {
+              that.drawImage()
+            }, 250)
           }
-          setTimeout(() => {
-            that.drawImage()
-          }, 250)
-        }
+        })
       })
     }).catch(err => {
+      console.log(111)
       console.log(err)
+      console.log(222)
     })
   }
 
