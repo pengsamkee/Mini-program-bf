@@ -96,7 +96,7 @@ class FoodDiaryPage {
   public mealType = 0;
   public mealDate = 0;
   public path = '';
-  public showPersonCheckLoading = false;
+  // public showPersonCheckLoading = false;
   public foodColorTipsArr = ['#0074d9', '#ffdc00','#7fdbff', '#39cccc', '#3d9970', '#2ecc40', '#01ff70', '#ff851b', '#001f3f', '#ff4136', '#85144b', '#f012be', '#b10dc9', '#111111', '#aaaaaa', '#dddddd'];
   public mealIndex = 0;
 
@@ -210,7 +210,7 @@ class FoodDiaryPage {
       });
       mealList.push(meal)
     };
-    (this as any).setData({mealList},()=>console.log(888999000,this.data.mealList))
+    (this as any).setData({mealList})
   }
 
   /**
@@ -281,28 +281,21 @@ class FoodDiaryPage {
     var that = this;
     wx.login({
       success(_res) {
-        // 发送 _res.code 到后台换取 openId, sessionKey, unionId
-        that.showPersonCheckLoading?"":wx.showLoading({ title: '加载中...' });
         var req = { jscode: _res.code };
         loginAPI.MiniProgramLogin(req).then(resp => {
-          console.log('获取token成功',resp);
-          that.showPersonCheckLoading ? "" :wx.hideLoading({});
           let userStatus = resp.user_status;
           switch (userStatus) {
-            case 1:
-              //validation page
+            case 1: //validation page
               wx.reLaunch({ url: '/pages/login/index' });
               break;
-            case 2:
-              //onBoarding process page
+            case 2: //onBoarding process page
               if (resp.token) {
                 wx.setStorageSync(globalEnum.globalKey_token, resp.token);
                 webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
                 wx.reLaunch({ url: '/pages/onBoard/onBoard' });
               }
               break;
-            case 3:
-              //keep it at home page
+            case 3: //keep it at home page
               if (resp.token) {
                 wx.setStorageSync(globalEnum.globalKey_token, resp.token);
                 webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
@@ -312,19 +305,11 @@ class FoodDiaryPage {
               break;
           }
         }).catch(err => {
-          wx.hideLoading({});
           wx.showModal({
             title: '',
             content: '首页登陆失败',
             showCancel: false
           });
-        });
-      },
-      fail(err) {
-        wx.showModal({
-          title: '',
-          content: '首页登陆验证失败',
-          showCancel: false
         });
       }
     })
@@ -622,27 +607,26 @@ class FoodDiaryPage {
   }
 
   public onDailyReportClick() {
-    this.retrieveDailyReport(this.mealDate);
-  }
-  public retrieveDailyReport(currentTimeStamp: number) {
+    if(this.data.score===0){
+      wx.showModal({
+        title: "",
+        content: "您今天还没有添加食物哦",
+        showCancel: false,
+        confirmText:'去添加'
+      })
+      return
+    }
     wx.showLoading({ title: "加载中..."});
-    let req: RetrieveOrCreateUserReportReq = { date: currentTimeStamp };
-    webAPI.RetrieveOrCreateUserReport(req).then(resp => {
-      let reportUrl: string = resp.report_url;
-      wx.hideLoading();
-      if (reportUrl && reportUrl != "") {
-        wx.navigateTo({ url: "/pages/reportPage/reportPage?url=" + reportUrl });
-      } else {
-        wx.showModal({
-          title: "",
-          content: "您今天还没有添加食物哦",
-          showCancel: false,
-          confirmText:'去添加'
-        })
-      }
-    }).catch(err => console.log(err))
+    const token = wx.getStorageSync(globalEnum.globalKey_token);
+    request.getUserProfileByToken({token}).then(resp => {
+      let userId: string = resp.userId;
+      wx.hideLoading({});
+      wx.navigateTo({ url: `/pages/reportPage/reportPage?userId=${userId}&date=${this.mealDate}`});
+    }).catch(err => {
+      wx.hideLoading({});
+      console.log(err)
+    })
   }
-
   
   public addFoodImage(event: any) {
     this.mealIndex = event.currentTarget.dataset.mealIndex;
@@ -713,7 +697,7 @@ class FoodDiaryPage {
       sourceType: [sourceType],
       success: function (res: any) {
         wx.showLoading({ title: "上传中...", mask: true });
-        that.showPersonCheckLoading = true;
+        // that.showPersonCheckLoading = true;
         let imagePath = res.tempFilePaths[0];
         that.path = imagePath;
         uploadFile(imagePath, that.onImageUploadSuccess, that.onImageUploadFailed, that.onUploadProgressing, 0, 0);
@@ -732,7 +716,7 @@ class FoodDiaryPage {
 
   public onImageUploadFailed(){
     console.log("uploadfailed");
-    wx.hideLoading();
+    wx.hideLoading({});
   }
 
   public onUploadProgressing(event: any){

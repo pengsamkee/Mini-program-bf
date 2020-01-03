@@ -40,11 +40,15 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
   });
   chart.tooltip(false);
   chart.legend({
+    verticalAlign:'center',
     position: 'right',
     itemFormatter: function itemFormatter(val) {
       return val + ' ' + map[val];
-    }
+    },
+    marker: 'square',
+    clickable: false
   });
+
   chart.coord('polar', {
     transposed: true,
     innerRadius: 0.7,

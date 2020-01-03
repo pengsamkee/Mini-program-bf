@@ -35,9 +35,12 @@ function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
   chart.tooltip(false);
   chart.legend({
     position: 'right',
+    marker:'square',
+    verticalAlign:'center',
     itemFormatter: function itemFormatter(val) {
       return val + ' ' + map[val];
-    }
+    },
+    clickable: false
   });
   chart.coord('polar', {
     transposed: true,

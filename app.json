@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/home/index",
+    "pages/login/index",
     "pages/report/index",
     "pages/textSearch/index",
     "pages/onBoard/onBoard",
     "pages/checkNutrition/index",
-    "pages/login/index",
     "pages/portfolio/index",
     "pages/medicalCase/index",
     "pages/webView/index",

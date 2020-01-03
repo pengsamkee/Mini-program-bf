@@ -44,6 +44,10 @@ export default {
   getDailyMacronutrientSummary(data) {
     return fetch('/rc/miniProgram/getDailyMacronutrientSummary', data, 'POST')
   },
+  // 通过 token 获取用户个人信息
+  getUserProfileByToken(data) {
+    return fetch('/uc/miniProgram/getUserProfileByToken', data, 'POST')
+  },
 
   
   // getPoidetail(data) {
@@ -52,11 +56,5 @@ export default {
   // clock(data) {
   //   return fetch('/api/checkpoint/' + data.id + '.json', {}, 'POST')
   // },
-  // getPhone(data) {
-  //   return fetch('/api/member/decrypt.json', data, 'POST')
-  // },
-  // getCommentList(data) {
-  //   return fetch('/api/poi/' + data.id + '/comment.json', data, 'GET')
-  // }
   
 }
