@@ -1,0 +1,225 @@
+@import './../../../style/baseCss.less';
+page{
+    width: 100%;
+}
+@keyframes show {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    padding:0 32rpx;
+    box-sizing: border-box;
+    padding-bottom: 200rpx;
+    .title{
+        font-size:36rpx;
+        font-family:PingFangSC-Semibold,PingFang SC;
+        font-weight:600;
+        color:rgba(53,53,53,1);
+        padding: 50rpx 0 0 32rpx;
+        box-sizing: border-box;
+        align-self: flex-start;
+    }
+    
+    .public {
+        width: 100%;
+        padding:38rpx 30rpx;
+        box-sizing: border-box;
+        box-shadow:0px 4rpx 14rpx 0px rgba(0,0,0,0.12);
+        border-radius:12rpx;
+        margin-top:30rpx;
+        .canvas-title{
+            font-size:28rpx;
+            color:#777;
+            animation: show 2s;
+        }
+        .spacial{
+            font-size:30rpx;
+            color:#444;
+        }
+        .last-title{ 
+            margin-bottom: 38rpx;
+        }
+        .canvas-wrap { 
+            width: 100%;
+            height: 240rpx;
+            position: relative;
+        }
+        .progress-container{
+            margin:46rpx 0 13rpx 0;
+            position: relative;
+            width:100%; 
+            height: 70rpx;
+            font-size:24rpx;
+            color:rgba(115,115,115,1);
+            .top{
+                position: absolute;
+                top:-60rpx;
+                animation: show 2.5s;
+            }
+            .progress{
+                margin:90rpx 0;
+            }
+            .bottom{
+                animation: show 4s;
+                position: absolute;
+                top:30rpx;
+                text{
+                    color:@base-color;
+                }
+            }
+        }
+        .progress-last{
+            font-size:24rpx;
+            color:rgba(115,115,115,1);
+            view{
+                margin-bottom: 8rpx;
+            }
+            .progress{
+                margin-bottom: 30rpx;
+            }
+        }
+    }
+    .public-canvas{
+        padding-bottom: 10rpx;
+    }
+}
+
+.fixed{
+    width:100%;
+    height:128rpx;
+    box-shadow:0px -2rpx 14rpx 0px rgba(0,0,0,0.12);
+    padding:32rpx;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    .left{
+        text-align: center;
+        .van-icon{
+            color: @base-color;
+            margin-top:14rpx;
+        }
+        view{
+            font-size:24rpx;
+            color:rgba(53,53,53,1);
+            margin-top:-14rpx;
+        }
+    }
+    .right{
+        display: flex;
+        align-items: center;
+        .continue{
+            width:240rpx;
+            height:74rpx;
+            border-radius:37rpx;
+            border:1px  solid @base-color;
+            font-size:28rpx;
+            color:@base-color;
+        }
+        .confirm{
+            width:240rpx;
+            height:74rpx;
+            background:@base-color;
+            border-radius:37rpx;
+            font-size:28rpx;
+            margin-left:26rpx;
+            color: #fff;
+        }
+    }
+}
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.choose-upload-type{
+    z-index:200;
+    width:100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left:0;
+    background: rgba(255, 255, 255, .97);
+    animation: show 0.3s ease-in-out;
+    font-size:24rpx;
+    color:@base-color;
+    .content{
+        position: absolute;
+        bottom: 0;
+        left:0;
+        width:100%;
+        .choose-type{
+            width:100%;
+            display: flex;
+            justify-content: space-around;
+            .item{
+                position: relative;
+                height: 270rpx;
+                width:120rpx;
+                display: flex;
+                justify-content: center;
+                animation: show .5s ease;
+                cover-image{
+                    margin-bottom: 12rpx;
+                    border-radius:50%;
+                    width:120rpx;
+                    height:120rpx;
+                    background:rgba(243,70,90,1);
+                    position: absolute;
+                    bottom: 40rpx
+                }
+                cover-view{
+                    margin-top:12rpx;
+                    position: absolute;
+                    bottom: 0rpx;
+                    background: transparent;
+                }
+            }
+        }
+        .add-tip{
+            font-size: 100rpx;
+            margin:50rpx auto 62rpx auto;
+            transform: rotate(-45deg);
+            color:#353535;
+            width:40rpx;
+            height: 40rpx;
+            animation: cricle .5s ease-in-out 0s;
+        }
+    }
+}
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes cricle {
+    0% {
+        transform:rotate(-45deg)
+    }
+    100% {
+        transform:rotate(135deg)
+    }
+}

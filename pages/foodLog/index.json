@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "日记",
-  "disableScroll": true,
-  "usingComponents": {
-    "modal-input": "/components/modal-input/modal-input",
-    "xing-scroll": "/components/xing-scroll-view/x-scroll-view"
-  }
-}

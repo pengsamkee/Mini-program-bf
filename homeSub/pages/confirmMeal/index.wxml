@@ -1,0 +1,79 @@
+<!--homeSub/pages/comfirmMeal/index.wxml-->
+<view class="page">
+    <view class="page-top">
+        <view class="set-text">请设置您自己摄入的份量</view>
+        <view class="how-set-text">
+            <view class="tip-text">精确的份量有助于精确分析哦~</view>
+            <view class="tip-how" bindtap='handleGoWeightReferencePage'>如何估算份量</view>
+        </view>
+    </view>
+    <view class="list">
+        <block wx:for="{{taggs}}" wx:key='{{item.foodId}}'>
+            <view class="item">
+                <view class="item-top">
+                    <view class="item-num">{{index+1}}</view>
+                    <view class="food-name">{{item.foodName}}</view>
+                </view>
+                <view class="weight-unit">
+                    <view class="weight">
+                        <view class="weight-text">份量:</view>
+                        <input 
+                          class="picker" 
+                          value="{{unitArr[index].amount===0?'':unitArr[index].amount}}" 
+                          type="digit" 
+                          maxlength="3" 
+                          bindinput="handleAmountInput" 
+                          bindfocus="handleAmountInputFocus"
+                          bindblur="handleAmountInputBlur"
+                          data-input-index='{{index}}'
+                        />
+                    </view>
+                    <view class="weight">
+                        <view class="weight-text">单位:</view>
+                        <view class="picker picker-true" bindtap='handleShowPicker' data-picker-index='{{index}}'>
+                            <view >{{unitArr[index].unitOption[unitArr[index].chooseUnitIndex].unitName}}</view>
+                            <image src="/images/rightArrow.png"/>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+    <!-- <view class="person-number">
+        <view class="person-number-text">这一餐共有几个人共享以上食物？</view> 
+        <view class="picker picker-true w-100" bindtap='handleShowPicker' data-picker-index='person'>
+            <view >{{persons[choosePersonNumIndex]}}</view>
+            <image src="/images/rightArrow.png"/>
+        </view>
+    </view> -->
+  <view class="next-button">
+    <view class="number">
+      <view class="total-num">{{taggs.length}}种食物</view>
+      <view class="text">总共{{totalEnergy}}千卡</view>
+    </view>
+    <view class="next" bindtap='createMealLog'>确认本餐记录</view>
+  </view>
+</view>
+<view class="popup">
+  <van-popup
+    show="{{ showPicker }}"
+    position="bottom"
+    bind:close="onConfirm"
+    custom-class='popup-custom-class'
+  >
+    <van-picker
+      show-toolbar
+      title="选择{{pickerIndex==='person'?'人数':'单位'}}"
+      columns="{{columnsForWXml}}"
+      default-index="{{unitArr[pickerIndex].chooseUnitIndex}}"
+      bind:cancel="onConfirm"
+      bind:confirm="onConfirm"
+      bind:change='onChange'
+      custom-class='picker-custom-class'
+      active-class='active-class'
+      toolbar-class='toolbar-class'
+      column-class='column-class'
+    />
+  </van-popup>
+</view>
+  

@@ -6,28 +6,28 @@ var app = getApp();
 var nutritionalDatabasePage = (function () {
     function nutritionalDatabasePage() {
         this.data = {
-            macroArticleArr: [{
-                    url: "https://baidu.com/",
-                    src: '../../images/maxresdefault.jpg',
-                    title: '标题一亦亿亿一亿',
-                }],
-            microArticleArr: [{
-                    url: "https://baidu.com/",
-                    src: '../../images/maxresdefault.jpg',
-                    title: '标题一亦亿亿一亿',
-                    subtitle: '补维生素B1吃什么好？补维生素B1食疗？',
-                }],
-            macroDisplayArr: [{
-                    url: '/pages/nutritionalDatabasePage/articlePage',
-                    src: '../../images/maxresdefault.jpg',
-                    title: '正在加载...',
-                }],
-            microDisplayArr: [{
-                    url: '/pages/nutritionalDatabasePage/articlePage',
-                    src: '../../images/maxresdefault.jpg',
-                    title: '正在加载...',
-                    subtitle: '正在加载...',
-                }],
+            // macroArticleArr: [{
+            //         url: "https://baidu.com/",
+            //         src: '../../images/maxresdefault.jpg',
+            //         title: '标题一亦亿亿一亿',
+            //     }],
+            // microArticleArr: [{
+            //         url: "https://baidu.com/",
+            //         src: '../../images/maxresdefault.jpg',
+            //         title: '标题一亦亿亿一亿',
+            //         subtitle: '补维生素B1吃什么好？补维生素B1食疗？',
+            //     }],
+            // macroDisplayArr: [{
+            //         url: '/pages/nutritionalDatabasePage/articlePage',
+            //         src: '../../images/maxresdefault.jpg',
+            //         title: '正在加载...',
+            //     }],
+            // microDisplayArr: [{
+            //         url: '/pages/nutritionalDatabasePage/articlePage',
+            //         src: '../../images/maxresdefault.jpg',
+            //         title: '正在加载...',
+            //         subtitle: '正在加载...',
+            //     }],
             textPageOneArticlesArr: [{
                     url: 'https://mp.weixin.qq.com/s/fg1qli0Dk1x9y0WZcOHv8w',
                     src: 'https://mmbiz.qpic.cn/mmbiz_jpg/etvbyK2yNuViamaNiaBibYKibgyVhicPzS5PzOrVn6mOdWaKmNdwcZKX93z9BJTtwnJCqiaauFhu0WoD3twaFvjjWGLA/640?wx_fmt=jpeg',

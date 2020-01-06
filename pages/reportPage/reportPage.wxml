@@ -1,5 +1,9 @@
 <!--pages/reportPage/reportPage.wxml-->
 
 <view class="report-page-body">
+<<<<<<< HEAD
   <web-view src="https://jreport.pinshen.com.cn/userdailyreport/{{url}}"></web-view>
+=======
+  <web-view src="{{reportPageUrl}}"></web-view>
+>>>>>>> version1.0.2
 </view>

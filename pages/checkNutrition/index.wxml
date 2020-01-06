@@ -26,7 +26,7 @@
 
     <view class='food-info'>
       <scroll-view scroll-y bindscrolltolower='scrollToLower' class='food-info-scroll-view'>
-        <block wx:for='{{category[activeIndex].children}}' wx:key='item.id'>
+        <block wx:for='{{category[activeIndex].children}}' wx:key='id'>
           <view class='food-item'>
             <image src="" class='food-image'></image>
             <view class='food-item-info' bindtap='goNutritionDetil' data-item-id='{{item.id}}'>
@@ -45,7 +45,7 @@
       </scroll-view>
     </view> -->
   <scroll-view class='scroll_left' scroll-y="true">
-    <block wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName" wx:key="{{idx}}">  
+    <block wx:for="{{list}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx">  
       <view class="nav_left_items {{curNav == idx ? 'active' : ''}}" bindtap="switchRightTab" data-id="{{idx}}">{{itemName[0].name}}</view>  
     </block>  
   </scroll-view>
@@ -56,7 +56,7 @@
         <view class="item {{idx=='A'?'first-item':''}}">
           <view class='food_list_name' id='{{idx}}'>{{itemName[0].name}}</view>
           <view class='item-detail'>
-            <view wx:for="{{itemName}}" wx:for-index="idex" wx:key="item.id" class="{{idex>0?'nav_right_items_wrap':''}}"> 
+            <view wx:for="{{itemName}}" wx:for-index="idex" wx:key="id" class="{{idex>0?'nav_right_items_wrap':''}}"> 
               <view class="nav_right_items" wx:if="{{idex>0}}" bindtap='onTapFoodItem' data-food-id='{{item.id}}' data-food-type='{{item.foodType}}'>{{item.name}}</view>      
             </view> 
           </view>

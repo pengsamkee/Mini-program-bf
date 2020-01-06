@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "食物详情",
+  "usingComponents": {
+    "van-icon":"../../../components/vant/icon/index",
+    "ff-canvas": "@antv/f2-canvas"
+  }
+}

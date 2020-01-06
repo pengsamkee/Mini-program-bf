@@ -27,7 +27,7 @@
     <view class='w-100' wx:else>
       <!-- <view class='public-wrap'>
         <view class="title-wrap w-100">
-          <view>热门搜索</view>
+          <view>常见</view>
           <view></view>
         </view>
         <view class="food-lists w-100">
@@ -56,5 +56,4 @@
       </view>
     </view>
   </view>
-
 </view>

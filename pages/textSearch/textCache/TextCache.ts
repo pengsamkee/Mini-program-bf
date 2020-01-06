@@ -7,7 +7,6 @@
     for (let index = 0; index < capacity; index++) {
       let key = "LRU_" + index;
       let jsonString = wx.getStorageSync(key);
-      console.log(jsonString);
       //convert jsonSting to an object"LRU_"
       if (jsonString && jsonString !== ""){
         let foodObj = JSON.parse(jsonString);

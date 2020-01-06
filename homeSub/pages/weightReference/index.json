@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "份量参考",
+  "usingComponents": {
+    "van-icon":"./../../../components/vant/icon/index"
+  }
+}

@@ -2,20 +2,27 @@
 
 const app = getApp<IMyApp>()
 import * as moment from 'moment';
+import * as globalEnum from '../../api/GlobalEnum';
 
 class reportPage {
   public data = {
-    url: null
+    // id: null,
+    reportPageUrl:'',
   }
 
   public onLoad(options): void {
+    console.log('date,userId',options)
+    var reportPageUrl:string = globalEnum.reportPageUrl+'?date='+options.date+'&userId='+options.userId+'&time='+ moment().utc();
+    // let url = options.url; 
+    // const index = url.lastIndexOf('/');
+    // if(index!==-1){
+    //   var id = url.substr(index+1)
+    // }
     (this as any).setData({
-      url: options.url + "?time=" + moment().utc()
+      // id: id + "?time=" + moment().utc(),
+      reportPageUrl
     });
-    console.log(this.data.url);
   }
-
-  // 
 }
 
 Page(new reportPage());

@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "搜索",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-popup":"../../components/vant/popup/index",
+    "van-picker":"../../components/vant/picker/index"
+  }
 }

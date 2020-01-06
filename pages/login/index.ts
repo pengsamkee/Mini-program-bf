@@ -38,7 +38,11 @@ class LoginPage {
             wx.setStorageSync(globalEnum.globalKey_token, resp.token);
             wx.reLaunch({ url: "/pages/onBoard/onBoard" });
           } else {
-            wx.showModal({ title: "", content: "验证邀请码失败，请联系客服。", showCancel: false });
+            wx.showModal({ 
+              title: "", 
+              content: "验证邀请码失败，请联系客服。", 
+              showCancel: false
+            });
           }
         }).catch(err => {
           wx.hideLoading({});
@@ -71,7 +75,7 @@ class LoginPage {
             });
           }else{
             wx.reLaunch({
-              url: '../../pages/foodDiary/index'
+              url: '../../pages/home/index'
             });
           }
         }else{
