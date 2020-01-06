@@ -570,11 +570,9 @@ class onBoard {
                 times_of_pregnancy: that.data.numPreg
               }
               wx.showLoading({ title: "加载中..." });
-              console.log(updateUserProfileReq);
               webAPI.UpdateUserProfile(updateUserProfileReq).then(resp => {
                 that.getRDIGoal();
               }).catch(err => {
-                console.log(err);
                 wx.hideLoading({});
                 wx.showModal({
                   title: '',
@@ -582,8 +580,6 @@ class onBoard {
                   showCancel: false
                 });
               });
-
-              // webAPI.UpdateUserProfile(updateUserProfileReq);
 
               let updateMedicalProfileReq = {
                 food_allergy_ids: [],
@@ -596,7 +592,7 @@ class onBoard {
           })
         } else {
           wx.navigateTo({
-            url: '../invitation/invitation?user_status=2'
+            url: '../login/index?user_status=2'
           })
         }
       }
