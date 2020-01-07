@@ -160,8 +160,6 @@ class FoodDetail {
     (this as any).setData({
       taggs: taggs,
       energy: Math.round(resp.energy)
-    },()=>{
-      console.log('整理得到初始taggs',this.data.taggs)
     });
     // 整理canvas数据
     for( let index in resp.simpleMacronutrientIntake){

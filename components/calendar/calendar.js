@@ -79,7 +79,7 @@ Component({
             }, () => {
               self.triggerEvent('select', { ischeck: !self.data.calShow })
             })
-          }, 100)
+          }, 200)
         })
       } else {
         self.setData({
@@ -159,7 +159,7 @@ Component({
       let a = new Date()
       // console.log("im date ", a, typeof a === 'object')
       // 判断当前是 安卓还是ios ，传入不容的日期格式
-      if (typeof dateData !== 'object') {
+      if (typeof dateData !== 'object' ) {
         dateData = dateData.replace(/-/g, "/")
       }
       let _date = new Date(dateData);

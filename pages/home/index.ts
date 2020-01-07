@@ -338,229 +338,6 @@ class FoodDiaryPage {
     wx.navigateTo({ url:'/pages/nutritionalDatabasePage/index' })
   }
 
-  // public countReportBadge(resp: any) {
-  //   let reportNum = 0;
-  //   let reports = resp.daily_report;
-  //   for (let index in reports) {
-  //     let report = reports[index];
-  //     if (!report.is_report_generated && !report.is_food_log_empty) {
-  //       let todayTime = moment().startOf('day').unix();
-  //       console.log(todayTime);
-  //       if (report.date < todayTime || (report.date == todayTime && moment(new Date()).hours > 22)) {   //count today reports status after 19
-  //         reportNum++;
-  //       }
-  //     }
-  //   }
-  //   if (reportNum != 0) {
-  //     wx.setTabBarBadge({
-  //       index: 2,
-  //       text: String(reportNum)
-  //     });
-  //   } else {
-  //     wx.removeTabBarBadge({
-  //       index: 2
-  //     });
-  //   }
-  // }
-/**
- * api请求今天摄入量和今天饮食记录
- */
-  // public retrieveFoodDiaryData(currentTimeStamp: number) {
-  //   let req: RetrieveFoodDiaryReq = { date: currentTimeStamp };
-  //   webAPI.RetrieveFoodDiary(req).then(resp => this.foodDiaryDataParsing(resp)).catch(err =>
-  //   const token1 = webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token))//用户可能没有登录，此时不应弹窗
-  //     if (!webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token))){
-  //       console.log(8888, token1)
-  //     }else{
-  //       wx.showModal({
-  //         title: '',
-  //         content: '获取日志失败',
-  //         showCancel: false
-  //       })
-  //     }
-  //   )
-  // }
-
-  // public retrieveMealLog(mealId: number) {
-  //   let req: RetrieveMealLogReq = { meal_id: mealId }
-  //   return webAPI.RetrieveMealLog(req).then(resp => {
-  //     return this.parseMealLog(resp);
-  //   }).catch(err => {
-  //     console.log(err);
-  //     wx.showModal({
-  //       title: '',
-  //       content: '获取食物数据失败',
-  //       showCancel: false
-  //     })
-  //   }
-  //   );
-  // }
-  // public parseMealLog(resp: MealLogResp) {
-  //   let foodList: Food[] = [];
-  //   for (let index in resp.food_log) {
-  //     let foodLog: FoodLogInfo = resp.food_log[index];
-  //     let unitObj = foodLog.unit_option.find(o => o.unit_id === foodLog.unit_id);
-  //     let unitName = "份"
-  //     if (unitObj) {
-  //       unitName = unitObj.unit_name;
-  //     }
-  //     let food: Food = {
-  //       foodName: foodLog.food_name,
-  //       energy: Math.floor(foodLog.energy / 100),
-  //       unitName: unitName,
-  //       weight: Math.round(foodLog.weight / 100)
-  //     }
-  //     foodList.push(food)
-  //   }
-  //   return foodList
-  // }
-  // public loadMealSummary(resp: RetrieveFoodDiaryResp) {
-  //   let breakfast: Meal;
-  //   let breakfastSummary: Food[] = [];
-  //   let breakfastIds: number[] = [] //得到早餐mael_id数组
-  //   resp.breakfast.forEach((item =>breakfastIds.push(item.meal_id)))
-  //   const breakfastProms = Promise.all(breakfastIds.map(id => this.retrieveMealLog(id))).then(
-  //     result => {
-  //       result.map((list,index) => {
-  //         const tip_color = that.foodColorTipsArr;
-  //         let changedList = list.map( item => item = Object.assign(item, { tip_color: tip_color[index] }))
-  //         breakfastSummary.push(...changedList); // breakfastSummary中获得早餐一共吃了多少食物，不分图片
-  //         let sum = list.reduce((pre, cur) => {// 每个sum代表一张图有多少卡路里
-  //           return cur.energy + pre
-  //         }, 0);
-  //         Object.assign(resp.breakfast[index], { img_engry: sum }, { tip_color: tip_color})
-  //       });
-  //       console.log('meals',resp.breakfast)
-  //       return breakfast = {
-  //         mealId: 0,
-  //         mealName: '早餐',
-  //         mealEngry: Math.floor(resp.breakfast_suggestion.energy_intake / 100),
-  //         suggestedIntake: Math.floor(resp.breakfast_suggestion.suggested_intake / 100),
-  //         mealPercentage: resp.breakfast_suggestion.percentage,
-  //         meals: resp.breakfast,
-  //         mealSummary: breakfastSummary,
-  //       };
-  //     });
-  //   //lunch
-  //   let lunch: Meal;
-  //   let lunchSummary: Food[] = [];
-  //   let lunchIds: number[] = []
-  //   resp.lunch.forEach((item =>lunchIds.push(item.meal_id)));
-  //   const lunchProms = Promise.all(lunchIds.map(id => this.retrieveMealLog(id))).then(
-  //     result => {
-  //       result.map((list,index) => {
-  //         const tip_color = that.foodColorTipsArr;
-  //         let changedList = list.map(item => item = Object.assign(item, { tip_color: tip_color[index] }))
-  //         lunchSummary.push(...changedList);
-  //         let sum = list.reduce((pre, cur) => {// 每个sum代表一张图有多少卡路里
-  //           return cur.energy + pre
-  //         }, 0);
-  //         Object.assign(resp.lunch[index], { img_engry: sum }, { tip_color: tip_color })
-  //       });
-  //       return lunch = {
-  //         mealId: 1,
-  //         mealName: '午餐',
-  //         mealEngry: Math.floor(resp.lunch_suggestion.energy_intake / 100),
-  //         suggestedIntake: Math.floor(resp.lunch_suggestion.suggested_intake / 100),
-  //         mealPercentage: resp.lunch_suggestion.percentage,
-  //         meals: resp.lunch,
-  //         mealSummary: lunchSummary
-  //       };
-  //     });
-  //   //dinner
-  //   let dinner: Meal;
-  //   let dinnerSummary: Food[] = [];
-  //   let dinnerIds: number[] = []
-  //   resp.dinner.forEach((item =>dinnerIds.push(item.meal_id)));
-  //   const dinnerProms = Promise.all(dinnerIds.map(id => this.retrieveMealLog(id))).then(
-  //     result => {
-  //       result.map((list,index) => {
-  //         const tip_color = that.foodColorTipsArr;
-  //         let changedList = list.map(item => item = Object.assign(item, { tip_color: tip_color[index] }))
-  //         dinnerSummary.push(...changedList);
-  //         let sum = list.reduce((pre, cur) => {// 每个sum代表一张图有多少卡路里
-  //           return cur.energy + pre
-  //         }, 0);
-  //         Object.assign(resp.dinner[index], { img_engry: sum }, { tip_color: tip_color})
-  //       });
-  //       return dinner = {
-  //         mealId: 2,
-  //         mealName: '晚餐', 
-  //         mealEngry: Math.floor(resp.dinner_suggestion.energy_intake / 100),
-  //         suggestedIntake: Math.floor(resp.dinner_suggestion.suggested_intake / 100),
-  //         mealPercentage: resp.dinner_suggestion.percentage,
-  //         meals: resp.dinner,
-  //         mealSummary: dinnerSummary
-  //       };
-  //     });
-  //   //additional
-  //   const that = this
-  //   let addition: Meal;
-  //   let additionSummary: Food[] = [];
-  //   let additionIds: number[] = []
-  //   resp.addition.forEach((item =>dinnerIds.push(item.meal_id)));
-  //   const additionProms = Promise.all(additionIds.map(id => this.retrieveMealLog(id))).then(
-  //     result => {
-  //       result.map((list,index) => {
-  //         const tip_color = that.foodColorTipsArr;
-  //         let changedList = list.map(item => item = Object.assign(item, { tip_color: tip_color[index] }))
-  //         additionSummary.push(...changedList);
-  //         let sum = list.reduce((pre, cur) => {  //计算出每张图的能量，并添加进对象
-  //           return cur.energy + pre
-  //         }, 0);
-  //         Object.assign(resp.addition[index], { img_engry: sum }, { tip_color: tip_color})
-  //       });
-  //       return addition = {
-  //         mealId: 3,
-  //         mealName: '加餐',
-  //         mealEngry: Math.floor(resp.addition_suggestion.energy_intake / 100),
-  //         suggestedIntake: Math.floor(resp.addition_suggestion.suggested_intake / 100),
-  //         mealPercentage: resp.addition_suggestion.percentage,
-  //         meals: resp.addition,
-  //         mealSummary: additionSummary
-  //       };
-
-  //     });
-  //   let mealList: Meal[] = []
-  //   Promise.all([breakfastProms, lunchProms, dinnerProms]).then(
-  //     result => {
-  //       result.map(meal => mealList.push(meal));
-  //       (this as any).setData({ mealList: mealList })
-  //     }
-  //   );
-
-  // }
-
-  
-/**
- * 解析获今天摄入量板块的数据
- */
-  // public foodDiaryDataParsing(resp: RetrieveFoodDiaryResp) {
-  //   console.log("summary", resp);
-  //   let score = resp.score;
-  //   let energy = resp.daily_intake.energy;
-  //   let protein = resp.daily_intake.protein;
-  //   let carbohydrate = resp.daily_intake.carbohydrate;
-  //   let fat = resp.daily_intake.fat;
-  //   let nutrientSummary = [
-  //     { nutrient_name: "热量", intaken_percentage: energy.percentage, intaken_num: Math.floor(energy.intake / 100), total_num: Math.floor(energy.suggested_intake / 100), unit: "千卡" },
-  //     { nutrient_name: "脂肪", intaken_percentage: fat.percentage, intaken_num: Math.floor(fat.intake / 100), total_num: Math.floor(fat.suggested_intake / 100), unit: "克" },
-  //     { nutrient_name: "碳水化合物", intaken_percentage: carbohydrate.percentage, intaken_num: Math.floor(carbohydrate.intake / 100), total_num: Math.floor(carbohydrate.suggested_intake / 100), unit: "克" },
-  //     { nutrient_name: "蛋白质", intaken_percentage: protein.percentage, intaken_num: Math.floor(protein.intake / 100), total_num: Math.floor(protein.suggested_intake / 100), unit: "克" }
-  //   ]
-
-  //   this.loadMealSummary(resp);
-  //   // let mealList = [breakfast, lunch, dinner, additional];
-  //   (this as any).setData({
-  //     nutrientSummary: nutrientSummary,
-  //     score: score
-  //   },()=>{
-  //     nutrientSummary.map((item,index)=>{
-  //       (this as any).selectComponent(`#circle${index}`).drawCircle(`canvas`, 75, 4, item.intaken_percentage/100 * 2)
-  //     });
-  //   });
-  // }
-
   public bindNaviToOtherMiniApp() {
     //test on navigate miniProgram
     wx.navigateToMiniProgram({
@@ -587,19 +364,24 @@ class FoodDiaryPage {
 
   //默认主动会触发一次
   public bindgetdate(event: any) {
-    //Convert date to unix timestamp
+    
+    webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
     let time = event.detail;
-    const navTitleTime = time.year + '/' + time.month + '/' + time.date;
-    (this as any).setData({ navTitleTime: navTitleTime })
+    let navTitleTime = time.year + '/' + time.month + '/' + time.date;
     let date = moment([time.year, time.month - 1, time.date]); // Moment month is shifted left by 1
-    //get current timestamp
+    
     this.mealDate = date.unix();
+    if(app.globalData.mealDate){
+      this.mealDate = app.globalData.mealDate;
+      navTitleTime = moment(this.mealDate*1000).format('YYYY/MM/DD')
+      app.globalData.mealDate = null;
+    }
     const todayTimeStamp = moment(new Date());
-    if (todayTimeStamp.isSame(date,'d')){
-        (this as any).setData({ navTitleTime: '今天' })
-    } else {
-      //他们不是在同一天
-      (this as any).setData({ navTitleTime: navTitleTime })
+    const formatMealData = moment(this.mealDate*1000);
+    if (todayTimeStamp.isSame(formatMealData,'d')){
+      (this as any).setData({ navTitleTime: '今天' })
+    } else { 
+      (this as any).setData({ navTitleTime })
     } 
     // this.retrieveFoodDiaryData(this.mealDate);
     this.getDailyMacronutrientSummary(this.mealDate) // 获取canvas信息

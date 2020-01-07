@@ -4,7 +4,7 @@
         <view class="set-text">请设置您自己摄入的份量</view>
         <view class="how-set-text">
             <view class="tip-text">精确的份量有助于精确分析哦~</view>
-            <view class="tip-how" bindtap='handleGoWeightReferencePage'>如何估算份量</view>
+            <!-- <view class="tip-how" bindtap='handleGoWeightReferencePage'>如何估算份量</view> -->
         </view>
     </view>
     <view class="list">

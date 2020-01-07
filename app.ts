@@ -58,6 +58,7 @@ App<IMyApp>({
   },
   globalData: {
     config: globalConfig,
-    menuInfo:null
+    menuInfo:null,
+    mealDate:null, // 由于路由跳转问题，在非当日上传图片后，再回首页会变成今日
   }
 })

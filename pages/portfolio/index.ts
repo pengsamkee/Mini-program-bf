@@ -143,7 +143,7 @@ class PortfolioPage {
         fail: err => {
           //跳转到验证页面
           wx.navigateTo({
-            url: '../invitation/index'
+            url: '../login/index'
           })
         }
       })

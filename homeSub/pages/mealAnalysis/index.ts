@@ -1,3 +1,5 @@
+let app =  getApp();
+
 import request from '../../../api/app/interface';
 import * as uploadFile from './../../../api/uploader.js';
 
@@ -7,7 +9,6 @@ let data = [];
 function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
   const map = {};
   data.forEach(function(obj) {
-    console.log(obj)
     if (obj.name==='蛋白质'){
       if(obj.percent>9){
         return map[obj.name] = `       `+ obj.percent + '%' + `    ` + '推荐'+obj.suggestedPercentageLower+'%-'+obj.suggestedPercentageUpper+'%';
@@ -110,6 +111,7 @@ class MealAnalysis {
     }
     this.mealDate = parseInt(options.mealDate);
     this.mealLogId = parseInt(options.mealLogId);
+    app.globalData.mealDate = this.mealDate;
     this.title = options.title;
     this.getSimpleDailyAnalysis()
   }
@@ -204,7 +206,7 @@ class MealAnalysis {
     wx.navigateTo({ url: '/pages/foodShare/index?mealId='+this.mealLogId });
   }
   public goHomePage(){
-    wx.switchTab({ url: '/pages/home/index' })
+    wx.switchTab({ url: `/pages/home/index`})
   }
   public handleContinueAdd(){
     (this as any).setData({showMask:true})
