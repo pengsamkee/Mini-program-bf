@@ -1,3 +1,5 @@
+let app =  getApp();
+
 import request from './../../../api/app/interface';
 
 class ConfirmMeal {

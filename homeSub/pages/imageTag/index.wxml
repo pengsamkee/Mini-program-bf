@@ -18,7 +18,7 @@
 		</view>
 		<movable-view
 			x="{{item.tagX}}"
-			y="{{item.tagY}}"
+			y="{{imageHeight===720?(item.tagY>290?290:item.tagY):(item.tagY/imageHeight>0.33?imageHeight*0.33:item.tagY)}}"
 			class="movable-tag"
 			direction="all"
 			wx:for="{{taggs}}"
@@ -40,7 +40,7 @@
 
 <view class="page">
   <view class="food-number">
-    <view class="num">共发现{{taggs.length}}种食物</view>
+    <view class="num">共发现{{taggs.length || '--'}}种食物</view>
     <view class="tips">如有漏掉食物，可长按图片增加标签哦～</view>
   </view>
   <view class="food-list">    
@@ -83,7 +83,7 @@
   </view>
   <view class="next-button">
     <view class="number">
-      <view class="total-num">{{taggs.length}}种食物</view>
+      <view class="total-num">{{taggs.length || '--'}}种食物</view>
       <view class="text">待设置摄入分量</view>
     </view>
     <view class="next" bindtap='goConfirmMeal'>下一步</view>

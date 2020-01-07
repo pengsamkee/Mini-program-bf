@@ -16,14 +16,14 @@
 		</view>
 		<movable-view
 			x="{{item.tagX}}"
-			y="{{item.tagY}}"
+			y="{{imageHeight===720?(item.tagY>290?290:item.tagY):(item.tagY/imageHeight>0.33?imageHeight*0.33:item.tagY)}}"
 			class="movable-tag"
 			direction="all"
 			wx:for="{{taggs}}"
 			wx:key="foodId"
 			bindchange="onTagMove"
 			data-tag-index="{{index}}"
-			out-of-bounds="{{true}}"
+			out-of-bounds="{{false}}"
 			wx:if="{{imageUrl&&imageUrl!='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-image.png'}}"
 		>
 			<view class="tag-number">{{index+1}}</view>

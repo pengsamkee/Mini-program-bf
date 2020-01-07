@@ -267,7 +267,7 @@ class textSearch {
     const totalEnergy = this.data.choosedLists.reduce((pre,next)=>{
       return next.weightNumber*next.unitEnergy+pre
     },0);
-    (this as any).setData({totalEnergy:totalEnergy.toFixed(1)})
+    (this as any).setData({totalEnergy:Number(totalEnergy.toFixed(1))})
   }
 
   /**
