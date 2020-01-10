@@ -15,12 +15,13 @@
   height: 100%;
   z-index: 999999;
   box-sizing: border-box;
-  transition: all 0.3s;
   opacity: 0;
+  transition: all 0.3s;
 }
 
 .calendar-box.active {
   opacity: 1;
+  transition: all 0.3s;
 }
 .mask{
   width:100%;
@@ -34,16 +35,19 @@
   box-sizing: border-box;
   font-size: 26rpx;
   background: #fff;
-  transition: all 0.3s;
-  transform: translateY(-100%);
+  transition: all 0.4s;
+  /* transform: translateY(-100%); */
   position: absolute;
   top:76px;
   left:0px;
   z-index: 22222;
+  opacity: 0;
 }
 
 .calendar-wrapper.active {
-  transform: translateY(0%);
+  /* transform: translateY(0%); */
+  transition: all 0.4s;
+  opacity: 1;
 }
 
 .header {
@@ -81,32 +85,6 @@
 .iconfont .choose-left{
   transform: rotate(180deg);
 }
-/* 
-.iconfont .left, .iconfont .right {
-  display: block;
-  width: 0;
-  height: 0;
-  border-top: 20rpx solid transparent;
-  border-bottom: 20rpx solid transparent;
-}
-
-.iconfont .left {
-  border-right: 40rpx solid transparent;
-  transform:rotate(90deg);
-}
-
-.iconfont .right {
-  border-left: 40rpx solid transparent;
-  transform:rotate(270deg);
-}
-
-.iconfont .left.color {
-  border-right-color: #ed2c48;
-}
-
-.iconfont .right.color {
-  border-left-color: #ed2c48;
-} */
 
 .btn {
   margin: 2rpx 32rpx;

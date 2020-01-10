@@ -58,112 +58,112 @@
         <view class="energy">{{item.energy}}千卡</view>
       </view>
     </view>
-
   </view>
 </template>
 
 <!-- main layout -->
-
-<cover-view class='nav-custom' style="height:{{menuInfo.bottom+10}}px;">
-  <cover-view class='nav-data-wrap' style="height:{{menuInfo.height}}px;margin-top:{{menuInfo.top}}px">
-    <cover-view bindtap='triggerBindgetdate'>{{navTitleTime}}</cover-view>
-    <cover-view bindtap='triggerBindgetdate' class="down">▼</cover-view>
+<view class="for-cover-view">
+  <cover-view class='nav'>
+    <cover-view style='height: {{statusHeight}}px;background:#ed2c48'></cover-view >
+    <cover-view class='navbar' style='height:{{navHeight}}px;background:#ed2c48'>
+      <cover-view bindtap='triggerBindgetdate'>{{navTitleTime}}</cover-view>
+      <cover-view bindtap='triggerBindgetdate' class="down">▼</cover-view>
+    </cover-view >
   </cover-view>
-</cover-view>
-
+    
 <!-- 日历组件 -->
-<calendar selected="{{selected}}" bindselect="bindselect" bindgetdate="bindgetdate" id='calendar'/>
-<view class="page" style="top:{{menuInfo.bottom+10}}px;">
-  <view class='bg-top'></view>
-  <view class="public-card" catchtap="onDailyReportClick">
-    <view class='score-wrap'>
-      <view class='score-wrap-left'>
-        <image src='/images/home/score.png'></image>
-        <view>今日已摄入量</view>
+  <calendar selected="{{selected}}" bindselect="bindselect" bindgetdate="bindgetdate" id='calendar'/>
+  <view class="page" style="top:{{statusHeight+navHeight}}px;">
+    <view class='bg-top'></view>
+    <view class="public-card" catchtap="onDailyReportClick">
+      <view class='score-wrap'>
+        <view class='score-wrap-left'>
+          <image src='/images/home/score.png'></image>
+          <view>今日已摄入量</view>
+        </view>
+        <view class='score-wrap-right'>
+          <view class='score-text'>得分</view>
+          <view class='score-num'>{{score}}</view>
+          <image src='/images/rightArrow.png'></image>
+        </view>
       </view>
-      <view class='score-wrap-right'>
-        <view class='score-text'>得分</view>
-        <view class='score-num'>{{score}}</view>
-        <image src='/images/rightArrow.png'></image>
-      </view>
-    </view>
-    <view class="lists">    
-      <view wx:for="{{nutrientSummary}}" class="nutrient_container" wx:key='index'>
-        <circle id='circle{{index}}' bg='circle_bg' draw='circle_draw'>
-          <view class="circle_info">
-            <text class='circle_percentage'> {{item.percent+'%'}}</text>
-            <text class='circle_label'> {{item.name}}  </text>
-          </view>
-        </circle>
-        <text class="small-text-font">{{item.intakeNum}}/{{item.totalNum}}{{item.unit}}</text>
-      </view>
-    </view>
-  </view>
-  <view class="public-card">
-    <view class='score-wrap' catchtap="goWeightRecord">
-      <view class='score-wrap-left'>
-        <image src='/images/home/weight_history.png'></image>
-        <view>体重记录</view>
-      </view>
-      <view class='score-wrap-right'>
-        <view class='score-text'>+</view>
-        <view class='score-text add-weight'>添加记录</view>
-      </view>
-    </view>
-    <view class="weight-wrap">    
-      <view class="weigth-text">
-        <text>{{latest_weight}}</text>公斤
-      </view>
-      <view class="weigth-line">
-        <ff-canvas id="scroll" canvas-id="scrollLine" opts="{{ opts }}" style="width:100%;height:100%;"></ff-canvas>
-      </view>
-    </view>
-  </view>
-  <view class="public-card">
-    <view class='score-wrap' catchtap="onDailyReportClick">
-      <view class='score-wrap-left'>
-        <image src='/images/home/today_food.png'></image>
-        <view>今日饮食记录</view>
-      </view>
-      <view class='score-wrap-right'>
-        <view class='score-text check-analysis'>查看分析</view>
-        <image src='../../images/rightArrow.png'></image>
-      </view>
-    </view>
-    <view class="new-meals">
-        <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='index'></template>
-    </view>
-  </view>
-
-  <view class="public-card">
-    <view class='score-wrap' catchtap="goNutritionalDatabasePage">
-      <view class='score-wrap-left'>
-        <image src='/images/home/nutrition_information.png'></image>
-        <view>营养资讯</view>
-      </view>
-      <view class='score-wrap-right'>
-        <view class='score-text check-analysis'>查看更多</view>
-        <image src='../../images/rightArrow.png'></image>
-      </view>
-    </view>
-    <view class='nutrition-information'>
-      <scroll-view scroll-x class="scroll-view">
-        <navigator class='info-item-wrap' wx:for='{{infoLists}}'  wx:key='index' url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}">
-          <view class='info-item'>
-            <image src='{{item.image}}'></image>
-            <view class="mask-wrap">
-              <view class="info-mask"></view>
-              <view class="info-title">{{item.title}}</view>
+      <view class="lists">    
+        <view wx:for="{{nutrientSummary}}" class="nutrient_container" wx:key='index'>
+          <circle id='circle{{index}}' bg='circle_bg' draw='circle_draw'>
+            <view class="circle_info">
+              <text class='circle_percentage'> {{item.percent+'%'}}</text>
+              <text class='circle_label'> {{item.name}}  </text>
             </view>
-          </view>
-        </navigator>
-      </scroll-view>
+          </circle>
+          <text class="small-text-font">{{item.intakeNum}}/{{item.totalNum}}{{item.unit}}</text>
+        </view>
+      </view>
     </view>
+    <view class="public-card">
+      <view class='score-wrap' catchtap="goWeightRecord">
+        <view class='score-wrap-left'>
+          <image src='/images/home/weight_history.png'></image>
+          <view>体重记录</view>
+        </view>
+        <view class='score-wrap-right'>
+          <view class='score-text'>+</view>
+          <view class='score-text add-weight'>添加记录</view>
+        </view>
+      </view>
+      <view class="weight-wrap">    
+        <view class="weigth-text">
+          <text>{{latest_weight}}</text>公斤
+        </view>
+        <view class="weigth-line">
+          <ff-canvas id="scroll" canvas-id="scrollLine" opts="{{ opts }}" style="width:100%;height:100%;"></ff-canvas>
+        </view>
+      </view>
+    </view>
+    <view class="public-card">
+      <view class='score-wrap' catchtap="onDailyReportClick">
+        <view class='score-wrap-left'>
+          <image src='/images/home/today_food.png'></image>
+          <view>今日饮食记录</view>
+        </view>
+        <view class='score-wrap-right'>
+          <view class='score-text check-analysis'>查看分析</view>
+          <image src='../../images/rightArrow.png'></image>
+        </view>
+      </view>
+      <view class="new-meals">
+          <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='index'></template>
+      </view>
+    </view>
+
+    <view class="public-card">
+      <view class='score-wrap' catchtap="goNutritionalDatabasePage">
+        <view class='score-wrap-left'>
+          <image src='/images/home/nutrition_information.png'></image>
+          <view>营养资讯</view>
+        </view>
+        <view class='score-wrap-right'>
+          <view class='score-text check-analysis'>查看更多</view>
+          <image src='../../images/rightArrow.png'></image>
+        </view>
+      </view>
+      <view class='nutrition-information'>
+        <scroll-view scroll-x class="scroll-view">
+          <navigator class='info-item-wrap' wx:for='{{infoLists}}'  wx:key='index' url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}">
+            <view class='info-item'>
+              <image src='{{item.image}}'></image>
+              <view class="mask-wrap">
+                <view class="info-mask"></view>
+                <view class="info-title">{{item.title}}</view>
+              </view>
+            </view>
+          </navigator>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="empty-footer"></view>
   </view>
-
-  <view class="empty-footer"></view>
 </view>
-
+  
 <cover-view 
   class="choose-upload-type" 
   wx:if='{{showMask}}' 

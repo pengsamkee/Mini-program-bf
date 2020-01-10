@@ -75,7 +75,6 @@ class FoodDiaryPage {
     ],
     mealList: [],
     score: '--',
-    menuInfo: {},
     infoLists: [
       { url: 'https://mp.weixin.qq.com/s/fg1qli0Dk1x9y0WZcOHv8w',image:'https://mmbiz.qpic.cn/mmbiz_jpg/etvbyK2yNuViamaNiaBibYKibgyVhicPzS5PzOrVn6mOdWaKmNdwcZKX93z9BJTtwnJCqiaauFhu0WoD3twaFvjjWGLA/640?wx_fmt=jpeg',
         title:'秋季饮食攻略!'
@@ -92,6 +91,8 @@ class FoodDiaryPage {
     navTitleTime:'',//导航栏处显示的时间
     latest_weight:' ',
     showMask:false,
+    statusHeight:null,
+    navHeight:null,
   };
   public mealType = 0;
   public mealDate = 0;
@@ -117,14 +118,25 @@ class FoodDiaryPage {
   }
   
   public onReady(){
-    /**
-     * 获取右上角胶囊尺寸，计算自定义标题栏位置
-     */
-    if(app.globalData.menuInfo){
-      (this as any).setData({ menuInfo: app.globalData.menuInfo });
+    if(app.globalData.statusHeight==null || app.globalData.navHeight==null){
+      const systemInfo = wx.getSystemInfoSync()
+      const statusHeight = systemInfo.statusBarHeight
+      const isiOS = systemInfo.system.indexOf('iOS') > -1  
+      var navHeight;
+      if (!isiOS) { // 安卓
+          navHeight = 48; 
+        } else {                
+          navHeight = 44;            
+      }
+      (this as any).setData({ 
+        statusHeight,
+        navHeight
+      });
     }else{
-      const menuInfo = wx.getMenuButtonBoundingClientRect();
-      (this as any).setData({ menuInfo: menuInfo });
+      (this as any).setData({ 
+        statusHeight:app.globalData.statusHeight,
+        navHeight:app.globalData.navHeight
+      });
     }
   }
   /**

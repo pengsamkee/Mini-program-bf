@@ -24,11 +24,18 @@ globalConfig.init()
 
 App<IMyApp>({
   onLaunch() {
-    /**
-     * 获取右上角胶囊尺寸，计算自定义标题栏位置
-     */
-    const menuInfo = wx.getMenuButtonBoundingClientRect();
-    this.globalData.menuInfo = menuInfo;
+    const systemInfo = wx.getSystemInfoSync()
+    const statusHeight = systemInfo.statusBarHeight
+    const isiOS = systemInfo.system.indexOf('iOS') > -1  
+    var navHeight;
+    if (!isiOS) { // 安卓
+        navHeight = 48;            
+      } else {                
+        navHeight = 44;            
+    }
+    this.globalData.statusHeight = statusHeight;
+    this.globalData.navHeight = navHeight;
+
     wx.onNetworkStatusChange(function (res) {
       var networkType = res.networkType
       var isConnected = res.isConnected
@@ -58,7 +65,8 @@ App<IMyApp>({
   },
   globalData: {
     config: globalConfig,
-    menuInfo:null,
     mealDate:null, // 由于路由跳转问题，在非当日上传图片后，再回首页会变成今日
+    statusHeight:null,
+    navHeight:null,
   }
 })

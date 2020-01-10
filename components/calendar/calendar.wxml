@@ -2,7 +2,7 @@
 <!-- <cover-view class="triangle" bindtap="dateSelection">▼{{selectDay}}</cover-view> -->
 <cover-view wx:if='{{!calShow}}' class="{{isOpen?'':'calendar-box'}} {{dateShow?'active':''}}" catchtouchmove='handleTouchMove'>
   <cover-view class="mask" catchtap="packup"></cover-view>
-  <cover-view class="calendar-wrapper {{dateShow?'active':''}}" style='top:{{menuInfo.bottom+10}}px'>
+  <cover-view class="calendar-wrapper {{dateShow?'active':''}}" style='top:{{statusHeight+navHeight}}px'>
     <cover-view class="calendar-panel">
       <cover-view class="date-befor" data-id="0" data-type="month" bindtap='dataBefor'>
         <cover-view class="iconfont">

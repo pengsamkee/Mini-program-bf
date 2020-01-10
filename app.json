@@ -44,12 +44,6 @@
         "selectedIconPath": "images/tabbar_check_active.png"
       },
       {
-        "pagePath": "pages/report/index",
-        "text": "饮食分析",
-        "iconPath": "images/report.png",
-        "selectedIconPath": "images/report_red.png"
-      },
-      {
         "pagePath": "pages/morePage/index",
         "text": "我的",
         "iconPath": "images/profile.png",

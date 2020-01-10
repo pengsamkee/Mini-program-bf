@@ -39,7 +39,8 @@ Component({
     canlender: {
       "weeks": []
     },
-    menuInfo:{}//做自适应高度
+    statusHeight:null,
+    navHeight:null,
   },
   ready() {
     this.getWeek(new Date())
@@ -49,10 +50,21 @@ Component({
         dateShow: true
       })
     }
-    const menuInfo = wx.getMenuButtonBoundingClientRect();
-    this.setData({
-      menuInfo: menuInfo
-    })
+
+    const systemInfo = wx.getSystemInfoSync()
+    const statusHeight = systemInfo.statusBarHeight
+    const isiOS = systemInfo.system.indexOf('iOS') > -1  
+    var navHeight;
+    if (!isiOS) { // 安卓
+        navHeight = 48; 
+      } else {                
+        navHeight = 44;            
+    }
+    this.setData({ 
+      statusHeight,
+      navHeight
+    });
+
   },
   /**
    * 组件的方法列表
@@ -79,7 +91,7 @@ Component({
             }, () => {
               self.triggerEvent('select', { ischeck: !self.data.calShow })
             })
-          }, 200)
+          }, 100)
         })
       } else {
         self.setData({

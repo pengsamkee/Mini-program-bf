@@ -240,6 +240,9 @@
   font-size: 24rpx;
   color: #888888;
 }
+.choose-food-container {
+  position: relative;
+}
 .choose-food-container .choosed-popup-custom-class {
   margin-left: 32rpx;
   margin-bottom: 34rpx;
