@@ -1,0 +1,271 @@
+/* pages/login/index.wxss */
+@import '../../style/weui.wxss';
+
+.red-background {
+  position: absolute;
+  width: 100%;
+  height: 72%;
+}
+
+.food {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 680rpx;
+}
+
+.phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 200rpx;
+  margin-right: 40rpx;
+  width:410rpx;
+  height:790rpx;
+}
+
+.pregnant {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 110rpx;
+  margin-left: 50rpx;
+  width:70rpx;
+  height:100rpx;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 82rpx;
+  margin-left: 145rpx;
+  color: white;
+  font-size: 100rpx;
+  font-family:PingFangSC-Regular;
+}
+
+.leaf {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width:37%;
+  height:100%;  
+}
+
+.subheader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 50rpx;
+  margin-top: 278rpx;
+  font-family:PingFangSC-Semibold;
+  font-size:48rpx;
+  color:#ffffff;
+  text-align:left;
+  display: block;
+  width: 312rpx;
+  height: 132rpx;
+}
+
+.divider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52rpx;
+  height: 100%;
+  margin-top: 430rpx;
+  margin-left: 50rpx;
+}
+
+.description {
+  font-family:PingFangSC-Regular;
+  font-size:14px;
+  color:#ffffff;
+  text-align:left;
+  margin-top: 470rpx;
+  margin-left: 50rpx;
+  width: 270rpx;
+  height: 100%
+}
+
+.popuptext {
+  position: absolute;
+  display: block;
+  width: 202rpx;
+  height: 86rpx;
+  bottom:0;
+  right:0;
+  font-family:PingFangSC-Regular;
+  font-size:28rpx;
+  color:#000000;
+  text-align:center;
+  margin-bottom:960rpx;
+  margin-right: 28rpx;
+
+  border: none;
+  background-color: white;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  border-radius: 7px;
+}
+
+.path {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50rpx;
+  height: 100%;
+  margin-bottom: 895rpx;
+  margin-right: 100rpx;
+}
+
+.placeholder-class{
+  letter-spacing: 1px;
+  color: #aaa;
+  text-align: center;
+}
+page{
+  width: 100%;
+  height: 100%;
+}
+.swiper-father{
+  width:100%;
+  height:100%;
+  display: flex;
+  justify-content: center;
+}
+.swiper{
+  width:100%;
+  height: 700rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.swiper-item{
+  width:100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image{
+  width:524rpx;
+  height:524rpx;
+  border-radius: 50%;
+}
+.login-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+}
+.bottom{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40rpx;
+    .input-invatation{
+        min-height:90rpx;
+        width:684rpx;
+        border:1px solid #bbb;
+        border-radius: 47rpx;
+        text-align: center;
+        line-height: 94rpx;
+        letter-spacing: 2px;
+        color: #888;
+    }
+    
+    .btn {
+        background-color: #ccc;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.486);
+        border-radius: 50rpx;
+        min-height:90rpx;
+        width:684rpx;
+        font-family:PingFangSC-Regular;
+        font-size:36rpx;
+        color:#ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:40rpx 0 20rpx 0;
+    }
+    .btn-active{
+        background: #ed2c48;
+        transition: all 0.3s;
+    }
+    .auth-wrap{
+        display: flex;
+        align-items: center;
+        font-size: 24rpx;
+        margin:20rpx 0;
+        .agree-text{
+            color:#888;
+            margin:4rpx 0 0 6rpx;
+        }
+        .agreement{
+            margin-top:4rpx;
+            color:#333;
+        }
+
+    }
+}
+.agreement-wrap{
+    width: 468rpx;
+    max-height: 990rpx;
+    margin:52rpx 56rpx 10rpx 56rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family:PingFang SC;
+    color: #222;
+    .title{
+        font-size:32rpx;
+        font-weight:bold;
+        margin-bottom: 20rpx;
+
+    }
+    .item{
+        width: 100%;
+        margin-bottom: 38rpx;
+        .item-title{
+            font-size:26rpx;
+            font-weight:bold;
+            margin-bottom: 8rpx;
+        }
+        .item-content{
+            width: 100%;
+            text-align:justify;
+            font-family:PingFangSC-Medium;
+            font-size:22rpx;
+            color: #666;
+            font-weight: 400;
+            view{
+                text{
+                    color: #222;
+                }
+            }
+        }
+    }
+    .comfirm-wrap{
+        min-height: 140rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        .agree-btn{
+            width: 80%;
+            min-height: 70rpx;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ed2c48;
+            border-radius: 6rpx;
+            font-size: 26rpx;
+        }
+    }
+}

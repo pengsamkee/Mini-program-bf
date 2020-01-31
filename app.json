@@ -3,9 +3,10 @@
     "pages/home/index",
     "pages/onBoard/onBoard",
     "pages/login/index",
+    "pages/nutritionalDatabasePage/articlePage",
+    "pages/checkNutrition/index",
     "pages/report/index",
     "pages/textSearch/index",
-    "pages/checkNutrition/index",
     "pages/portfolio/index",
     "pages/medicalCase/index",
     "pages/webView/index",
@@ -17,7 +18,6 @@
     "pages/reportPage/reportPage",
     "pages/morePage/index",
     "pages/nutritionalDatabasePage/index",
-    "pages/nutritionalDatabasePage/articlePage",
     "pages/foodShare/index"
   ],
   "window": {
@@ -69,7 +69,8 @@
       "root": "checkNutrition",
       "pages": [
         "pages/searchFood/index",
-        "pages/nutritionDetail/index"
+        "pages/nutritionDetail/index",
+        "pages/chatBox/index"
       ]
     }
   ]

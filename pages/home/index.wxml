@@ -49,7 +49,7 @@
       </view>
     </view>
 
-    <view class="food-wrap" wx:if="{{mealSummary.length!==0}}">
+    <view class="food-wrap" wx:if="{{mealSummary&&mealSummary.length!==0}}">
       <view class="food-item" wx:for="{{mealSummary}}" wx:key='index'>
         <view class="name-weight">
           <view class="tip" style="background:{{item.colorTip}}"></view>

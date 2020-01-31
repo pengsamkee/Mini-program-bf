@@ -48,6 +48,10 @@ export default {
   getUserProfileByToken(data) {
     return fetch('/uc/miniProgram/getUserProfileByToken', data, 'POST')
   },
+  // 请求查营养Tab页面的列表信息
+  checkNutrientFoodList(data) {
+    return fetch('/kc/tools/checkNutrientFoodList', data, 'GET')
+  },
 
   
   // getPoidetail(data) {

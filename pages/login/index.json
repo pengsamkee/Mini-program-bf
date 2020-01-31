@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "授权登录",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-icon":"/components/vant/icon/index",
+    "van-popup":"/components/vant/popup/index"
+  }
 }

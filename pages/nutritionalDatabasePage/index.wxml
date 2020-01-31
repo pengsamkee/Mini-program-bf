@@ -63,7 +63,9 @@
         <swiper-item wx:for="{{rollingImages}}">     
           <navigator url="/pages/nutritionalDatabasePage/articlePage?url={{item.url}}" class="rollingBlock">
             <image class="rollingImage" mode="aspectFill" src="{{item.src}}"></image>
-            <view class="rollingImagesText">{{item.title}}</view>
+            <view class="mask">
+              <view class="rollingImagesText">{{item.title}}</view>
+            </view>
           </navigator>
         </swiper-item>
       </swiper>

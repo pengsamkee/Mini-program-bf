@@ -112,13 +112,18 @@
   display: flex;
   justify-content: center
 }
-
-.rollingImagesText {  
+.mask{
+  width:720rpx;
+  background: #000;
   position: absolute;
-  bottom: 3%;
-  left: 5%;
-  right: 5%;
+  bottom: 0;
+  left: 15rpx;
   margin: auto;
+  padding:6rpx 30rpx;
+  box-sizing: border-box;
+  opacity: 0.5;
+}
+.rollingImagesText {  
   text-align: center;
   font-family:PingFangSC-Regular;
   font-size: 35rpx;

@@ -197,7 +197,21 @@ class ImageTagPage {
     // let taggs = [...this.data.taggs];
     let taggs = JSON.parse(JSON.stringify(this.data.taggs));
     taggs.splice(index,1);
-    (this as any).setData({taggs:taggs})
+    (this as any).setData({taggs},()=>{
+      if(this.data.taggs.length===0){
+        wx.showToast({
+          title: '删除成功,跳转中...',
+          icon: 'none',
+          duration: 1500,
+          mask: true,
+        });
+        setTimeout(()=>{
+          wx.switchTab({
+            url: '/pages/home/index'
+          });
+        },1400)
+      }
+    })
   }
   /**
    * 点击校验选项，用户自己输入tag名字

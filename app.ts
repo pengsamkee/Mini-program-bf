@@ -1,4 +1,5 @@
 //app.ts
+
 export interface IMyApp {
   userInfoReadyCallback?(res: wx.UserInfo): void
   globalData: {
@@ -15,6 +16,7 @@ export interface IMyApp {
   }
 }
 
+const ald = require('./utils/ald-stat.js')
 import * as globalEnum from './api/GlobalEnum'
 var webAPI = require('./api/login/LoginService');
 import GlobalConfig from './config/index'

@@ -85,6 +85,9 @@
       <picker-view-column>
         <view wx:for="{{weightArr}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
       </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{pointArr}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
+      </picker-view-column>
     </picker-view>
   </view>
   <view class="margin-top-20 nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
@@ -143,7 +146,7 @@
   <view class="body-picker">
     <view class="{{datePicker}}">{{year}}年{{month}}月{{date}}日</view>
 
-    <picker-view class="picker-column" indicator-style="height: 50px;" value="{{value}}" bindchange="bindDateChange"> 
+    <picker-view class="picker-column w-100" indicator-style="height: 50px;" value="{{value}}" bindchange="bindDateChange"> 
       <picker-view-column>
         <view wx:for="{{years}}" style="line-height: 50px">{{item}}年</view>
       </picker-view-column>
@@ -189,13 +192,13 @@
     <view class="preg-unit">次</view>
   </view>
 
-  <view class="nextButton-container" bindtap="nextSubmit">下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
-  <view class="preButton-container" bindtap='numberOfPregnanciesPre'> 上一步</view>
-  <picker-view class="picker-column" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{pregnancyNumVal}}" bindchange="bindNumPregInput">
+  <picker-view class="picker-column w-100" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{pregnancyNumVal}}" bindchange="bindNumPregInput">
     <picker-view-column>
       <view wx:for="{{numPregOptions}}" style="line-height: 66rpx; justify-content: center;">{{item}}</view>
     </picker-view-column>
   </picker-view>
+  <view class="nextButton-container specail-pre" bindtap="nextSubmit">下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap='numberOfPregnanciesPre'> 上一步</view>
 
   <view wx:if="{{empty == true}}">
     <view class="validation-message">{{inputValidate}}</view>

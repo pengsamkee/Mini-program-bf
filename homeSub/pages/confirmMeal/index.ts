@@ -162,9 +162,9 @@ class ConfirmMeal {
         }
         wx.showLoading({  title: '加载中...' });
         request.createMealLog(req).then(res=>{
-            wx.hideLoading();
+         
             wx.showToast({title:'食物记录成功'})
-            setTimeout(()=>{
+            setTimeout(()=>{ 
                 wx.reLaunch({url: `./../mealAnalysis/index?mealType=${mealType}&mealDate=${mealDate}&mealLogId=${res.mealLogId}&title=${title}`});
             },1450)
         }).catch(err=>{

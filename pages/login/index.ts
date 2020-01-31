@@ -12,6 +12,16 @@ class LoginPage {
     indicatorDots:true,
     autoplay:true,
     background: ['https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/food-image/tmp_45d4676e4716b3dce4a0a77636971780.png','https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/food-image/tmp_8a334145fcb50b643551503c814bc668.png'],
+    checked:false,
+    showAgreeText:false,
+    agreement:[
+      {
+        title:'一、定义',content:'很多个很短很短个和豆腐干分工会的个低功耗好机会电饭锅见到过点击蝶粉蜂黄返回'
+      },
+      {
+        title:'三、定义',content:'很多个很短很短个和豆腐干分工会的个低功耗好机会电饭锅见到过点击蝶粉蜂黄返'
+      }
+    ]
   }
 
   public onLoad(option) {
@@ -20,7 +30,8 @@ class LoginPage {
       (this as any).setData({
         userStatus: Number(option.user_status),
         showAuth: true,
-        code:'1'
+        code:'1',
+        checked:true
       })
     }
   }
@@ -43,6 +54,9 @@ class LoginPage {
               content: "验证邀请码失败，请联系客服。", 
               showCancel: false
             });
+            (_this as any).setData({
+              code: ''
+            })
           }
         }).catch(err => {
           wx.hideLoading({});
@@ -61,11 +75,16 @@ class LoginPage {
       success: function (res) {
         if (res.authSetting['scope.userInfo']) {
           if (_this.data.userStatus == 1){
-            if (_this.data.code){
+            if (_this.data.code && _this.data.checked){
               _this.submit()
-            }else{
+            }else if(!_this.data.code){
               wx.showToast({
                 title:'请先输入邀请码',
+                icon:"none"
+              })
+            }else{
+              wx.showToast({
+                title:'请先同意用户协议',
                 icon:"none"
               })
             }
@@ -93,7 +112,28 @@ class LoginPage {
       code : e.detail.value.trim()
     })
   }
- 
+  public handleToogleAgree(){
+    (this as any).setData({
+      checked: !this.data.checked
+    })
+  }
+  public handleConfirmAgree(){
+    (this as any).setData({
+      checked: true,
+      showAgreeText:false
+    })
+  }
+
+  public showAgreeText(){
+    (this as any).setData({
+      showAgreeText: true
+    })
+  }
+  public closeAgreeText(){
+    (this as any).setData({
+      showAgreeText: false
+    })
+  }
 }
 
 Page(new LoginPage())

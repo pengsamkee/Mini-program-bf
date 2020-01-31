@@ -1,37 +1,271 @@
-<!--pages/login/index.wxml-->
 
-
-<!-- <image class="red-background" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/authorization/auth_red_background.png' mode="scaleToFill"></image>
-<image class="food" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/authorization/yoghurt_img.png' mode="widthFix"></image>
-<image class="phone" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/authorization/recruitment_drive.png' mode="aspectFit"></image>
-<image class="leaf" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/authorization/leaf.png' mode="widthFix"></image>
-<image class="pregnant" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/authorization/pregnant.png' mode="widthFix"></image>
-<image class="divider" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/authorization/divider.png' mode="widthFix"></image>
-<image class="path" src='https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/authorization/path.png' mode="widthFix"></image> -->
-
-<view class="swiper-father">
-  <swiper 
-    indicator-dots="{{true}}"
-    autoplay="{{true}}" 
-    interval="{{4000}}" 
-    indicator-active-color='#484848'
-    class="swiper"
-    circular='{{true}}'
+<view class="login-container">
+  <view class="swiper-father">
+    <swiper 
+      indicator-dots="{{true}}"
+      autoplay="{{true}}" 
+      interval="{{4000}}" 
+      indicator-active-color='#484848'
+      class="swiper"
+      circular='{{true}}'
+    >
+      <block wx:for="{{background}}" wx:key="*this">
+        <swiper-item class='swiper-item'>
+          <image src="{{item}}" class='image'></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  
+  <view class="bottom">
+    <input class='input-invatation' placeholder="请输入邀请码" placeholder-class="placeholder-class" bindinput='handleInput' value='{{code}}' wx:if="{{!showAuth}}"></input>
+    <button class="{{code&&checked?'btn-active':''}} btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登 录</button>
+    <view class="auth-wrap">
+      <van-icon name='circle' size='16px' wx:if='{{!checked}}' bindtap='handleToogleAgree'/>
+      <van-icon name='checked' size='16px' wx:else color='#ed2c48' bindtap='handleToogleAgree'/>
+      <text class="agree-text" bindtap='handleToogleAgree'>点击确认表示同意</text>
+      <text class="agreement" bindtap='showAgreeText'>《用户协议》</text>
+    </view>
+  </view>
+  <view class="agree-wrap">
+    
+  </view>
+  <van-popup
+    show="{{ showAgreeText }}" 
+    bind:close="closeAgreeText"
+    closeable
   >
-    <block wx:for="{{background}}" wx:key="*this">
-      <swiper-item class='swiper-item'>
-        <image src="{{item}}" class='image'></image>
-      </swiper-item>
-    </block>
-  </swiper>
+    <view class="agreement-wrap">
+      <view class="title"> 营养知食用户协议 </view>
+      <view class="item">
+        <view class="item-title">一. 定义</view>
+        <view class="item-content">
+          本条款中,<text>“早餐吃好”</text>指的是杭州品深科技有限公司发布的基于微信平台的<text>小程序</text>(或杭州品深科技有限公司发布的早餐吃好的其他版本)以及其所有支持网站。
+          <view>
+            <text>1．早餐吃好上的食品信息及相关的健康选择当您使用早餐吃好时,您可能会看您和您家人感兴趣的食品信息和相关健康选择。对于这些信息,您明白并接受。</text>
+          </view>
+          <view>
+            1.1.所有信息都是按照<text>客观实际情况</text>提供的;没有考虑到您的个人情况,只是一般信息。这些信息都是由<text>健康</text>专业人员依据他们自己在软件发布时的最佳专业知识以及<text>可靠的信息来源</text>。开发和审核的都是根据收集食品时所收集到的食品包装上的配料、营养成分信息或其他相关信息,或者根据其他相似食品所具有的最佳信息进行估算的;使用早餐吃好的所有用户需要<text>自行判断信息的准确性</text>及针对其个人情况这些信息的相关性,对早餐吃好的依赖所存在的风险由用户自己承担。应该只作为使用参考,而不应替代专业的医疗或其他健康专家的建议。如果您对自己或家人的健康有疑问或担忧,杭州品深科技有限公司建议您咨询您的医生或其他有资质的卫生专业人员。
+          </view>
+          <view>
+            1.2.所有用户,特别是那些有特殊饮食需求或食物敏感性的用户应该<text>确保他们在购买之前弄清产品的成分</text>。
+          </view>
+          <view>
+            1.3.生产配方可能会<text>随着时间而出现变化</text>。杭州品深科技有限公司不能保证所提供信息或建议的完整性和准确性,若您使用或依赖此信息而给您或家人带来任何损失或损害,杭州品深科技有限公司不予负法律规定的除外的责任。
+          </view>
+          <view>
+            1.4.出现在早餐吃好里关于杭州品深科技有限公司的所有信息仅出于您的兴趣考虑。如果需要了解更多信息,请访问<text>https://www.pinshen.com.cn/</text>。
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">二. 本协议和条款的修改</view>
+        <view class="item-content">
+          <view>
+            本条款中,“早餐吃好”指的是杭州品深科技有限公司发布的基于微信平台的小程序(或杭州品深科技有限公司发布的早餐吃好的其他版本)以及其所有支持网站。
+          </view>
+          <view>
+            2.1 本协议的内容包括早餐吃好<text>已经发布</text>的和<text>未来可能发布</text>或更新的各种规则。
+          </view>
+          <view>
+            2.2 早餐吃好有权在运营和发布新产品是修改此协议的条款，<text>并以新条款为准</text>。
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">三. 本协议和条款的修改</view>
+        <view class="item-content">
+          <view>
+           3.1 您有权使用自己的微信或手机号码作为自己的账户名称。 <text>账号的所有权归公司所有</text>，您仅拥有使用权。
+          </view>
+          <view>
+          3.2 用户在申请注册使用早餐吃好产品或服务时， 必须向早餐吃好<text>提供真实，准确，完整，合法，有效，最新的个人资料</text>。 如果因注册信息不真实或更新不及时或冒用行为导致的纠纷或相关问题， 早餐吃好将不负任何责任。
+          </view>
+          <view>
+           3.3 <text>您的账户只限您个人使用</text>， 未经早餐吃好的书面同意，您不得以任何形式出租，借用，转让，售卖，赠与或以其他方式许可他人使用该账号。
+          </view>
+          <view>
+          3.4 您有权随时<text>注销此前注册的账户</text>。 注销账户后，早餐吃好将停止为您提供所有的产品和服务。 您曾经通过该账号产生的所有内容，信息，数据，记录将会被删除或者匿名处理。
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">四. 产品和服务</view>
+        <view class="item-content">
+          <view>
+           4.1早餐吃好服务的具体内容由早餐吃好运营方根据实际情况提供，包括但不限于用户使用早餐吃好记录饮食情况、查询食物卡路里数据、查看饮食分析报告、咨询营养师等，<text>早餐吃好运营方有权对其提供的服务或产品形态进行升级或其他调整</text>，并将及时更新页面/告知用户。
+          </view>
+          <view>
+          4.2服务的形式为早餐吃好饮食管理平台，通过建设用户便于交互的软件环境，为用户提供基础的信息传输和数据分析服务。
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">五. 用户行为规范</view>
+        <view class="item-content">
+          <view>
+           5.1您不可使用任何“深层链接”、“抓取页面”、“机器人”、“蜘蛛”或其他自动装置、程序、算法、方法或者任何相似或相同的手动程序，访问、取得、复制或监测本软件任何部分或任何内容，或以任何方式复制或规避本软件或任何内容的结构或介绍，通过任何非本软件提供的方式，取得或试图取得任何资料、文件或信息。
+          </view>
+          <view>
+          5.2您不可试图通过非法侵入、“破解”密码或任何其他非法方式，未经授权访问本软件的任何部分或功能，或者未经授权取得本软件提供的任何服务。
+          </view>
+          <view>
+           5.3您不可反向查找、追踪或寻求追踪任何关于本软件任何其他用户或访问者的信息，包括任何非您所有的账户的来源；或为显示您个人所有信息以外的任何信息之目的， 包括但不限于本软件提供的身份证明或信息，使用本软件或本软件提供的任何服务或信息。
+          </view>
+          <view>
+          5.4您同意不使用任何设备、软件或程序，干扰或试图干扰本软件的正常运行或于本软件进行的任何交易，或干扰或试图干扰他人使用本软件。
+          </view>
+          <view>
+           5.5您不可操控识别功能，用以伪造通过本软件提交给早餐吃好的任何信息或传输内容的来源，或者伪造本软件提供的任何服务的来源。您不可假冒他人、或假冒代表他人，或模仿任何其他个人或实体。
+          </view>
+          <view>
+            5.6您不可为任何非法或本协议禁止之目的使用本软件或任何内容，或者教唆实施任何非法行为或侵犯早餐吃好或他人权利的其他行为。
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">六. 用户信息的使用和保护</view>
+        <view class="item-content">
+          <view>
+           6.1收集:当您以游客身份使用早餐吃好时,杭州品深科技有限公司不会收集任何关于您的可识别信息。当您上传食物和反馈问题时,您需要使用微信账号登陆。我们会遵守相关法律法规保护您的个人信息。
+          </view>
+          <view>
+          6.2.分享信息:您可以通过微信来分享产品信息。您应该参考这些第三方应用程序的使用条款,隐私和安全设置来确定它们是怎样分享和处理您的信息的。
+          </view>
+          <view>
+          6.3 本应用不对外公开或向第三方提供单个用户的注册资料及用户在使用网络服务时存储在本社区的非公开内容，但下列情况除外：
+          </view>
+          <view>(1)事先获得用户的明确授权；</view>
+          <view>(2)根据有关的法律法规要求；</view>
+          <view>(3)按照相关政府主管部门的要求；</view>
+          <view>(4)为维护社会公众的利益。</view>
+          <view>
+            6.4 本应用可能会与第三方合作向用户提供相关的网络服务，在此情况下，如该第三方同意承担与本社区同等的保护用户隐私的责任，则本社区有权将用户的注册资料等信息提供给该第三方，并无须另行告知用户。
+          </view>
+          <view>
+            6.5 在不透露单个用户隐私资料的前提下，本应用有权对整个用户数据库进行分析并对用户数据库进行商业上的利用。
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">七. 免责条款</view>
+        <view class="item-content">
+          <view>7.1.除您所享有的法定权益外,您同意</view>
+          <view><text>(a)当您自行下载,安装和使用早餐吃好时,您需要自己承担使用过程中可能发生的风险;</text></view>
+          <view><text>(b)您需要自行承担因使用早餐吃好所带来的后果,包括上传和分享该应用导致的风险;</text></view>
+          <view>
+          7.2.以法律允许的最大范围为限外,杭州品深科技有限公司及其附属公司或任何员工、代理、第三方内容提供商或授权商,都不能向您担保早餐吃好、早餐吃好提供的信息以及您使用这些信息的可靠性,他们不能承担您因使用早餐吃好所造成的直接、间接或其他损失的相关法律、合同或侵权责任(包括因疏忽造成的)。您可能遭受如下原因造成(但不限于)的损害:
+          </view>
+          <view>(a)您依赖早餐吃好相关信息的完整性、准确性、适用性和实时性;</view>
+          <view>
+          (b)在使用早餐吃好过程中,出现运行、数据传输方面的故障或延迟,以及包括诸如电脑病毒或其他有害成分、数据丢失、网络连接不畅、第三方违法行为、或者盗窃,破坏,篡改或未经授的记录访问等损害;
+          </view>
+          <view>
+          (c)任何您通过手机或其他设备访问互联网所收取的手机流量、漫游等及其他费用;
+          </view>
+          <view>
+          (d)通过早餐吃好访问第三方网址、服务或应用(包括但不局限于微信)。杭州品深科技有限公司对第三方网站、应用和服务的内容及运行均不承担责任。除非另有说明,杭州品深科技有限公司并不表示认可通过早餐吃好可以链接的第三方网址、应用和服务。用户若使用第三方网址、应用和服务需自行承担可能的风险;
+          </view>
+          <view>
+          (e)第三方的诽谤,威胁,攻击或非法行为等。
+          </view>
+          <view>
+          7.3.<text>杭州品深科技有限公司是一个独立的有限公司</text>。我们乐于向生产商进行征求意见,同时也乐于接受生产商提供的反馈,但所有的评估最终必须由杭州品深科技有限公司及其专家组按照我们的要求进行,不能有任何第三方的参与。
+          </view>
+          <view>
+          7.4.因为您的直接或间接使用早餐吃好而导致杭州品深科技有限公司遭受诉讼、索赔、法院召唤、被追究法律责任、诉讼费、财务损失和损害(包括免除全部法律责任的法律费用),统称“损失”,您需赔偿杭州品深科技有限公司其附属机构、员工、代理、第三方内容提供商以及授权商。这些损失包括,但不限于,由于您直接或间接使用早餐吃好时违反第三方内容提供商的知识产权所造成的损失。
+          </view>
+          <view>
+          7.5.<text>此免责声明,法律责任范围和赔偿包括法律规定的其他权限</text>。
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">八. 知识产权</view>
+        <view class="item-content">
+          <view>
+           8.1.除非另有说明,在杭州品深科技有限公司和您之间,<text>杭州品深科技有限公司拥有、控制并保留一切与早餐吃好相关的所有信息,文字,材料,图形,广告,软件代码及数据整合等权利(杭州品深科技有限公司产权)</text>。
+          </view>
+          <view>
+          8.2.除早餐吃好软件明确说明之外,或杭州品深科技有限公司明确的书面授权,<text>您不允许以任何方式修改,复制,转载,重新发布,设计,上传早餐吃好给第三方</text>;也不允许粘贴、发送和散发杭州品深科技有限公司产权。除非事先获得杭州品深科技有限公司的书面授权,或者任何其他具有相关权利人的许可,无论何种意图,凭借何种方式,<text>您都无权在公共场合复制、广播、转载、(在任何媒体上)储存早餐吃好的内容,或构造其违规衍生物</text>。该禁令并不适用于那些在遵守杭州品深科技有限公司要求的前提下可以免费重复利用的内容。
+          </view>
+          <view>
+           8.3.在没有获得具体的书面的许可之前,您不得使用杭州品深科技有限公司的商标(无论是否为注册商标)。
+          </view>
+          <view>
+          8.4.除非另有说明,您有权限下载、查看,以及不以盈利为目的地使用早餐吃好,但需完全<text>遵守所有版权</text>和其它所有权声明。
+          </view>
+          <view>
+           8.5.您从早餐吃好下载的资料包括软件,程序代码,文件和/或软件中包含或产生的图像,以及软件附带的数据(统称为“软件”)由杭州品深科技有限公司授权。<text>您不得出售、分销、解码、逆向分析以及其他与此类似方式操作软件</text>。
+          </view>
+          <view>
+          8.6.杭州品深科技有限公司在早餐吃好中使用第三方商标并不意味着杭州品深科技有限公司与第三方存在任何形式的联系,也不对其商标表示认可。
+          </view>
+          <view>
+           8.7.除了一些以私人调查、研究、评判为目的,并且是在当前有效的著作权法所明确规定合理使用的情况,<text>未经杭州品深科技有限公司的书面许可,不得复制早餐吃好的任何部分</text>。
+          </view>
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">九. 侵权投诉</view>
+        <view class="item-content">
+          <view>
+           9.1任何第三方依据相关法律法规的规定，认为和您存在利用早餐吃好侵犯其合法权益的行为，并向早餐吃好提交了侵权投诉和相天证明材料的，<text>早餐吃好有权采取删除、屏蔽、断开链接等必要措施</text>。
+          </view>
+          <view>
+          9.2任何第三方依据相关法律法规的规定，认为早餐吃好所涉及的作品、表演、录音录像制品等，侵犯目己的信息网络传播权或者被删除、改变了目己的权利管理电子信息的，可以向早餐吃好提交书面投诉，要求早餐吃好删除该侵权作品，或者断开链接。
+          </view>
+          <view>
+            9.3侵权投诉必须包含下述信息 :
+          </view>
+          <view>
+            (1) 被侵权人的证明材料，或被侵权作品的原始链接及其它证明材料。
+          </view>
+          <view>
+            (2) 侵权信息或作品在早餐吃好的具体链接。
+          </view>
+          <view>
+            (3) 侵权投诉人的联络方式，以便杭州品深科技有限公司相关部门能及时回复您的投诉，最好包括电子邮件地址、电话号码或手机等。
+          </view>
+          <view>
+            (4) 投诉内容须纳入以下声明:“本人本着诚信原则，有证据认为该对象侵害本人或他人的合法权益。本人承诺投诉全部信息真实、准确，否则目愿承担一切后果”。
+          </view>
+          <view>
+            (5) 本人姓名，身份证号和亲笔签字并注明日期，如代理他人投诉的，必须出具授权人签字的授权书。
+          </view>
+            早餐吃好建议您在提起诉讼之前咨询法律顾问或律师。早餐吃好提请您注意：如果对侵权投诉不实，则您可能承担因此而产生的法律责任。
+        </view>
+      </view>
+      <view class="item">
+        <view class="item-title">十. 争议解决条款</view>
+        <view class="item-content">
+          <view>
+           10.1本协议之订立、生效、解释、修订、补充、终止、执行与争议解决均适用中华人民共和国法律; 如法律无相关规定的，参照商业惯例及/或行业惯例。
+          </view>
+          <view>
+          10.2您内使用早餐吃好服务所产生及与早餐吃好服务有关的争议，应当友好协商解决。协商不成时，任何一万均可同杭州品深科技有限公司所在地即杭州市萧山区有管辖权的人民法院提起诉讼。且胜诉方有权要求败诉一方承担与诉讼相关的合理的交通、住宿费用、诉讼费、律师费等。
+          </view>
+          <view>
+         10.3早餐吃好所自行维护运营或者委托第三万维护的服务器内的数据库及数据可以在诉讼中作为证据使用，您不得以该等数据库、数据为电子形式而否定其法律效力。同时，您放弃要求早餐吃好对该等数据库、数据的表现形式进行公证的要求。
+          </view>
+        </view>
+      </view>
+      <!-- <view class="item">
+        <view class="item-title">十一. 若您不接受此协议会发生什么？</view>
+        <view class="item-content">
+          <view>
+           11.1如果您想要使用早餐吃好，您必须接受此协议。
+          </view>
+        </view>
+      </view> -->
+      <view class="comfirm-wrap">
+        <view class="agree-btn" bindtap='handleConfirmAgree'>同 意</view>
+      </view>
+        
+    </view>
+  </van-popup>
+    
 </view>
-
-<input class='input-invatation' placeholder="请输入邀请码" placeholder-class="placeholder-class" bindinput='handleInput' value='{{code}}' wx:if="{{!showAuth}}"></input>
-<button class="{{code?'btn-active':''}} btn" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">授权登录</button>
-<!-- <view class="header">知食</view>
-<view class="subheader">定制你的专属均衡饮食方案</view>
-<view class="popuptext">只需要你拍照记录下每天的饮食</view>
-
-<scroll-view scroll-y="false">
-  <view class="description">专业营养师量身打造精密营养大数据分析</view>
-</scroll-view> -->
+  
+  
+  

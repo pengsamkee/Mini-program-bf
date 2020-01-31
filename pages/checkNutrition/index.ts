@@ -1,10 +1,6 @@
-import { IMyApp } from '../../app'
-import { UpdateUserProfileReq } from "../../api/app/AppServiceObjs"
-import * as globalEnum from '../../api/GlobalEnum'
-import * as moment from 'moment';
+
 import request from '../../api/app/interface';
 import list from './list';
-const app = getApp<IMyApp>()
 
 import * as webAPI from '../../api/app/AppService';
 class QueryCalories {
@@ -13,12 +9,64 @@ class QueryCalories {
     activeIndex:0,
     showLoading:false,
     scrollTop:0,
-    // 左侧点击类样式
     curNav: 'A',
-    list:list,
+    list:null,
     scrollTopId:'',
     queryArr:[],
+  }
 
+  public getCheckNutrientFoodList(){
+    const that = this
+    request.checkNutrientFoodList().then(res=>{
+      that.formatList(res)
+    }).catch(err=>{
+      wx.showToast({
+        title: '服务器开小差,稍后请重试',
+        icon: 'none',
+      });
+    })
+  }
+  public onShow(){
+    const that = this
+    setTimeout(()=>{
+      if(that.data.list===null){
+        that.getCheckNutrientFoodList()
+      }
+    },4000)
+  }
+
+  public formatList(res){
+    const key = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    let list = {}
+    res.map((item,index)=>{
+      list[key[index]]=[
+        {name:item.efficacyName},
+        ...item.foodList
+      ]
+    });
+    (this as any).setData({
+      list:list
+    },()=>{
+      this.getQueryArr()
+    })
+  }
+
+  public getQueryArr(){
+    const that = this
+    const query = wx.createSelectorQuery()
+    for (let index in that.data.list){
+      query.select(`#${index}`).boundingClientRect()
+    }
+    query.exec(function (res:any) {
+      res.map( i => i.top -= 66 );
+      (that as any).setData({
+        queryArr: res
+      })
+    })
+  }
+
+  public onReady(){
+    this.getCheckNutrientFoodList()
   }
 
   public goSearchFood(){
@@ -52,9 +100,7 @@ class QueryCalories {
       })
     }
   }
-  public onShow() {
 
-  }
   public goNutritionDetil(e){
     console.log(e.currentTarget.dataset.itemId)
     const id = e.currentTarget.dataset.itemId
@@ -62,9 +108,6 @@ class QueryCalories {
       url:`/checkNutrition/pages/nutritionDetail/index?id=${id}`
     })
   }
-
-
-
 
   //点击左侧 tab ，右侧列表相应位置联动 置顶
   public switchRightTab(e) {
@@ -89,19 +132,6 @@ class QueryCalories {
     (this as any).setData({ curNav: curId})
   }
 
-  public onReady(){
-    const that = this
-    const query = wx.createSelectorQuery()
-    for (let index in this.data.list){
-      query.select(`#${index}`).boundingClientRect()
-    }
-    query.exec(function (res:any) {
-      res.map( i => i.top -= 66 );
-      (that as any).setData({
-        queryArr: res
-      })
-    })
-  }
   public onTapFoodItem(e){
     const foodId = e.currentTarget.dataset.foodId
     const foodType = e.currentTarget.dataset.foodType

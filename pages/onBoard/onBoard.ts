@@ -25,10 +25,10 @@ class onBoard {
     gender: 0,
     height: 150,
     heightVal:[110],
-    heightArr: [],
-    weightBMI:0,
-    weight: 47.3,
-    weightVal: [173],
+    heightArr: [], // 身高初始化数组，包含40-230
+    weight: 50.5,
+    weightVal: [20,5],
+    pointArr:[0,1, 2, 3, 4, 5, 6, 7, 8, 9],
     weightArr:[],
     pregnancyStage: '',
     pregStageSelected: 4,
@@ -76,12 +76,16 @@ class onBoard {
     if (event.target.id == "男") {
       (this as any).setData({
         totalPage: 6,
-        gender: 1
+        gender: 1,
+        height:170,
+        heightVal:[130],
       });
     } else {
       (this as any).setData({
         totalPage: 7,
         gender: 2,
+        height:150,
+        heightVal:[110],
       });
     }
   }
@@ -96,31 +100,6 @@ class onBoard {
     this.setDueDatePicker(today);
     this.initHeightArr();
     this.initWeightArr();
-  }
-
-  /**
-   * 循环获得heightArr
-   */
-  public initHeightArr(){
-    let heightArr:Number[] = []
-    for(let i=40;i<=230;i++){
-      heightArr.push(i)
-    }
-    (this as any).setData({
-      heightArr: heightArr
-    })
-  }
-  /**
-   * 循环获得weightArr
-   */
-  public initWeightArr() {
-    let weightArr: Number[] = []
-    for (let i = 30; i <= 300; i+=0.1) {
-      weightArr.push(Number(i.toFixed(1)))
-    }
-    (this as any).setData({
-      weightArr: weightArr
-    })
   }
   // Set the picker options for pregnancy due date
   public setDueDatePicker(today: any): void {
@@ -156,85 +135,63 @@ class onBoard {
     (this as any).setData({ birthYears: years });
   }
 
+  /**
+   * 循环获得heightArr
+   */
+  public initHeightArr(){
+    let heightArr:Number[] = []
+    for(let i=40;i<=230;i++){
+      heightArr.push(i)
+    }
+    (this as any).setData({
+      heightArr
+    })
+  }
+  /**
+   * 循环获得weightArr
+   */
+  public initWeightArr() {
+    let weightArr: Number[] = []
+    for (let i = 30; i <= 200; i+=1) {
+      const num:string = i+'.';
+      weightArr.push(num)
+    }
+    (this as any).setData({
+      weightArr
+    })
+  }
+
+
+
   // Method to handle styling of WeChat input
   public focusInput(event: any): void {
     (this as any).setData({ textInputClass: "section-input" });
   }
-  // 换成了picker，如果picker没问题，后续下面的代码可以删除
-  // Handle the height input event
-  // public bindHeightInput(event: any): void {
-  //   this.focusInput(event);
-
-  //   let heightInput = event.detail.value;
-
-  //   if (heightInput >= 40 && heightInput <= 230 && heightInput != "") {
-
-  //     (this as any).setData({ height: heightInput, nextPage: true, empty: false });
-
-  //   } else {
-
-  //     (this as any).setData({ nextPage: false, empty: false });
-
-  //     if (heightInput == "") {
-  //       (this as any).setData({ textInputClass: "section" });
-  //     }
-
-  //   }
-  // }
   public bindHeightSelect(event: any) {
     let val = event.detail.value[0];
     let height = this.data.heightArr[val];
-    let weightBMI = Number((21 * height/100 * height/100).toFixed(1));
-    let weightVal = [Number(((weightBMI - 30) / 0.1).toFixed(1))];
     (this as any).setData({
       yearDisplay: "yearDisplay-input",
       height: height,
+      heightVal:[val],
       nextPage: true,
       empty: false,
-      weight: weightBMI,
-      weightVal:weightVal
     });
   }
 
   public bindWeightSelect(event:any){
-    let val = event.detail.value[0];
-    let weight = this.data.weightArr[val];
+    const { value } = event.detail;
+    const { pointArr, weightArr } = this.data;
+    const units = weightArr[value[0]];
+    const point = pointArr[value[1]];
     (this as any).setData({
+      weight:units+point,
+      weightVal:[value[0],value[1]],
       yearDisplay: "yearDisplay-input",
-      weight: weight,
       nextPage: true,
       empty: false,
-    });
+    })
   }
-  // 换成了picker，如果picker没问题，后续下面的代码可以删除
-  // Handle the weight input event
-  // public bindWeightInput(event: any): void {
-  //   this.focusInput(event);
-
-  //   let weightInput = event.detail.value;
-
-  //   if (weightInput >= 30 && weightInput <= 300 && weightInput != "") {
-
-  //     (this as any).setData({
-  //       weight: weightInput,
-  //       nextPage: true,
-  //       empty: false
-  //     });
-
-  //   } else {
-
-  //     (this as any).setData({
-  //       nextPage: false,
-  //       empty: false
-  //     });
-
-  //     if (weightInput == "") {
-
-  //       (this as any).setData({ textInputClass: "section" });
-
-  //     }
-  //   }
-  // }
 
   // Handle the age input event
   public bindAgeInput(event: any): void {
@@ -262,6 +219,19 @@ class onBoard {
         empty: false
       });
     }
+  }
+
+  // get weighIndex and init weight
+  public getWeightInfo() {
+    console.log('=============================================================================================================================')
+    const { height, weightArr } = this.data;
+    let bmiWeight = Math.round(height/100*height/100*21*10)/10;
+    let unit = Math.floor(bmiWeight) - parseInt(weightArr[0]);
+    let point = bmiWeight*10%10;
+    (this as any).setData({ 
+      weight: bmiWeight,
+      weightVal:[unit,point]
+    });
   }
 
   public nextSubmit() {
@@ -298,6 +268,10 @@ class onBoard {
         countPage: this.data.countPage + 1,
         currentPage: this.data.currentPage + 1
       });
+      console.log('this.data.countPage',this.data.countPage)
+      if(this.data.countPage===3){
+        this.getWeightInfo()
+      }
       this.onChange();
     } else {
       (this as any).setData({ empty: true });
@@ -367,7 +341,6 @@ class onBoard {
         nextPage: true,
         empty: false
       });
-
     }
   }
 
@@ -394,6 +367,7 @@ class onBoard {
 
   public onChange() {
     // Handles next page validation
+
     if (this.data.countPage !== 4 && this.data.countPage !== 8 && this.data.countPage !==2 && this.data.countPage !==3) {
       (this as any).setData({ nextPage: false });
     }
@@ -611,11 +585,13 @@ class onBoard {
   }
 
   public preButton234(){
-    if (this.data.countPage==2){
+    if (this.data.countPage==2){ // 当前在选择身高页
       (this as any).setData({
         countPage: this.data.countPage - 1,
         currentPage: this.data.currentPage - 1,
         gender: 0,
+        // height: 150,
+        // heightVal:[110],
         nextPage: false,
         empty: false,
       })
@@ -624,22 +600,20 @@ class onBoard {
       (this as any).setData({
         countPage: this.data.countPage - 1,
         currentPage: this.data.currentPage - 1,
-        height: 150,
-        weight: 47.3,
-        weightVal: [173],
+        // height: 150,
+        // weight: 50.5,
+        // weightVal: [20,5],
         nextPage: true,
         empty: false,
         yearDisplay: 'yearDisplay',
       })
     }
     if (this.data.countPage == 4) {
-      let weightBMI = Number((21 * this.data.height / 100 * this.data.height / 100).toFixed(1));
-      let weightVal = [Number(((weightBMI - 30) / 0.1).toFixed(1))];
       (this as any).setData({
         countPage: this.data.countPage - 1,
         currentPage: this.data.currentPage - 1,
-        weight: weightBMI,
-        weightVal: weightVal,
+        // weight: 50.5,
+        // weightVal: [20,5],
         nextPage: true,
         empty: false,
         yearDisplay: 'yearDisplay',
