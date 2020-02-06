@@ -1,0 +1,55 @@
+<!--homeSub/pages/scorePrize/index.wxml-->
+<view class="page-container">
+    <view class="page-title"> 我的积分 </view>
+    <view>
+        5000分
+    </view>
+    <view>
+        超过1333人
+    </view>
+    <view class="list"> 
+        <view class="public">
+            <view class="count">
+                10次
+            </view>
+            <view>
+                饮食打卡
+            </view>
+        </view>
+        <view class="public">
+            <view class="count">
+                10次
+            </view>
+            <view>
+                运动打卡
+            </view>
+        </view>
+        <view class="public">
+            <view class="count">
+                10次
+            </view>
+            <view>
+                体重打卡
+            </view>
+        </view>
+    </view>
+      
+    <view>
+        积分兑换商品详情
+        <view>
+            5000分 营养师咨询一次 瘦熊猫在参体验
+        </view>
+        <view>
+            10000分 减脂训练营一周 瘦熊猫在参体验
+        </view>
+        <view>
+            20000分 营养师咨询一次 瘦熊猫在参体验
+        </view>
+        <view>
+            50000分 营养师咨询一次 瘦熊猫在参体验
+        </view>
+          
+    </view>
+      
+</view>
+  

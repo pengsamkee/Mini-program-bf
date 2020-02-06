@@ -37,7 +37,7 @@
       <view class="food-image-container " wx:for="{{mealLogSummaryVOS}}" wx:for-index="idx" wx:key='mealLogId'>
         <view class='image-and-mask'> 
           <view class='image-tip' style="border-color:{{item.colorTip}} {{item.colorTip}} transparent transparent"></view>
-          <image class="food-image " src="{{item.imageUrl == ''?'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-icon.png':item.imageUrl}}" mode="aspectFill" catchtap='naviToFoodDetail' data-meal-index="{{index}}" data-image-index="{{idx}}"/>
+          <image class="food-image" src="{{item.imageUrl == ''?'https://dietlens-1258665547.cos.ap-shanghai.myqcloud.com/mini-app-image/defaultImage/textsearch-default-icon.png':item.imageUrl}}" mode="aspectFill" catchtap='naviToFoodDetail' data-meal-index="{{index}}" data-image-index="{{idx}}"/>
           <view class='image-mask'>
             <view class='mask'></view>
             <view class='image-mask-text'>{{item.energy}}千卡</view>
@@ -75,6 +75,56 @@
   <calendar selected="{{selected}}" bindselect="bindselect" bindgetdate="bindgetdate" id='calendar'/>
   <view class="page" style="top:{{statusHeight+navHeight}}px;">
     <view class='bg-top'></view>
+    <view class="public-card">
+      <view class='score-wrap'>
+        <view class='score-wrap-left'>
+          <image src='/images/home/score.png'></image>
+          <view>今日打卡任务</view>
+        </view>
+        <view class='score-wrap-right' bindtap='handleGoScorePrize'>
+          <view class='score-text'>总积分:</view>
+          <view class='score-num'>{{5000}}</view>
+          <view class='score-text add-weight'>奖品兑换</view>
+          <image src='/images/rightArrow.png'></image>
+        </view>
+      </view>
+      <view class="clock-wrap">
+        <view class="clock-item">
+          <view class="clock-food" bindtap='handleClockBreakFast'>
+            <view>早餐打卡</view>
+            <view>11am前</view>
+          </view>
+          <view class="clock-people">3200人参与</view>
+        </view>
+        <view class="clock-item">
+          <view class="clock-food">
+            <view>每日5000步</view>
+          </view>
+          <view class="clock-people">31200人参与</view>
+        </view>
+        <view class="clock-item" catchtap="goWeightRecord">
+          <view class="clock-food">
+            <view>体重打卡</view>
+          </view>
+          <view class="clock-people">53200人参与</view>
+        </view>
+      </view>
+    </view>
+    <view class="public-card">
+      <view class='score-wrap' catchtap="onDailyReportClick">
+        <view class='score-wrap-left'>
+          <image src='/images/home/today_food.png'></image>
+          <view>今日饮食记录</view>
+        </view>
+        <view class='score-wrap-right'>
+          <view class='score-text check-analysis'>营养师报告</view>
+          <image src='../../images/rightArrow.png'></image>
+        </view>
+      </view>
+      <view class="new-meals">
+          <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='index'></template>
+      </view>
+    </view>
     <view class="public-card" catchtap="onDailyReportClick">
       <view class='score-wrap'>
         <view class='score-wrap-left'>
@@ -103,11 +153,27 @@
       <view class='score-wrap' catchtap="goWeightRecord">
         <view class='score-wrap-left'>
           <image src='/images/home/weight_history.png'></image>
+          <view>运动步数</view>
+        </view>
+        <view class='score-wrap-right'>
+          <view class='score-text'>当前步数</view>
+          <view class='score-num'>{{765}}</view>
+          <image src='/images/rightArrow.png'></image>
+        </view>
+      </view>
+      <view class="weight-wrap">    
+        <view class="weigth-text">每日步数模块</view>
+      </view>
+    </view>
+    <view class="public-card">
+      <view class='score-wrap' catchtap="goWeightRecord">
+        <view class='score-wrap-left'>
+          <image src='/images/home/weight_history.png'></image>
           <view>体重记录</view>
         </view>
         <view class='score-wrap-right'>
-          <view class='score-text'>+</view>
           <view class='score-text add-weight'>添加记录</view>
+          <image src='/images/rightArrow.png'></image>
         </view>
       </view>
       <view class="weight-wrap">    
@@ -119,21 +185,7 @@
         </view>
       </view>
     </view>
-    <view class="public-card">
-      <view class='score-wrap' catchtap="onDailyReportClick">
-        <view class='score-wrap-left'>
-          <image src='/images/home/today_food.png'></image>
-          <view>今日饮食记录</view>
-        </view>
-        <view class='score-wrap-right'>
-          <view class='score-text check-analysis'>查看分析</view>
-          <image src='../../images/rightArrow.png'></image>
-        </view>
-      </view>
-      <view class="new-meals">
-          <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='index'></template>
-      </view>
-    </view>
+   
 
     <view class="public-card">
       <view class='score-wrap' catchtap="goNutritionalDatabasePage">

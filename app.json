@@ -62,7 +62,8 @@
         "pages/imageTag/index",
         "pages/confirmMeal/index",
         "pages/weightReference/index",
-        "pages/foodDetail/index"
+        "pages/foodDetail/index",
+        "pages/scorePrize/index"
       ]
     },
     {

@@ -118,7 +118,7 @@ class FoodDiaryPage {
 
 
   public onLoad() {
-    // wx.navigateTo({url:'./../../checkNutrition/pages/chatBox/index'})
+    wx.navigateTo({url:'./../../homeSub/pages/scorePrize/index'})
     webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
   }
 
@@ -236,7 +236,9 @@ class FoodDiaryPage {
       });
       mealList.push(meal)
     };
-    (this as any).setData({ mealList })
+    (this as any).setData({ mealList },()=>{
+      console.log('页面初次渲染的mealList',this.data.mealList)
+    })
   }
 
   /**
@@ -556,6 +558,22 @@ class FoodDiaryPage {
     if (this.data.showMask) {
       (this as any).setData({ showMask: false })
       return false
+    }
+  }
+  public handleGoScorePrize(){
+    wx.navigateTo({ url:'../../homeSub/pages/scorePrize/index' })
+  }
+  public handleClockBreakFast(){
+    const hour = moment().format('HH')
+    if( hour>20 || hour<4 ){
+      wx.showToast({
+        title:'早餐打卡时间为4点-10点',
+        icon:'none'
+      })
+    }else{
+      this.mealIndex = 0;
+      this.mealType = 1;
+      (this as any).setData({ showMask: true })
     }
   }
 }

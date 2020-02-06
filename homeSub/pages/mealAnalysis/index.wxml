@@ -1,6 +1,24 @@
 <!-- homeSub/pages/mealAnalysis/index.wxml -->
 <view class='wrap'>
-  <view class="title">本餐饮食结构</view>
+  <view class="title">营养建议</view>
+  <view class="public" wx:if='{{info.lessFoodGroups&&info.lessFoodGroups.length>0}}'>
+    <view class="canvas-title last-title spacial">{{info.suggestedNote}}</view>
+    <!-- <view class="canvas-title last-title">{{info.tips}}</view> -->
+    <view class='progress-last'>
+      <block wx:for="{{info.lessFoodGroups}}" wx:key='nameCN'>
+        <view>{{item.nameCN}}摄入较少仅{{item.intakeValue.intake}}g，推荐{{item.intakeValue.suggestedIntake}}g</view>
+        <progress 
+          class="progress" 
+          percent="{{item.intakeValue.intake/item.intakeValue.suggestedIntake*100}}" 
+          stroke-width="6" 
+          active="{{true}}" 
+          backgroundColor="#D8D8D8" 
+          activeColor="#ed2c48" 
+          border-radius='2'
+        />
+      </block>
+    </view>
+  </view>
   <view class="public public-canvas">
     <view class="canvas-title spacial" wx:if='{{lessType}}'> {{mealName}}:建议增加{{lessType}}的占比 </view>
     <view class="canvas-title spacial" wx:else> {{mealName}}:热量元素摄入比例合理，继续保持！ </view>
@@ -27,11 +45,11 @@
   </view>
   <view class="public">
     <view class="canvas-title spacial">
-      累计摄入{{numOfDailyFoodCategory}}种食物，
-      <text wx:if='{{suggestedNumOfDailyFoodCategory>numOfDailyFoodCategory}}'>还需摄入{{suggestedNumOfDailyFoodCategory-numOfDailyFoodCategory}}种食物</text>
+      已摄入{{numOfDailyFoodCategory}}种食物，
+      <text wx:if='{{suggestedNumOfDailyFoodCategory<12}}'>建议每天至少{{suggestedNumOfDailyFoodCategory}}种食物</text>
       <text wx:else>恭喜您，您已达标！</text>
     </view>
-    <view class="canvas-title" wx:if='{{suggestedNumOfDailyFoodCategory>numOfDailyFoodCategory}}'> 根据《中国居民膳食指南》建议您每天至少摄入12种食物 </view>
+    <!-- <view class="canvas-title" wx:if='{{suggestedNumOfDailyFoodCategory>numOfDailyFoodCategory}}'> 根据《中国居民膳食指南》建议您每天至少摄入12种食物 </view> -->
       
     <view class="progress-container">
       <view class="top" style='right:{{numOfDailyFoodCategory>=suggestedNumOfDailyFoodCategory?622-suggestedNumOfDailyFoodCategory/numOfDailyFoodCategory*622:0}}rpx'> 推荐 {{suggestedNumOfDailyFoodCategory}}种 ▼ </view>
@@ -48,24 +66,9 @@
       <view wx:else class="bottom" style='left:{{numOfDailyFoodCategory/suggestedNumOfDailyFoodCategory*622-15}}rpx'><text>▲ </text> 摄入 {{numOfDailyFoodCategory}}种</view>
     </view>
   </view>
-  <view class="public" wx:if='{{info.lessFoodGroups&&info.lessFoodGroups.length>0}}'>
-    <view class="canvas-title last-title spacial">{{info.suggestedNote}}</view>
-    <view class="canvas-title last-title">{{info.tips}}</view>
-    <view class='progress-last'>
-      <block wx:for="{{info.lessFoodGroups}}" wx:key='nameCN'>
-        <view>{{item.nameCN}}摄入较少 {{item.intakeValue.intake}}/{{item.intakeValue.suggestedIntake}}g</view>
-        <progress 
-          class="progress" 
-          percent="{{item.intakeValue.intake/item.intakeValue.suggestedIntake*100}}" 
-          stroke-width="6" 
-          active="{{true}}" 
-          backgroundColor="#D8D8D8" 
-          activeColor="#ed2c48" 
-          border-radius='2'
-        />
-      </block>
-    </view>
-  </view>
+  <view class="text-tips">以上建议由品深科技专业营养师基于《2016年中国居民膳食指南》提供，如有特殊医疗状况，请咨询专科医生。</view>
+    
+ 
 </view>
 <view class="fixed">
   <view class="left" bindtap='goSharePage'>
