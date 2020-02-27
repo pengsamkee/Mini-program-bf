@@ -109,6 +109,10 @@ class FoodDiaryPage {
     showMask: false,
     statusHeight: null,
     navHeight: null,
+    mealType:0,
+    showAddScorePopup:false,
+    wxRunStepArr:[],
+    step:'-/-'
   };
   public mealType = 0;
   public mealDate = 0;
@@ -118,17 +122,12 @@ class FoodDiaryPage {
 
 
   public onLoad() {
-    wx.navigateTo({url:'./../../homeSub/pages/scorePrize/index'})
+    // wx.navigateTo({url:'./../../homeSub/pages/mealAnalysis/index'})
     webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
   }
 
   public onShow() {
     this.login();
-    // comfirmMeal页面添加完食物后 会触发
-    if (this.mealDate !== 0) {
-      this.getDailyMealLogGroupFoodLogDetail(this.mealDate);
-      this.getDailyMacronutrientSummary(this.mealDate);
-    }
   }
 
   public onReady() {
@@ -211,7 +210,10 @@ class FoodDiaryPage {
       request.getDailyMealLogGroupFoodLogDetail({ date }).then(res => {
         that.parseDailyMealLogGroupFoodLogDetail(res);
       }).catch(err => {
-        wx.showToast({ title: '获取食物记录失败', icon: 'none' });
+        const token = wx.getStorageSync(globalEnum.globalKey_token)
+        wx.showModal({
+          content:'获取饮食记录失败，时间戳：'+date+'；token:'+token+'；报错'+JSON.stringify(err)
+        })
       })
     }
   }
@@ -245,8 +247,6 @@ class FoodDiaryPage {
    * 获取体重相关信息,onshow中触发
    */
   public retrieveData(): void {
-    let token = wx.getStorageSync(globalEnum.globalKey_token);
-    webAPI.SetAuthToken(token);
     let that = this;
 
     let currWeek: number = moment().week();
@@ -291,11 +291,9 @@ class FoodDiaryPage {
         chart.axis(false);
         chart.changeData(nearDataArr);
       }).catch(err => {
-        console.log('获取体重数据失败', err)
+        const token = wx.getStorageSync(globalEnum.globalKey_token)
         wx.showModal({
-          title: '',
-          content: '获取体重数据失败',
-          showCancel: false
+          content: '获取体重数据失败,token:'+token+',报错'+JSON.stringify(err)
         });
       });
     }, 200);
@@ -318,16 +316,19 @@ class FoodDiaryPage {
             case 2: //onBoarding process page
               if (resp.token) {
                 wx.setStorageSync(globalEnum.globalKey_token, resp.token);
-                webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
+                webAPI.SetAuthToken(resp.token);
                 wx.reLaunch({ url: '/pages/onBoard/onBoard' });
               }
               break;
             case 3: //keep it at home page
               if (resp.token) {
                 wx.setStorageSync(globalEnum.globalKey_token, resp.token);
-                webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
+                webAPI.SetAuthToken(resp.token);
                 that.authenticationRequest();
                 that.retrieveData(); // 获取体重记录
+                that.getDailyMealLogGroupFoodLogDetail(that.mealDate);
+                that.getDailyMacronutrientSummary(that.mealDate);
+                // that.getWeRunData(resp.sessionKey)
               }
               break;
           }
@@ -339,6 +340,68 @@ class FoodDiaryPage {
           });
         });
       }
+    })
+  }
+  public getWeRunData(sessionKey){
+    const that = this
+    wx.getWeRunData({
+      success: function (res) {
+        that.runStepInfo(sessionKey,res)
+      },
+      fail: function (res) {
+        wx.getSetting({
+          success: function (res) {
+            if (!res.authSetting['scope.werun']) {
+              wx.showModal({
+                title: '提示',
+                content: '获取微信运动步数，需要开启计步权限',
+                success: function (res) {
+                  if (res.confirm) {
+                    //跳转去设置
+                    wx.openSetting({
+                      success: function (res) {
+                        that.login()
+                      }
+                    })
+                  } else {
+                    //不设置
+                  }
+                }
+              })
+            }
+          }
+        })
+      }
+    })
+  }
+  public runStepInfo(sessionKey,r){
+    const that = this
+    request.runStepInfo({
+      sessionKey,
+      encryptedData:r.encryptedData,
+      ivStr:r.iv
+    }).then(res=>{
+      that.formatStep(res,that.mealDate)
+    }).catch(err=>{
+      wx.showToast({title:'获取微信步数失败',icon:'none'})
+      console.log('获取微信步数失败')
+    })
+  }
+  public formatStep(stepArr,mealDate){
+    const that = this
+    let step;
+    stepArr.map(item=>{
+      item.time = moment(item.timestamp*1000).format('YYYY-MM-DD')
+      const todayTime = moment(mealDate*1000).format('YYYY-MM-DD')
+      if(item.time===todayTime){
+        step = item.step
+      }
+    })
+    this.setData({
+      wxRunStepArr:stepArr,
+      step
+    },()=>{
+      console.log('微信运动步数=>',this.data.wxRunStepArr)
     })
   }
   public authenticationRequest() {
@@ -391,8 +454,6 @@ class FoodDiaryPage {
 
   //默认主动会触发一次
   public bindgetdate(event: any) {
-
-    webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
     let time = event.detail;
     let navTitleTime = time.year + '/' + time.month + '/' + time.date;
     let date = moment([time.year, time.month - 1, time.date]); // Moment month is shifted left by 1
@@ -410,9 +471,16 @@ class FoodDiaryPage {
     } else {
       (this as any).setData({ navTitleTime })
     }
-    // this.retrieveFoodDiaryData(this.mealDate);
-    this.getDailyMacronutrientSummary(this.mealDate) // 获取canvas信息
-    this.getDailyMealLogGroupFoodLogDetail(this.mealDate) 
+    const token = wx.getStorageSync(globalEnum.globalKey_token)
+    webAPI.SetAuthToken(token);
+    if(token&&token.length>=20){
+      this.getDailyMacronutrientSummary(this.mealDate) // 获取canvas信息
+      this.getDailyMealLogGroupFoodLogDetail(this.mealDate) 
+    }
+    console.log('this.data.step',this.data.step)
+    if(this.data.step&&this.data.step!=='-/-'){
+      this.formatStep(this.data.wxRunStepArr,this.mealDate)
+    }
   }
 
   public onDailyReportClick() {
@@ -427,7 +495,22 @@ class FoodDiaryPage {
       return
     }
     wx.aldstat.sendEvent( '点击查看日报', {page:'home',status:1} )
+    this.userLevel()
+  }
+  // 查看用户有没有输入邀请码注册
+  public userLevel(){
+    const that = this
     wx.showLoading({ title: "加载中..." });
+    request.userLevel().then(res=>{
+      if(res.level===1){ // 输入过邀请码
+        that.getUserProfileByToken()
+      }else{
+        wx.navigateTo({url:'./../../homeSub/pages/dailyPage/index'})
+      }
+    })
+  }
+  // 获取跳转日报H5链接信息
+  public getUserProfileByToken(){
     const token = wx.getStorageSync(globalEnum.globalKey_token);
     request.getUserProfileByToken({ token }).then(resp => {
       let userId: string = resp.userId;
@@ -442,34 +525,10 @@ class FoodDiaryPage {
   public addFoodImage(event: any) {
     this.mealIndex = event.currentTarget.dataset.mealIndex;
     this.mealType = this.mealIndex + 1;
-    (this as any).setData({ showMask: true })
-    // wx.showActionSheet({
-    //   itemList: ['拍照记录', '相册', '文字搜索'],
-    //   success(res: any) {
-    //     switch (res.tapIndex) {
-    //       case 0:
-    //         that.chooseImage('camera');
-    //         wx.reportAnalytics('record_type_select', {
-    //           sourcetype: 'camera',
-    //         });
-    //         break;
-    //       case 1:
-    //         that.chooseImage('album');
-    //         wx.reportAnalytics('record_type_select', {
-    //           sourcetype: 'album',
-    //         });
-    //         break;
-    //       case 2:
-    //         wx.navigateTo({
-    //           url: "../../pages/textSearch/index?title=" + that.data.mealList[mealIndex].mealName + "&mealType=" + that.mealType + "&naviType=0&filterType=0&mealDate=" + that.mealDate
-    //         });
-    //         wx.reportAnalytics('record_type_select', {
-    //           sourcetype: 'textSearch',
-    //         });
-    //         break;
-    //     }
-    //   }
-    // });
+    (this as any).setData({ 
+      showMask: true,
+      mealType: this.mealType
+    })
   }
 
   public handleChooseUploadType(e: any) {
@@ -563,9 +622,12 @@ class FoodDiaryPage {
   public handleGoScorePrize(){
     wx.navigateTo({ url:'../../homeSub/pages/scorePrize/index' })
   }
+  public handleGoMotionStep(){
+    wx.navigateTo({ url:`../../homeSub/pages/motionStep/index?step=${this.data.step}` })
+  }
   public handleClockBreakFast(){
     const hour = moment().format('HH')
-    if( hour>20 || hour<4 ){
+    if( hour>10 || hour<4 ){
       wx.showToast({
         title:'早餐打卡时间为4点-10点',
         icon:'none'
@@ -573,7 +635,10 @@ class FoodDiaryPage {
     }else{
       this.mealIndex = 0;
       this.mealType = 1;
-      (this as any).setData({ showMask: true })
+      (this as any).setData({ 
+        showMask: true,
+        mealType: 1
+      })
     }
   }
 }

@@ -1,0 +1,12 @@
+/* pages/foodHabit/index.wxss */
+.underline-input {
+  border-bottom: 1px #000 solid; 
+  height: 5px;
+}
+
+.confirm-btn {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 25px;
+  padding: 0px;
+}

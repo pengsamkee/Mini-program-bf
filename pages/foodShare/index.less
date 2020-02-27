@@ -1,0 +1,391 @@
+/* pages/foodShare/index.wxss */
+
+.bg {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #fc9c1f 0%,#ff7e16 100%);
+    position: relative;
+  }
+  
+  .share-card {
+    margin-top: 28rpx;
+    background-color: white;
+    margin-bottom: 60rpx;
+    margin-left: 64rpx;
+    margin-right: 64rpx;
+    box-shadow: 0 12rpx 34rpx 0 rgba(0, 0, 0, 0.10);
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .full-width-image {
+    width: auto;
+    height: auto;
+  }
+  
+
+  
+  .save-album-btn {
+    font-family: PingFangSC-Regular;
+    font-size: 36rpx;
+    color: #ff822d;
+    letter-spacing: 0.16rpx;
+    background: #fff;
+    border: 2rpx solid #ff822d;
+    border-radius: 8rpx;
+    width: 182rpx;
+    height: 90rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
+  
+  .progress-wrap{
+    width:100%;
+    margin-top:40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .progress-loading{
+    width:60%;
+    margin-bottom:40rpx;
+  }
+
+  .user{
+    position: absolute;
+    top:100rpx;
+    left:40rpx;
+  }
+  .header-img{
+    height:100rpx;
+    width:100rpx;
+    border:8rpx solid #fff;
+    position: absolute;
+    top:-20rpx;
+    z-index: 888;
+  }
+  
+  .username{
+    height:59rpx;
+    background: #ed2c48;
+    color: #fff;
+    padding:0 30rpx 0 38rpx;
+    position: relative; 
+    top: 1rpx;
+    left:105rpx;
+    line-height: 55rpx;
+    z-index: 0;
+  }
+  .username-image{
+    width: 0rpx;
+    height: 0rpx;
+    border: 30rpx solid #ed2c48;
+    position: absolute;
+    right:-60rpx;
+    top:30rpx;
+    z-index: 1;
+  }
+
+  
+
+  .draw-wrap .mask-wrap .content-wrap .content-wrap-left .name{
+    font-size: 32rpx;
+  }
+  .draw-wrap .mask-wrap .content-wrap .content-wrap-left .meal-richness{
+    font-size: 22rpx;
+  }
+  .meal-detail{
+    display: flex;
+    margin-top:30rpx;
+  }
+  .meal-detail .public{
+    margin-left:50rpx;
+  }
+  .fat-name{
+    min-width: 26rpx;
+  }
+  .meal-detail .public:nth-of-type(1){
+    margin-left:0rpx;
+  }
+  .meal-detail .public .public-weight{
+    font-size: 26rpx;
+  
+    white-space:nowrap; 
+  }
+  .meal-detail .public .public-name{
+    font-size: 20rpx;
+    margin-top:10rpx;
+    
+  }
+
+  .content-wrap-right .calorie{
+    font-size: 33rpx;
+  }
+  .content-wrap-right .code-image{
+    width:110rpx;
+    height: 110rpx;
+    margin-top:10rpx;
+    margin-bottom:6rpx;
+    display: block;
+  }
+  .content-wrap-right .code-image-text{
+    font-size: 18rpx;
+  }
+  
+  /* 食物只有一个时候 */
+  .img-and-name-wrap{
+   position: relative;
+  }
+  
+  .mask-wrap-single{
+    position: absolute;
+    z-index: 10;
+    bottom:0;
+    left:0;
+    height:120rpx;
+    width:100%;
+  }
+  
+  .img-and-name-wrap .content-wrap-single{
+    width:100%;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+    top:0;
+    left:0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:30rpx;
+    box-sizing: border-box;
+    color:#fff;
+  }
+  .single-name{
+  font-size: 36rpx;
+  }
+  .single-calories{
+  display: flex;
+  align-items: baseline;
+  }
+  .calories-number{
+  font-size: 36rpx;
+  }
+  .calories-unit{
+  font-size: 22rpx;
+  }
+  .single-bottom{
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; */
+    height:340rpx;
+  }
+  .tips{
+    width:100%;
+    height:135rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .public-mic{
+    height:30rpx;
+    width:500rpx;
+    border-radius: 5%;
+    border: 1px solid #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-size: 24rpx;
+  
+  }
+  .public-mic:nth-of-type(2){
+    margin-top:10rpx;
+  }
+  .tips image{
+    width:0;
+    height:0;
+  
+  }
+  .meal-detail-qrcode{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -20rpx;
+  
+  }
+  .meal-detail-special{
+    margin-top:10rpx;
+  }
+  .eat-number .number{
+    font-size: 24rpx;
+    color: #555 
+  }
+  .qrcode-wrap{
+    text-align: center;
+    margin-left:60rpx;
+  }
+  .qrcode{
+    width:120rpx;
+    height: 120rpx;
+  }
+  .description{
+    font-size:20rpx; 
+  }
+
+  .a-top{
+      width:150rpx;
+      height: 100rpx;
+      margin-left:50%;
+  }
+  .canvas-image{
+    margin: 0 auto;
+    width:80%;
+  }
+
+.draw-wrap{
+    position: fixed;
+    top:14000rpx;
+    // position: absolute;
+    // top:1600rpx;
+    width: 80%;
+    .share-text{
+        width: 100%;
+        height: 150px;
+        display: block;
+    }
+    .url-image{
+        display: block;
+        width: 100%;
+    }
+    .mask-wrap{
+        position: relative;
+        height:150px;
+        width:100%;
+        .qrcode-bg{
+            width:100%;
+            height: 100%;
+            display: block;
+        }
+        .content-wrap2{
+            width:100%;
+            height: 100%;
+            position: absolute;
+            z-index: 10;
+            top:0;
+            left:0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding:0 30px;
+            box-sizing: border-box;
+            font-size:18rpx;
+            font-family:PingFang;
+            font-weight:400;
+            color:rgba(98,97,97,1);
+            .content-left{
+                height: 100%;
+                flex:1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .public{
+                    display: flex;
+                    align-items: center;
+                    margin:6rpx 0;
+                    width: 100%;
+                    background: #593;
+                    text{
+                        white-space:nowrap;
+                        padding:0 4rpx;
+                    }
+                    .font-weight{
+                        color:#010101;
+                        font-weight: bold;
+                        font-size: 20rpx;
+                        white-space: nowrap;
+                        min-width:50rpx;
+                        text-align: center;
+                    }
+                    .font-weight-space{
+                        max-width: 20rpx;
+                        min-width: 10rpx;
+                        text-align: left;
+                    }
+                    .text12{
+                        min-width: 130rpx;
+                    }
+                }
+                .title{
+                    font-size:24rpx;
+                    font-family:Adobe Heiti Std;
+                    font-weight:normal;
+                    color:rgba(255,157,36,1);
+                    margin-bottom: 4rpx;
+                }
+            }
+            .content-wrap-right{
+                height: 100%;
+                width:150rpx;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              }
+        }
+    }
+}
+.button-layer {
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    /* padding:0 20rpx; */
+    .share-title{
+        width: 100%;
+        text-align: center;
+        font-size:24rpx;
+        font-family:Adobe Heiti Std;
+        font-weight:normal;
+        color:rgba(253,246,240,1);
+        margin:0 0 30rpx 0;
+    }
+    .share-btn-group{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-size:24rpx;
+        font-family:PingFang;
+        font-weight:500;
+        color:rgba(255,238,238,1);
+        .friend{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            .share-icon{
+                width:100rpx;
+                height: 100rpx;
+                display: block;
+                margin-bottom: 26rpx;
+            }
+            .share-btn {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: transparent;
+                &::after{
+                    border: none;
+                }
+            }
+        }
+    }
+  }
+  

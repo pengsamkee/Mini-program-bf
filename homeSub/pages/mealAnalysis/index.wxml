@@ -46,13 +46,12 @@
   <view class="public">
     <view class="canvas-title spacial">
       已摄入{{numOfDailyFoodCategory}}种食物，
-      <text wx:if='{{suggestedNumOfDailyFoodCategory<12}}'>建议每天至少{{suggestedNumOfDailyFoodCategory}}种食物</text>
+      <text wx:if='{{(hour<10&&numOfDailyFoodCategory<4) || (hour>=10&&hour<16&&numOfDailyFoodCategory<8) || (hour>=16&&hour<=24&&numOfDailyFoodCategory<12)}}'>种类可能不够丰富！</text>
       <text wx:else>恭喜您，您已达标！</text>
     </view>
-    <!-- <view class="canvas-title" wx:if='{{suggestedNumOfDailyFoodCategory>numOfDailyFoodCategory}}'> 根据《中国居民膳食指南》建议您每天至少摄入12种食物 </view> -->
       
     <view class="progress-container">
-      <view class="top" style='right:{{numOfDailyFoodCategory>=suggestedNumOfDailyFoodCategory?622-suggestedNumOfDailyFoodCategory/numOfDailyFoodCategory*622:0}}rpx'> 推荐 {{suggestedNumOfDailyFoodCategory}}种 ▼ </view>
+      <view class="top" style='right:{{numOfDailyFoodCategory>=suggestedNumOfDailyFoodCategory?622-suggestedNumOfDailyFoodCategory/numOfDailyFoodCategory*622:0}}rpx'> 推荐 {{needNumber}}种 ▼ </view>
       <progress 
         class="progress" 
         percent="{{numOfDailyFoodCategory/suggestedNumOfDailyFoodCategory*100}}" 

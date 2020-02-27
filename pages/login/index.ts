@@ -43,7 +43,7 @@ class LoginPage {
     wx.login({
       success(_res) {
         wx.hideLoading({});
-        let req = { jscode: _res.code, invitation_code: code };
+        let req = { jscode: _res.code, invitation_code: code || 'free202002' };
         loginAPI.MiniProgramRegister(req).then(resp => {
           if (resp.token && resp.token != "") {
             wx.setStorageSync(globalEnum.globalKey_token, resp.token);
@@ -75,14 +75,17 @@ class LoginPage {
       success: function (res) {
         if (res.authSetting['scope.userInfo']) {
           if (_this.data.userStatus == 1){
-            if (_this.data.code && _this.data.checked){
+            // if (_this.data.code && _this.data.checked){
+            if (_this.data.checked){
               _this.submit()
-            }else if(!_this.data.code){
-              wx.showToast({
-                title:'请先输入邀请码',
-                icon:"none"
-              })
-            }else{
+            }
+            // else if(!_this.data.code){
+              // wx.showToast({
+              //   title:'请先输入邀请码',
+              //   icon:"none"
+              // })
+            // }
+            else{
               wx.showToast({
                 title:'请先同意用户协议',
                 icon:"none"

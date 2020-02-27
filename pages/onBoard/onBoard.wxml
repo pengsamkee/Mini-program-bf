@@ -17,7 +17,6 @@
         <view wx:if="{{gender===2}}">
           <image id="女" bindtap="genderEvent" src="../../images/genderPage/female-white@3x.png" class="female-icon" mode="widthFix"></image>
         </view>
-
         <view wx:else>
           <image id="女" bindtap="genderEvent" src="../../images/genderPage/female-red@3x.png" class="female-icon" mode="widthFix"></image>
         </view>
@@ -48,13 +47,6 @@
 <!-- Height -->
 <view wx:elif="{{countPage == 2}}">
   <view class="header">您的身高?</view>
-
-  <!-- <view class="body">
-    <view>
-      <input class="{{textInputClass}}" type="digit" bindfocus="focusInput" bindinput='bindHeightInput' placeholder=" 0" focus="{{focus}}" />
-    </view>
-    <view class="unit">cm</view>
-  </view> -->
   <view class="age-body">
     <view class="{{yearDisplay}}">{{height}}cm</view>
     <picker-view class="picker-column" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{heightVal}}" bindchange="bindHeightSelect">
@@ -70,35 +62,8 @@
   </view>
 </view>
 
-<!-- Weight -->
-<view wx:elif="{{countPage == 3}}">
-  <view class="header">您的体重?</view>
-  <!-- <view class="body">
-    <view>
-      <input type="digit" class="{{textInputClass}}" bindfocus="focusInput" bindinput="bindWeightInput" placeholder="0" focus="{{focus}}" />
-    </view>
-    <view class="unit">kg</view>
-  </view> -->
- <view class="age-body">
-    <view class="{{yearDisplay}}">{{weight}}kg</view>
-    <picker-view class="picker-column" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{weightVal}}" bindchange="bindWeightSelect">
-      <picker-view-column>
-        <view wx:for="{{weightArr}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
-      </picker-view-column>
-      <picker-view-column>
-        <view wx:for="{{pointArr}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
-      </picker-view-column>
-    </picker-view>
-  </view>
-  <view class="margin-top-20 nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
-  <view class="preButton-container" bindtap='preButton234'> 上一步</view>
-  <view wx:if="{{empty == true}}">
-    <view class="validation-message">{{weightValidate}}</view>
-  </view>
-</view>
-
 <!-- birth year -->
-<view wx:elif="{{countPage == 4}}">
+<view wx:elif="{{countPage == 3}}">
   <view class="header">您的出生年份?</view>
 
   <view class="age-body">
@@ -116,6 +81,29 @@
     <view class="validation-message">{{ageValidate}}</view>
   </view>
 </view>
+
+<!-- Weight -->
+<view wx:elif="{{countPage == 4}}">
+  <view class="header">您的体重?</view>
+  <view class="age-body">
+    <view class="{{yearDisplay}}">{{weight}}kg</view>
+    <picker-view class="picker-column" indicator-style="height: 56rpx; font-family:HelveticaNeue;font-size:23px; color:#292929;" value="{{weightVal}}" bindchange="bindWeightSelect">
+      <picker-view-column>
+        <view wx:for="{{weightArr}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{pointArr}}" style="justify-content: center; align-items: center; display: flex">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+  <view class="margin-top-20 nextButton-container" bindtap="nextSubmit"> 下一步 <text class='process-text'>({{currentPage}}/{{totalPage}})</text></view>
+  <view class="preButton-container" bindtap='preButton234'> 上一步</view>
+  <view wx:if="{{empty == true}}">
+    <view class="validation-message">{{weightValidate}}</view>
+  </view>
+</view>
+
+
  
 <!-- Not shown to users who are male (page 1) or below the age of 16 (page 4) -->
 <view wx:elif="{{pregnantStageCondition == true && dueDateCondition == false}}">

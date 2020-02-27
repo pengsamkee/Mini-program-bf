@@ -1,0 +1,11 @@
+<!--homeSub/pages/motionStep/index.wxml-->
+<view class="page">
+    <view class="step">
+        <view class="count">{{step}}</view>
+        <view class="text"> 今日步数 </view>
+    </view>
+    <view> 还差{{5000-step}}步数，加油呀！</view>
+    <view class="back-home" bindtap='backToHome'> 走几步去！（回首页） </view>
+    <view class="clock-btn"> 打卡</view>
+</view>
+  

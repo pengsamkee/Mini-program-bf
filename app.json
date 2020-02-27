@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/home/index",
+    "pages/foodShare/index",
     "pages/onBoard/onBoard",
+    "pages/foodDetail/index",
     "pages/login/index",
     "pages/nutritionalDatabasePage/articlePage",
     "pages/checkNutrition/index",
@@ -13,12 +15,11 @@
     "pages/weightRecord/index",
     "pages/weightRecord/weightInput",
     "pages/weightRecord/targetInput",
-    "pages/foodDetail/index",
     "pages/rdiPage/rdiPage",
     "pages/reportPage/reportPage",
     "pages/morePage/index",
     "pages/nutritionalDatabasePage/index",
-    "pages/foodShare/index"
+    "pages/foodPreference/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -63,7 +64,9 @@
         "pages/confirmMeal/index",
         "pages/weightReference/index",
         "pages/foodDetail/index",
-        "pages/scorePrize/index"
+        "pages/scorePrize/index",
+        "pages/motionStep/index",
+        "pages/dailyPage/index"
       ]
     },
     {

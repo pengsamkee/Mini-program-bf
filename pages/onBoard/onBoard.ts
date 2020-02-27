@@ -1,12 +1,10 @@
 
 import { IMyApp } from '../../app'
-import { epoch } from '../../utils/util'
 
 const app = getApp<IMyApp>()
 import * as webAPI from '../../api/app/AppService';
-import { MiniProgramLogin } from '../../api/login/LoginService';
 import * as globalEnum from '../../api/GlobalEnum'
-import { UpdateUserProfileReq, UpdateMedicalProfile } from '../../api/app/AppServiceObjs';
+import * as moment from 'moment'
 
 class onBoard {
 
@@ -47,8 +45,6 @@ class onBoard {
     medicalselected: 5,
     inputValidate: '请输入你的答案',
     optionsValidate: '请选择你的答案',
-    // heightValidate: '请在40-230厘米范围内输入您的身高',
-    // weightValidate: '请在30-300千克范围内输入您的体重',
     expectedDateValidate: '请在今天到未来45周的日期内选择您的预产期',
     ageValidate: '请确保您的年龄在1-100岁范围内',
     rdiGoal: 2000,
@@ -96,10 +92,10 @@ class onBoard {
     });
 
     let today = new Date();
-    this.setBirthYearPicker(today);
+    this.setBirthYearPicker(today); 
     this.setDueDatePicker(today);
     this.initHeightArr();
-    this.initWeightArr();
+    
   }
   // Set the picker options for pregnancy due date
   public setDueDatePicker(today: any): void {
@@ -152,16 +148,22 @@ class onBoard {
    */
   public initWeightArr() {
     let weightArr: Number[] = []
-    for (let i = 30; i <= 200; i+=1) {
-      const num:string = i+'.';
-      weightArr.push(num)
+    const nowYear:number = Number(moment().format('YYYY'))
+    if(nowYear-this.data.birthYear>18){
+      for (let i = 30; i <= 150; i+=1) {
+        const num:string = i+'.';
+        weightArr.push(num)
+      }
+    }else{
+      for (let i = 0; i <= 150; i+=1) {
+        const num:string = i+'.';
+        weightArr.push(num)
+      }
     }
     (this as any).setData({
       weightArr
     })
   }
-
-
 
   // Method to handle styling of WeChat input
   public focusInput(event: any): void {
@@ -203,12 +205,15 @@ class onBoard {
 
     (this as any).setData({ yearDisplay: "yearDisplay-input" });
 
-    if (age >= 1 && age <= 100) {
+    if (age >= 0 && age <= 100) {
 
       (this as any).setData({
         birthYear: birthYear,
         nextPage: true,
         empty: false,
+      },()=>{
+        console.log('birthYear',birthYear)
+        this.initWeightArr();
       });
 
     } else {
@@ -223,7 +228,6 @@ class onBoard {
 
   // get weighIndex and init weight
   public getWeightInfo() {
-    console.log('=============================================================================================================================')
     const { height, weightArr } = this.data;
     let bmiWeight = Math.round(height/100*height/100*21*10)/10;
     let unit = Math.floor(bmiWeight) - parseInt(weightArr[0]);
@@ -268,8 +272,7 @@ class onBoard {
         countPage: this.data.countPage + 1,
         currentPage: this.data.currentPage + 1
       });
-      console.log('this.data.countPage',this.data.countPage)
-      if(this.data.countPage===3){
+      if(this.data.countPage===4){
         this.getWeightInfo()
       }
       this.onChange();
@@ -590,33 +593,28 @@ class onBoard {
         countPage: this.data.countPage - 1,
         currentPage: this.data.currentPage - 1,
         gender: 0,
-        // height: 150,
-        // heightVal:[110],
         nextPage: false,
         empty: false,
       })
     }
-    if (this.data.countPage == 3) {
+    if (this.data.countPage == 3) { // 年龄页
       (this as any).setData({
         countPage: this.data.countPage - 1,
         currentPage: this.data.currentPage - 1,
-        // height: 150,
-        // weight: 50.5,
-        // weightVal: [20,5],
         nextPage: true,
         empty: false,
         yearDisplay: 'yearDisplay',
+        birthYear: 1991,
       })
     }
-    if (this.data.countPage == 4) {
+    if (this.data.countPage == 4) { // 体重页
       (this as any).setData({
         countPage: this.data.countPage - 1,
         currentPage: this.data.currentPage - 1,
-        // weight: 50.5,
-        // weightVal: [20,5],
         nextPage: true,
         empty: false,
         yearDisplay: 'yearDisplay',
+        birthYear: 1991,
       })
     }
   }
@@ -627,7 +625,6 @@ class onBoard {
       nextPage: true,
       empty: false,
 
-      birthYear: 1991,
       yearDisplay: "yearDisplay",
 
       pregnantStageCondition: true,

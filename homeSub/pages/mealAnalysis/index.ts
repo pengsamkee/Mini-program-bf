@@ -1,6 +1,7 @@
 let app =  getApp();
 
 import request from '../../../api/app/interface';
+import * as moment from 'moment';
 import * as uploadFile from './../../../api/uploader.js';
 
 
@@ -93,7 +94,9 @@ class MealAnalysis {
     suggestedIntake:null,
     energyStatus:null,
     showMask:false,
-    mealName:null
+    mealName:null,
+    hour:null,
+    needNumber:null,
   }
 
   public onLoad(options:options) {
@@ -114,6 +117,21 @@ class MealAnalysis {
     app.globalData.mealDate = this.mealDate;
     this.title = options.title;
     this.getSimpleDailyAnalysis()
+  }
+  public onShow(){
+    const hour = Number(moment().format('H'));
+    let needNumber;
+    if(hour<10){
+      needNumber = 4
+    }else if(hour>=10&&hour<16){
+      needNumber = 8
+    }else{
+      needNumber = 12
+    }
+    this.setData({
+      hour,
+      needNumber
+    })
   }
   public onReady(){
     this.getMealMacronutrientAnalysis()

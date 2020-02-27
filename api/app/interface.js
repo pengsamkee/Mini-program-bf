@@ -52,13 +52,13 @@ export default {
   checkNutrientFoodList(data) {
     return fetch('/kc/tools/checkNutrientFoodList', data, 'GET')
   },
-
-  
-  // getPoidetail(data) {
-  //   return fetch('/api/poi/' + data.id + '.json', {}, 'GET')
-  // },
-  // clock(data) {
-  //   return fetch('/api/checkpoint/' + data.id + '.json', {}, 'POST')
-  // },
+  // 查看用户有没有输入邀请码注册
+  userLevel(data) {
+    return fetch('/uc/miniProgram/userLevel', data, 'GET')
+  },
+  // 解密得到微信运动步数
+  runStepInfo(data) {
+    return fetch('/rc/wxmp/runStepInfo', data, 'GET')
+  },
   
 }

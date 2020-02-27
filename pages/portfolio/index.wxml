@@ -42,7 +42,7 @@
       </picker>
       <!--birthday-->
       <view class="weui-cell">
-        <picker mode="date" bindchange='birthdaySelect' value='{{birthday}}' fields='year' start='1919' end='2018'>
+        <picker mode="date" bindchange='birthdaySelect' value='{{birthday}}' fields='year' start='1920' end='2020'>
           <view class="space-between-view">
             <view class="weui-cell__bd">出生年份</view>
             <view class="weui-cell__ft">{{birthday}}</view>
@@ -66,7 +66,7 @@
         <view class="space-between-view">
           <view class="weui-cell__bd">体重</view>
           <view class="weui-cell__ft">
-            <input class="right-align-input" type="number" bindblur='onCurrentWeightInput' placeholder="请输入您现在的体重" value='{{currentWeight}}' bindfocus='onFocusWeightInput'></input>
+            <input class="right-align-input" type="digit" bindblur='onCurrentWeightInput' placeholder="请输入您现在的体重" value='{{currentWeight}}' bindfocus='onFocusWeightInput'></input>
           </view>
           <view class="weui-cell__ft">kg</view>
         </view>
@@ -82,7 +82,7 @@
       </view>
     </view>
 
-    <view class="weui-cells weui-cells_after-title section" hidden='{{genderIndex !== 2}}'>
+    <view class="weui-cells weui-cells_after-title section" hidden='{{genderIndex !== 1}}'>
       <!--pregnancy status-->
       <picker class="weui-cell {{errorChecking[1]==true?'error-red-border':''}}" mode="selector" bindchange='pregnancyStatusSelect' range='{{pregnancyStatusArray}}' value='{{pregnancyStatusIndex}}'>
         <view class="space-between-view">

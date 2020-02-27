@@ -1,83 +1,72 @@
 <!--pages/foodShare/index.wxml-->
 <view class="bg">
-  <!-- <view class="share-card">
-    <image class="full-width-image" src="{{imageUrl}}" mode="widthFix"></image>
-  </view>
-  <view class="button-layer" wx:if='{{imageUrl}}'>
-    <button class="save-album-btn" catchtap='onBackFoodDiary'>看日记</button>
-    <button class="save-album-btn" catchtap='onSaveToAlbumBtnPressed'>保存</button>
-    <button open-type="share" class="share-btn">分享给朋友</button>
-  </view> -->
   <view wx:if='{{percent>0&&percent<100}}' class='progress-wrap'>
     <progress percent="{{percent}}" activeColor="#ed2c48" duration='100' active-mode='forwards' active backgroundColor='#ddd' class='progress-loading' stroke-width='20' border-radius='10'/>
     <view class='percent'>美图生成中..</view>
   </view>
-
-  <image class="canvas-image" src="{{imageUrl}}" wx:if='{{imageUrl}}' mode="widthFix"></image>
-
-<!-- 如果只有一个食物 -->
-<view class="draw-wrap draw_canvas" style="height:{{imgHeight}}px;width:{{imgWidth}}px;" wx:if='{{single}}'>
-  <view class="img-and-name-wrap">
-    <image class="image draw_canvas" mode="widthFix" src='{{image_url}}' data-type="image" data-url="{{image_url}}" style="width:{{imgWidth}}px" bindload="handleImageLoad"></image>
-    <view class="mask-wrap-single draw_canvas">
-      <view class='mask draw_canvas' data-type="text" data-background="rgba(0,0,0,0.5)" data-text=""></view>
-      <view class='content-wrap-single draw_canvas'>
-        <view class="single-name draw_canvas" data-type="text" data-text="{{single.recipe_name}}">{{single.recipe_name}}</view>
-        <view class="single-calories draw_canvas">
-          <view class='calories-number draw_canvas' data-type="text" data-text="{{single.calorie.value}}">{{single.calorie.value}}</view>
-          <view class='calories-unit draw_canvas' data-type="text" data-text="{{single.calorie.unit}}">{{single.calorie.unit}}</view>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <view class='user draw_canvas'>
-    <image src='{{user_info.avatar_url}}' class="header-img draw_canvas" data-type="radius-image" data-url="{{user_info.avatar_url}}"></image>
-    <view class="username draw_canvas" data-type="text" data-text="{{user_info.username}}">
-      {{user_info.username}}
-      <image class='username-image draw_canvas' data-type="radius-image" data-url="{{}}"></image>
-    </view>
-  </view>
-  <view class="single-bottom draw_canvas">
-    <view class="tips draw_canvas">
-      <view class="public-mic draw_canvas" wx:if='{{single.top_two_highest_quantity[0]}}'>
-        <view class='public-mic-text draw_canvas' data-type="text" data-text="{{single.top_two_highest_quantity[0].nutrient_name+':'+single.top_two_highest_quantity[0].description}}">富含{{single.top_two_highest_quantity[0].nutrient_name}}:{{single.top_two_highest_quantity[0].description}}</view>
-      </view>
-      <view class="public-mic draw_canvas" wx:if='{{single.top_two_highest_quantity[1]}}'>
-        <view class='public-mic-text draw_canvas' data-type="text" data-text="{{single.top_two_highest_quantity[1].nutrient_name+':'+single.top_two_highest_quantity[1].description}}">富含{{single.top_two_highest_quantity[1].nutrient_name}}:{{single.top_two_highest_quantity[1].description}}</view>
-      </view>
-    </view>
-    <view class='meal-detail-qrcode draw_canvas'>
-      <view class="eat-number draw_canvas">
-        <view class="number draw_canvas" data-type="text" data-text="我吃了{{single.intake.value+single.intake.unit}}">我吃了{{single.intake.value+single.intake.unit}}</view>
-        <view class="meal-detail meal-detail-special draw_canvas">
-          <view class="public draw_canvas">
-            <view class="public-weight draw_canvas" data-type="text" data-text="{{single.protein.value+single.protein.unit}}">{{single.protein.value+single.protein.unit}}</view>
-            <view class="public-name draw_canvas" data-type="text" data-text="蛋白质">蛋白质</view>
-          </view>
-          <view class='public draw_canvas'>
-            <view class="public-weight draw_canvas" data-type="text" data-text="{{''+single.fat.value+single.fat.unit}}">{{single.fat.value}}{{single.fat.unit}}</view>
-            <view class="public-name draw_canvas" data-type="text" data-text="脂肪">脂肪</view>
-          </view>
-          <view class="public draw_canvas">
-            <view class="public-weight draw_canvas" data-type="text" data-text="{{single.carb.value}}{{single.carb.unit}}">{{single.carb.value}}{{single.carb.unit}}</view>
-            <view class="public-name draw_canvas" data-type="text" data-text="碳水化合物">碳水化合物</view>
-          </view>
-        </view>
-      </view>
-      
-      <view class="qrcode-wrap draw_canvas">
-        <image class='qrcode draw_canvas' src='{{single.qr_code.image_url}}' data-type="image" data-url="{{single.qr_code.image_url}}"></image>
-        <view class='description draw_canvas' data-type="text" data-text="{{single.qr_code.description}}">{{single.qr_code.description}}</view>
-      </view>
-    </view>
+  <image wx:if='{{percent==100}}' class="a-top" src="./../../images/share_top_bg.png" />
     
+  <image class="canvas-image" src="{{imageUrl}}" wx:if='{{imageUrl}}' mode="widthFix"/>
+
+
+  <!-- <view class="draw-wrap draw_canvas" style="height:{{imgHeight}}px;width:{{imgWidth}}px;" wx:if='{{single}}'>
+    <view class="img-and-name-wrap">
+      <image class="image draw_canvas" mode="widthFix" src='{{image_url}}' data-type="image" data-url="{{image_url}}" style="width:{{imgWidth}}px"></image>
+      <view class="mask-wrap-single draw_canvas">
+        <view class='mask draw_canvas' data-type="text" data-background="rgba(0,0,0,0.5)" data-text=""></view>
+        <view class='content-wrap-single draw_canvas'>
+          <view class="single-name draw_canvas" data-type="text" data-text="{{single.recipe_name}}">{{single.recipe_name}}</view>
+          <view class="single-calories draw_canvas">
+            <view class='calories-number draw_canvas' data-type="text" data-text="{{single.calorie.value}}">{{single.calorie.value}}</view>
+            <view class='calories-unit draw_canvas' data-type="text" data-text="{{single.calorie.unit}}">{{single.calorie.unit}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class='user draw_canvas'>
+      <image src='{{user_info.avatar_url}}' class="header-img draw_canvas" data-type="radius-image" data-url="{{user_info.avatar_url}}"></image>
+      <view class="username draw_canvas" data-type="text" data-text="{{user_info.username}}">
+        {{user_info.username}}
+        <image class='username-image draw_canvas' data-type="radius-image" data-url="{{}}"></image>
+      </view>
+    </view>
+    <view class="single-bottom draw_canvas">
+      <view class="tips draw_canvas">
+        <view class="public-mic draw_canvas" wx:if='{{single.top_two_highest_quantity[0]}}'>
+          <view class='public-mic-text draw_canvas' data-type="text" data-text="{{single.top_two_highest_quantity[0].nutrient_name+':'+single.top_two_highest_quantity[0].description}}">富含{{single.top_two_highest_quantity[0].nutrient_name}}:{{single.top_two_highest_quantity[0].description}}</view>
+        </view>
+        <view class="public-mic draw_canvas" wx:if='{{single.top_two_highest_quantity[1]}}'>
+          <view class='public-mic-text draw_canvas' data-type="text" data-text="{{single.top_two_highest_quantity[1].nutrient_name+':'+single.top_two_highest_quantity[1].description}}">富含{{single.top_two_highest_quantity[1].nutrient_name}}:{{single.top_two_highest_quantity[1].description}}</view>
+        </view>
+      </view>
+      <view class='meal-detail-qrcode draw_canvas'>
+        <view class="eat-number draw_canvas">
+          <view class="number draw_canvas" data-type="text" data-text="我吃了{{single.intake.value+single.intake.unit}}">我吃了{{single.intake.value+single.intake.unit}}</view>
+          <view class="meal-detail meal-detail-special draw_canvas">
+            <view class="public draw_canvas">
+              <view class="public-weight draw_canvas" data-type="text" data-text="{{single.protein.value+single.protein.unit}}">{{single.protein.value+single.protein.unit}}</view>
+              <view class="public-name draw_canvas" data-type="text" data-text="蛋白质">蛋白质</view>
+            </view>
+            <view class='public draw_canvas'>
+              <view class="public-weight draw_canvas" data-type="text" data-text="{{''+single.fat.value+single.fat.unit}}">{{single.fat.value}}{{single.fat.unit}}</view>
+              <view class="public-name draw_canvas" data-type="text" data-text="脂肪">脂肪</view>
+            </view>
+            <view class="public draw_canvas">
+              <view class="public-weight draw_canvas" data-type="text" data-text="{{single.carb.value}}{{single.carb.unit}}">{{single.carb.value}}{{single.carb.unit}}</view>
+              <view class="public-name draw_canvas" data-type="text" data-text="碳水化合物">碳水化合物</view>
+            </view>
+          </view>
+        </view>
+        
+        <view class="qrcode-wrap draw_canvas">
+          <image class='qrcode draw_canvas' src='{{single.qr_code.image_url}}' data-type="image" data-url="{{single.qr_code.image_url}}"></image>
+          <view class='description draw_canvas' data-type="text" data-text="{{single.qr_code.description}}">{{single.qr_code.description}}</view>
+        </view>
+      </view>
+    </view>
   </view>
 
-  
-</view>
-
-<!-- 如果有多个食物 -->
   <view class="draw-wrap draw_canvas" style="height:{{imgHeight}}px;width:{{imgWidth}}px;" wx:if='{{multi}}'>
     <image class="image draw_canvas" mode="widthFix" src='{{image_url}}' data-type="image" data-url="{{image_url}}" style="width:{{imgWidth}}px"></image>
     <view class='user'>
@@ -117,13 +106,67 @@
           <view class="code-image-text draw_canvas" data-type="text" data-text="{{multi.qr_code.description}}">{{multi.qr_code.description}}</view>
         </view>
       </view>
-     
+    </view>
+  </view> -->
+
+  <view class="draw-wrap draw_canvas" style="height:{{imgHeight}}px">
+    <image class="draw_canvas share-text" src="./../../images/share_text.png" data-type="image" data-url="./../../images/share_text.png"/>
+    <image class="url-image draw_canvas" mode="widthFix" src='{{image_url}}' data-type="image" data-url="{{image_url}}"></image>
+    <view class='user'>
+      <image src='{{user_info.avatar_url}}' class="header-img draw_canvas" data-type="radius-image" data-url="{{user_info.avatar_url}}"></image>
+    </view> 
+
+    <view class="mask-wrap">
+      <image class="qrcode-bg" src='./../../images/share_qrcode_bg.png' data-type="image" data-url="./../../images/share_qrcode_bg.png"/>
+      <view class='content-wrap2'>
+        <view class='content-left draw_canvas'>
+          <view class='title draw_canvas' data-type="text" data-text="午餐大分析">午餐大分析</view>
+          <view class="public">
+            <view class='draw_canvas' data-type="text" data-text="食物丰富度">食物丰富度</view><view class='draw_canvas font-weight font-weight-space' data-type="text" data-text="{{5}}">{{5}}</view><view class='draw_canvas text12' data-type="text" data-text="种(每日需12种)">种(每日需12种)</view>
+          </view>
+          <view class="public">
+            <view class='draw_canvas' data-type="text" data-text="蛋白质:">蛋白质:</view><view class='draw_canvas font-weight' data-type="text" data-text="{{multiOrSingle.protein.value}}">{{multiOrSingle.protein.value}}</view><view class='draw_canvas' data-type="text" data-text="{{multiOrSingle.protein.unit}}">{{multiOrSingle.protein.unit}}</view>
+          </view>
+          <view class="public">
+            <view class='draw_canvas' data-type="text" data-text="脂肪:">脂肪:</view>
+            <view class='draw_canvas font-weight' data-type="text" data-text="{{multiOrSingle.fat.value}}">{{multiOrSingle.fat.value}}</view>
+            <view class='draw_canvas' data-type="text" data-text="{{multiOrSingle.fat.unit}}">{{multiOrSingle.fat.unit}}</view>
+          </view>
+          <view class="public">
+            <view class='draw_canvas' data-type="text" data-text="碳水化合物:">碳水化合物:</view>
+            <view class='draw_canvas font-weight' data-type="text" data-text="{{multiOrSingle.carb.value}}">{{multiOrSingle.carb.value}}</view>
+            <view class='draw_canvas' data-type="text" data-text="{{multiOrSingle.carb.unit}}">{{multiOrSingle.carb.unit}}</view>
+          </view>
+        </view>
+        <view class='content-wrap-right'>
+          <image src="{{multiOrSingle.qr_code.image_url}}" class="code-image draw_canvas" data-type="image" data-url="{{multiOrSingle.qr_code.image_url}}"></image>
+          <view class="code-image-text draw_canvas" data-type="text" data-text="长按识别小程序">长按识别小程序</view>
+        </view>
+      </view>
     </view>
   </view>
+  
+
   <view class="button-layer" wx:if='{{imageUrl}}'>
-    <button class="save-album-btn" catchtap='onBackFoodDiary'>回首页</button>
-    <button class="save-album-btn" catchtap='onSaveToAlbumBtnPressed'>保存</button>
-    <button open-type="share" class="share-btn">分享给朋友</button>
+    <view class="share-title">—— 分享到 ——</view>
+    <!-- <button class="save-album-btn" catchtap='onBackFoodDiary'>回首页</button> -->
+    <view class="share-btn-group">
+      <view class="friend" catchtap='handleGoHome'>
+        <image class="share-icon" src="./../../images/share_go_home.png"  />
+        <text>去首页</text>
+      </view>
+      <view class="friend" catchtap='onSaveToAlbumBtnPressed'>
+        <image class="share-icon" src="./../../images/share_friends.png"  />
+        <text>保存海报</text>
+      </view>
+      <view class="friend">
+        <image class="share-icon" src="./../../images/share_friend.png"  />
+        <button open-type="share" class="share-btn"></button>
+        <text>分享给朋友</text>
+      </view>
+        
+    </view>
+      
   </view>
-  <canvas canvas-id="canvas1" class="canvas" style="width:{{imgWidth}}px; height:{{imgHeight}}px; position: fixed; top: -199999rpx;"></canvas>
+  <canvas canvas-id="canvas1" class="canvas" style="width:80vw;height:{{imgHeight+imgWidth*0.08}}px; position: fixed; top: -199999rpx;"></canvas>
 </view>

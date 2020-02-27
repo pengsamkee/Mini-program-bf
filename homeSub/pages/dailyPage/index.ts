@@ -7,7 +7,7 @@ type options = {
   mealDtate:number
   title:string
 }
-class ScorePrize {
+class DailyPage {
   
   public data = {
     
@@ -19,7 +19,10 @@ class ScorePrize {
   public onReady(){
    
   }
-  
+  public backToHome(){
+    console.log(999)
+    wx.switchTab({url: '/pages/home/index'});
+  }
 }
 
-Page(new ScorePrize())
+Page(new DailyPage())

@@ -5,15 +5,6 @@ var baseUrl = globalEnum.baseUrl;
 
 const fetch = (url, data, method) => {
   let requestUrl = baseUrl + url;
-  // if(url==='/rc/miniProgram/recognizeFood'){
-  //   requestUrl = 'http://192.168.110.245:18080/rc/miniProgram/recognizeFood'
-  // }
-  // if(url==='/rc/miniProgram/createMealLog'){
-  //   requestUrl = 'http://192.168.110.245:18080/rc/miniProgram/createMealLog'
-  // }
-  // if(url==='/rc/miniProgram/getMealLogSummary'){
-  //   requestUrl = 'http://192.168.110.245:18080/rc/miniProgram/getMealLogSummary'
-  // }
   return new Promise((resolve, reject) => {
     wx.request({
       url: requestUrl,

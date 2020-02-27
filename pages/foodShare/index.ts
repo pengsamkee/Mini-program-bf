@@ -7,9 +7,8 @@ class FoodSharePage {
   public mealLogId = 0;
   public data = {
     imageUrl: "", // 画出来的图
-    bgUrl: "../../images/bg@3x.png",
     imgHeight:0,
-    imgWidth:350,
+    imgWidth:3,
     image_url:'', // 原来的图
     percent:0,
     multi: {} ,
@@ -33,7 +32,6 @@ class FoodSharePage {
         })
       },
       finish(url) {
-        console.log(777888,url)
         self.setData({
           imageUrl: url
         })
@@ -58,11 +56,24 @@ class FoodSharePage {
     drawimg.draw(data2);
   }
 
-  public onLoad(option: any) {
-    webAPI.SetAuthToken(wx.getStorageSync(globalEnum.globalKey_token));
-    this.mealLogId = Number(option.mealId);
-    this.mealLogShare()
-    // this.getSharePic();
+  public onLoad(options: any) {
+    this.mealLogId = Number(options.mealId);
+    if(options.token){
+      wx.setStorageSync('token',options.token);
+      webAPI.SetAuthToken(options.token);
+    }
+    
+  }
+  public onReady(){
+    const that = this
+    const windowWidth = wx.getSystemInfoSync().windowWidth
+    this.setData({
+      imgWidth:windowWidth*0.8
+    },()=>{
+      setTimeout(()=>{
+        that.mealLogShare()
+      },300)
+    })
   }
 
   public mealLogShare(){
@@ -98,37 +109,34 @@ class FoodSharePage {
       const image_url = res.image_url
       that.setData({
         image_url: image_url,
-        multi: res.multi_dish,
-        single: res.single_dish,
+        // multi: res.multi_dish,
+        // single: res.single_dish,
+        multiOrSingle:res.multi_dish?res.multi_dish:res.single_dish,
         user_info: res.user_info
       },()=>{
         wx.getImageInfo({
           src: image_url,
           success(res) {
-            let h = res.height * that.data.imgWidth / res.width;
-            let canChangeHeight = r.multi_dish ? h:h+170;
+            let h = (res.height * that.data.imgWidth / res.width)+275;
+            // let canChangeHeight = r.multi_dish ? h:h+170;
             that.setData({
               // 图片默认是300px宽
-              imgHeight: canChangeHeight,
+              imgHeight: h,
               percent:1 // 只是为了在画图之前250ms，让进度条先显示出来
-            }
+            })
             setTimeout(() => {
+              console.log(that.data.imgHeight)
               that.drawImage()
             }, 250)
           }
         })
       })
     }).catch(err => {
-      console.log(111)
       console.log(err)
-      console.log(222)
     })
   }
-
-  public handleImageLoad(){
-  }
   
-  public onBackFoodDiary(){
+  public handleGoHome(){
     wx.switchTab({
       url:'/pages/home/index'
     })
@@ -221,9 +229,10 @@ class FoodSharePage {
   }
 
   public onShareAppMessage() { 
+    const token = wx.getStorageSync(globalEnum.globalKey_token)
     return {
-      title: '知食',
-      path: '',
+      title: '瘦熊猫Nutritionist',
+      path: `/pages/foodShare/index?token=${token}&mealId=${this.mealLogId}`,
       imageUrl: this.data.imageUrl
     }
   }

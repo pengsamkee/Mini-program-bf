@@ -75,7 +75,7 @@
   <calendar selected="{{selected}}" bindselect="bindselect" bindgetdate="bindgetdate" id='calendar'/>
   <view class="page" style="top:{{statusHeight+navHeight}}px;">
     <view class='bg-top'></view>
-    <view class="public-card">
+    <!-- <view class="public-card">
       <view class='score-wrap'>
         <view class='score-wrap-left'>
           <image src='/images/home/score.png'></image>
@@ -96,7 +96,7 @@
           </view>
           <view class="clock-people">3200人参与</view>
         </view>
-        <view class="clock-item">
+        <view class="clock-item" catchtap="handleGoMotionStep">
           <view class="clock-food">
             <view>每日5000步</view>
           </view>
@@ -109,22 +109,8 @@
           <view class="clock-people">53200人参与</view>
         </view>
       </view>
-    </view>
-    <view class="public-card">
-      <view class='score-wrap' catchtap="onDailyReportClick">
-        <view class='score-wrap-left'>
-          <image src='/images/home/today_food.png'></image>
-          <view>今日饮食记录</view>
-        </view>
-        <view class='score-wrap-right'>
-          <view class='score-text check-analysis'>营养师报告</view>
-          <image src='../../images/rightArrow.png'></image>
-        </view>
-      </view>
-      <view class="new-meals">
-          <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='index'></template>
-      </view>
-    </view>
+    </view> -->
+ 
     <view class="public-card" catchtap="onDailyReportClick">
       <view class='score-wrap'>
         <view class='score-wrap-left'>
@@ -149,22 +135,22 @@
         </view>
       </view>
     </view>
-    <view class="public-card">
-      <view class='score-wrap' catchtap="goWeightRecord">
+    <!-- <view class="public-card">
+      <view class='score-wrap' catchtap="handleGoMotionStep">
         <view class='score-wrap-left'>
           <image src='/images/home/weight_history.png'></image>
           <view>运动步数</view>
         </view>
         <view class='score-wrap-right'>
           <view class='score-text'>当前步数</view>
-          <view class='score-num'>{{765}}</view>
+          <view class='score-num'>{{step}}</view>
           <image src='/images/rightArrow.png'></image>
         </view>
       </view>
       <view class="weight-wrap">    
         <view class="weigth-text">每日步数模块</view>
       </view>
-    </view>
+    </view> -->
     <view class="public-card">
       <view class='score-wrap' catchtap="goWeightRecord">
         <view class='score-wrap-left'>
@@ -185,7 +171,21 @@
         </view>
       </view>
     </view>
-   
+   <view class="public-card">
+      <view class='score-wrap' catchtap="onDailyReportClick">
+        <view class='score-wrap-left'>
+          <image src='/images/home/today_food.png'></image>
+          <view>今日饮食记录</view>
+        </view>
+        <view class='score-wrap-right'>
+          <view class='score-text check-analysis'>营养师报告</view>
+          <image src='../../images/rightArrow.png'></image>
+        </view>
+      </view>
+      <view class="new-meals">
+          <template is="meal-card" wx:for="{{mealList}}" data="{{...item,index}}" wx:key='index'></template>
+      </view>
+    </view>
 
     <view class="public-card">
       <view class='score-wrap' catchtap="goNutritionalDatabasePage">
@@ -222,6 +222,16 @@
   bindtap='handleHiddenMask'
  >
   <cover-view class="content">
+    <!-- <cover-image wx:if='{{mealType===1}}' class="bg-breakfast" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1581007928003&di=2071a5ae5af23473b3f80eb8c9441853&imgtype=0&src=http%3A%2F%2Fimg3.stockfresh.com%2Ffiles%2Fj%2Fjohnkwan%2Fm%2F39%2F1007708_stock-photo-healthy-english-breakfast-time-with-fruit-and-coffee.jpg" bindload="" binderror="">
+    </cover-image>
+    <cover-image wx:if='{{mealType===2}}' class="bg-breakfast" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1581009571250&di=38dfbee3b30dcf35fe33fad6be19fbcd&imgtype=0&src=http%3A%2F%2Fimg.redocn.com%2Fsheying%2F20181009%2Ffengshengdewucan_9781447.jpg" bindload="" binderror="">
+    </cover-image>
+    <cover-image wx:if='{{mealType===3}}' class="bg-breakfast" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1581009653950&di=2d7e9890625478cf91b19828857e1965&imgtype=0&src=http%3A%2F%2Fqcloud.dpfile.com%2Fpc%2Ff3AUgq3tj_vfGSlOistD9Xo9TkZOzXjK5hm4RlCRgGWOOBtfzYHS2nOTLYzTtJMtTYGVDmosZWTLal1WbWRW3A.jpg" bindload="" binderror="">
+    </cover-image>
+    <cover-view class="score-tips">
+      <cover-view class="">早餐打卡 +100分</cover-view>
+      <cover-view class="">记录早餐/午餐/晚餐 +50分</cover-view>
+    </cover-view> -->
     <cover-view class="choose-type">
       <cover-view class="item item1" bindtap='handleChooseUploadType' data-index='0'>
         <cover-image src="/images/homeCamera.png"></cover-image>
@@ -239,3 +249,18 @@
     <cover-image class="add-tip" src='/images/gray_plus_small.png'></cover-image>
   </cover-view>
 </cover-view>
+
+
+<van-popup
+    show="{{ showAddScorePopup }}" 
+    bind:close="closeAgreeText"
+    closeable
+  >
+  <view class="agreement-wrap">
+    <view class="title"> 营养知食用户协议 </view>
+    <view class="comfirm-wrap">
+      <view class="agree-btn" bindtap='handleConfirmAgree'>同 意</view>
+    </view>
+      
+  </view>
+</van-popup>

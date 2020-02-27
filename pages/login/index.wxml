@@ -18,8 +18,8 @@
   </view>
   
   <view class="bottom">
-    <input class='input-invatation' placeholder="请输入邀请码" placeholder-class="placeholder-class" bindinput='handleInput' value='{{code}}' wx:if="{{!showAuth}}"></input>
-    <button class="{{code&&checked?'btn-active':''}} btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登 录</button>
+    <input class='input-invatation' placeholder="请输入邀请码，非必填" placeholder-class="placeholder-class" bindinput='handleInput' value='{{code}}' wx:if="{{!showAuth}}"></input>
+    <button class="{{checked?'btn-active':''}} btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登 录</button>
     <view class="auth-wrap">
       <van-icon name='circle' size='16px' wx:if='{{!checked}}' bindtap='handleToogleAgree'/>
       <van-icon name='checked' size='16px' wx:else color='#ed2c48' bindtap='handleToogleAgree'/>

@@ -1,0 +1,90 @@
+.page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:20rpx;
+    box-sizing: border-box;
+    .top{
+        width:100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .person-info{
+            width:100%;
+            display: flex;
+            align-items: center;
+            .avatar-wrap{
+                border:10rpx solid red;
+                border-radius: 50%;
+                .avatar-border{
+                    width: 80rpx;
+                    height: 80rpx;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    border:10rpx solid #fff;
+                    .avater{
+                        display: block;
+                    }
+                }
+            }
+            .name-wrap{
+                width:300rpx;
+                height: 80rpx;
+                background: red;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 40rpx;
+                color: #fff;
+                position: relative;
+                left:-60rpx;
+                z-index: -1;
+            }
+        }
+        .time{
+            white-space: nowrap;
+        }
+    }
+    .daily-title{
+        width:100%;
+        margin:20rpx 0;
+    }
+    .content{
+        width: 95%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        box-shadow: 0 0 18rpx 2rpx #ccc;
+        padding:20rpx;
+        box-sizing: border-box;
+        border-radius: 10rpx;
+        .score{
+            border:6rpx solid pink;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 140rpx;
+            height: 140rpx;
+            border-radius: 50%;
+        }
+        .progress{
+            height: 100rpx;
+            width: 100%;
+        }
+        .level-wrap{
+            display: flex;
+            align-items: center;
+            view{
+                margin:0 10rpx;
+            }
+            .specail{
+                font-size: 40rpx;
+            }
+        }
+    }
+    button{
+        margin:40rpx 0;
+        // color: #fff;
+
+    }
+}

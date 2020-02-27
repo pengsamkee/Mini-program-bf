@@ -3,6 +3,7 @@
   "usingComponents": {
     "calendar": "/components/calendar/calendar",
     "circle":"/components/circle-progress/circle-progress",
-    "ff-canvas": "@antv/f2-canvas"
+    "ff-canvas": "@antv/f2-canvas",
+    "van-popup":"./../../../components/vant/popup/index"
   }
 }

@@ -13,6 +13,7 @@ class reportPage {
   public onLoad(options): void {
     console.log('date,userId',options)
     var reportPageUrl:string = globalEnum.reportPageUrl+'?date='+options.date+'&userId='+options.userId+'&time='+ moment().utc();
+    console.log('reportPageUrl='+reportPageUrl);
     // let url = options.url; 
     // const index = url.lastIndexOf('/');
     // if(index!==-1){

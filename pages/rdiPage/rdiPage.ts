@@ -8,7 +8,7 @@ class rdiPage {
 
   public onLoad(options): void {
     (this as any).setData({
-      url: options.url
+      url: options.url+'#wechat_redirect'
     });
   }
 
